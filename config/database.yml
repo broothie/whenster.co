@@ -21,15 +21,22 @@ default: &default
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
+_local: &local
+  host: <%= ENV.fetch('POSTGRES_HOST', 'localhost') %>
+  port: <%= ENV.fetch('POSTGRES_PORT', 5432) %>
+  user: <%= ENV.fetch('POSTGRES_USER', 'pguser') %>
+  password: <%= ENV.fetch('POSTGRES_PASSWORD', 'pgpassword') %>
+
 development:
   <<: *default
-  database: whenster_co_development
+  <<: *local
+  database: whenster_development
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
   # When left blank, postgres will use the default role. This is
   # the same name as the operating system user running Rails.
-  #username: whenster_co
+  #username: whenster
 
   # The password associated with the postgres role (username).
   #password:
@@ -57,7 +64,8 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: whenster_co_test
+  <<: *local
+  database: whenster_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -81,6 +89,6 @@ test:
 #
 production:
   <<: *default
-  database: whenster_co_production
-  username: whenster_co
-  password: <%= ENV["WHENSTER_CO_DATABASE_PASSWORD"] %>
+  database: whenster_production
+  username: whenster
+  password: <%= ENV["WHENSTER_DATABASE_PASSWORD"] %>

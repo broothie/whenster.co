@@ -4,3 +4,10 @@
 require_relative "config/application"
 
 Rails.application.load_tasks
+
+namespace "dev" do
+  desc "set up docker containers for dbs"
+  task "resources" do
+    sh "docker compose up -d"
+  end
+end
