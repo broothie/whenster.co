@@ -2,26 +2,24 @@ require 'rails_helper'
 
 RSpec.describe "Users", type: :request do
   describe "sign up" do
-    let(:user_params) { attributes_for(:user).slice(:email, :username, :password) }
+    let(:user_attrs) { attributes_for(:user) }
 
     it "works" do
-      post "/api/users", params: { user: user_params }
+      post "/api/users", params: { user: user_attrs.slice(:email, :username, :password) }
       expect(response).to be_created
 
       payload = JSON.parse(response.body)
       user_data = payload.fetch("user")
-      expect(user_data["email"]).to eq user_params[:email]
-      expect(user_data["username"]).to eq user_params[:username]
+      expect(user_data["email"]).to eq user_attrs[:email]
+      expect(user_data["username"]).to eq user_attrs[:username]
 
-      token = payload.fetch("token")
-
-      get "/api/user", headers: { Authorization: "Bearer #{token}" }
+      get "/api/user", headers: { Authorization: "Token #{payload.fetch("token")}" }
       expect(response).to be_ok
 
       payload = JSON.parse(response.body)
       user_data = payload.fetch("user")
-      expect(user_data["email"]).to eq user_params[:email]
-      expect(user_data["username"]).to eq user_params[:username]
+      expect(user_data["email"]).to eq user_attrs[:email]
+      expect(user_data["username"]).to eq user_attrs[:username]
     end
   end
 
@@ -29,7 +27,7 @@ RSpec.describe "Users", type: :request do
     let(:user) { create(:user) }
 
     it "returns user data" do
-      get "/api/users/#{user.id}", headers: { Authorization: "Bearer #{user.generate_jwt}" }
+      get "/api/users/#{user.id}", headers: { Authorization: "Token #{user.generate_jwt}" }
       expect(response).to be_ok
 
       payload = JSON.parse(response.body)

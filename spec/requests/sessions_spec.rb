@@ -14,9 +14,7 @@ RSpec.describe "Sessions", type: :request do
       expect(user_data["email"]).to eq user.email
       expect(user_data["username"]).to eq user.username
 
-      token = payload.fetch("token")
-
-      get "/api/user", headers: { Authorization: "Bearer #{token}" }
+      get "/api/user", headers: { Authorization: "Token #{payload.fetch("token")}" }
       expect(response).to be_ok
 
       payload = JSON.parse(response.body)
