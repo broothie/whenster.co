@@ -1,0 +1,1 @@
+render("api/users/user", user: current_user).merge(email: current_user.email)

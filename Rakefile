@@ -10,4 +10,8 @@ namespace "dev" do
   task "resources" do
     sh "docker compose up -d"
   end
+
+  task "teardown" do
+    sh "docker compose down"
+  end
 end

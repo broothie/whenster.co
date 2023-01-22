@@ -1,0 +1,4 @@
+{
+  user: render("api/users/current_user"),
+  token: @token,
+}
