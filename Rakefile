@@ -11,6 +11,7 @@ namespace "dev" do
     sh "docker compose up -d"
   end
 
+  desc "tear down docker containers for dbs"
   task "teardown" do
     sh "docker compose down"
   end

@@ -7,7 +7,7 @@ services:
   - type: web
     name: whenster
     env: ruby
-    buildCommand: "bundle"
+    buildCommand: "bundle && bundle exec rails db:schema:load"
     startCommand: "bundle exec puma -C config/puma.rb"
     envVars:
       - key: DATABASE_URL
