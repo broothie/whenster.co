@@ -7,6 +7,13 @@ class User < ApplicationRecord
   before_validation :clean_email!
   before_validation :clean_username!
 
+  def generate_jwt
+    JWT.encode(
+      { id:, exp: 30.days.from_now.to_i },
+      Rails.application.secrets.secret_key_base,
+    )
+  end
+
   private
 
   def clean_email!

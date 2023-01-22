@@ -12,13 +12,6 @@ class ApplicationController < ActionController::API
     render status:, json: { errors: }
   end
 
-  def generate_jwt(user)
-    JWT.encode(
-      { id: user.id, exp: 30.days.from_now.to_i },
-      Rails.application.secrets.secret_key_base,
-    )
-  end
-
   def authenticate_user!
     if request.headers["Authorization"].present?
       authenticate_or_request_with_http_token do |token|

@@ -7,7 +7,7 @@ class Api::UsersController < ApplicationController
     return render_errors :internal_server_error, @user unless @user.save
 
     @current_user = @user
-    @token = generate_jwt(@user)
+    @token = @user.generate_jwt
     render status: :created
   end
 

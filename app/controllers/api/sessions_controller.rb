@@ -7,8 +7,8 @@ class Api::SessionsController < ApplicationController
     return render_errors :unauthorized, errors: { "email or password" => ["is invalid"] } unless @user.authenticate(create_params[:password])
 
     @current_user = @user
-    @token = generate_jwt(@user)
-    render status: :ok
+    @token = @user.generate_jwt
+    render status: :created
   end
 
   private
