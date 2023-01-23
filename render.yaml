@@ -14,7 +14,7 @@ services:
         fromDatabase:
           name: whenster
           property: connectionString
-      - key: SECRET_KEY_BASE
+      - key: SECRET
         sync: false
       - key: HOSTNAME
         sync: false
