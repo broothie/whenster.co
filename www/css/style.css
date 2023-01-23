@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  .b-on-w {
+    @apply bg-gray-50 text-gray-900 dark:bg-gray-800 dark:text-gray-50;
+  }
+
+  .b-on-w-light {
+    @apply bg-slate-200 dark:bg-slate-700;
+  }
+
+  .link {
+    @apply underline cursor-pointer;
+  }
+
+  .light {
+    @apply text-gray-600 dark:text-gray-400;
+  }
+
+  .input {
+    @apply rounded border-0 b-on-w-light px-3 py-2 text-inherit;
+  }
+
+  .chip {
+    @apply b-on-w-light w-fit rounded-full;
+  }
+}

@@ -6,7 +6,7 @@ RSpec.describe "Sessions", type: :request do
     let(:user) { create(:user, password:) }
 
     it "works" do
-      post "/api/sessions", params: { session: { email: user.email, password: } }
+      post "/api/session", params: { session: { email: user.email, password: } }
       expect(response).to be_created
 
       payload = JSON.parse(response.body)

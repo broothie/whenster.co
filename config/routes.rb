@@ -3,9 +3,10 @@ Rails.application.routes.draw do
     get :info, controller: :root
     get :health, controller: :root
 
-    resources :users, only: [:create, :show]
-    resources :sessions, only: [:create]
-
-    resource :user, controller: :user, only: [:show]
+    resources :users, only: [:show]
+    resource :session, only: [:create]
+    resource :user, controller: :user, only: [:create, :show]
   end
+
+  get "*path", to: "static#index"
 end

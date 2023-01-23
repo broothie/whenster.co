@@ -5,7 +5,7 @@ RSpec.describe "Users", type: :request do
     let(:user_attrs) { attributes_for(:user) }
 
     it "works" do
-      post "/api/users", params: { user: user_attrs.slice(:email, :username, :password) }
+      post "/api/user", params: { user: user_attrs.slice(:email, :username, :password) }
       expect(response).to be_created
 
       payload = JSON.parse(response.body)

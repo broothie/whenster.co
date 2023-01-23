@@ -29,3 +29,9 @@
 /config/master.key
 
 .env
+
+## Frontend
+node_modules
+.parcel-cache
+public/index.*
+public/logo.*.png

@@ -8,7 +8,7 @@ class User < ApplicationRecord
   before_validation :clean_username!
 
   def generate_jwt
-    JWT.encode({ id:, exp: 30.days.from_now.to_i }, ENV["SECRET"])
+    JWT.encode({ id:, exp: 30.days.from_now.to_i }, ENV.fetch("SECRET"))
   end
 
   private
