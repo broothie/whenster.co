@@ -4,7 +4,7 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   config.action_mailer.default_url_options = {
-    host: ENV.fetch("HOST", "localhost"),
+    host: ENV.fetch("HOSTNAME", "localhost"),
     port: ENV.fetch("PORT", 3000)
   }
 

@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  namespace :api, defaults: { format: :json } do
+  scope :api, module: :api, defaults: { format: :json } do
+    get :info, controller: :root
+    get :health, controller: :root
+
     resources :users, only: [:create, :show]
     resources :sessions, only: [:create]
 
