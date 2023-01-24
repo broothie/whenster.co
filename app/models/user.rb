@@ -11,6 +11,10 @@ class User < ApplicationRecord
   before_validation :clean_username!
   before_validation :ensure_calendar_token!
 
+  def self.find_by_email(email)
+    find_by("email ILIKE ?", email)
+  end
+
   def generate_jwt
     JWT.encode({ id:, exp: 30.days.from_now.to_i }, ENV.fetch("SECRET"))
   end
@@ -22,12 +26,11 @@ class User < ApplicationRecord
   private
 
   def clean_email!
-    email.strip!
-    email.downcase!
+    email&.strip!
   end
 
   def clean_username!
-    username.strip!
+    username&.strip!
   end
 
   def ensure_calendar_token!

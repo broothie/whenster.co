@@ -3,7 +3,7 @@ class Api::LoginLinksController < ApplicationController
 
   def create
     @email = create_params[:email]
-    user = User.find_by(email: @email.downcase)
+    user = User.find_by_email(@email)
     if user
       user.login_links.create!
     else

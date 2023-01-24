@@ -13,8 +13,19 @@ FactoryBot.define do
       creator { create(:user) }
     end
 
-    after(:create) do |event, evaluator|
+    after :create do |event, evaluator|
       event.invites.host.going.create!(user: evaluator.creator, inviter: evaluator.creator)
+    end
+  end
+
+  factory :invite do
+    user { create(:user) }
+    event { create(:event) }
+
+    trait :self_invite do
+      before :create do |invite|
+        invite.inviter = invite.user
+      end
     end
   end
 end

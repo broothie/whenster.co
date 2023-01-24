@@ -40,7 +40,6 @@ group :development, :test do
   gem "dotenv-rails", "~> 2.8"
   gem "factory_bot", "~> 6.2"
   gem "faker", "~> 3.1"
-  gem "rspec-rails", "~> 6.0"
 end
 
 group :development do
@@ -48,5 +47,13 @@ group :development do
   # gem "spring"
 end
 
+group :test do
+  gem "rspec-rails", "~> 6.0"
+  gem "shoulda-matchers", "~> 5.3"
+end
+
 gem "jb", "~> 0.8.0"
 gem "jwt", "~> 2.6"
+
+gem "pry", "~> 0.14.2"
+gem "pry-rails", "~> 0.3.9"

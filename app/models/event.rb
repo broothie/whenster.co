@@ -21,21 +21,24 @@ class Event < ApplicationRecord
     end_at.past?
   end
 
-  def editable?
-    !past?
-  end
-
   private
 
   def start_at_in_future!
+    return unless start_at
+
     errors.add(:start_at, "must be in future") unless future?
   end
 
   def start_at_before_end_at!
+    return unless start_at
+    return unless end_at
+
     errors.add(:end_at, "must be after start_at") unless end_at.after?(start_at)
   end
 
   def editable!
-    errors.add(:event, "is no longer editable") unless editable?
+    return unless end_at
+
+    errors.add(:event, "is no longer editable") if past?
   end
 end
