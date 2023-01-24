@@ -18,7 +18,6 @@ class Api::SessionsController < ApplicationController
     login_link.destroy!
 
     @token = @current_user.generate_jwt
-    render status: :created
   end
 
   private

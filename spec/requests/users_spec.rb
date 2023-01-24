@@ -5,17 +5,21 @@ RSpec.describe "Users", type: :request do
     let(:user_attrs) { attributes_for(:user) }
 
     it "works" do
-      post "/api/user", params: { user: user_attrs.slice(:email, :username, :password) }
+      post "/api/user", params: { user: user_attrs.slice(:email, :username) }
       expect(response).to be_created
-
       payload = JSON.parse(response.body)
       user_data = payload.fetch("user")
       expect(user_data["email"]).to eq user_attrs[:email]
       expect(user_data["username"]).to eq user_attrs[:username]
 
-      get "/api/user", headers: { Authorization: "Token #{payload.fetch("token")}" }
+      user = User.find(user_data["id"])
+      token = user.login_links.last.token
+      post "/api/session", params: { login_link: { token: } }
       expect(response).to be_ok
+      api_token = JSON.parse(response.body).fetch("token")
 
+      get "/api/user", headers: { Authorization: "Token #{api_token}" }
+      expect(response).to be_ok
       payload = JSON.parse(response.body)
       user_data = payload.fetch("user")
       expect(user_data["email"]).to eq user_attrs[:email]

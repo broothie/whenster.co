@@ -1,5 +1,5 @@
 class ApplicationMailer < ActionMailer::Base
-  EMAIL_PREFIX_ALLOWLIST = ENV.fetch("EMAIL_ALLOWLIST", "").split(/\s+/).freeze
+  EMAIL_PREFIX_ALLOWLIST = ENV.fetch("EMAIL_PREFIX_ALLOWLIST", "").split(/\s+/).freeze
 
   default from: email_address_with_name("hello@whenster.co", "whenster")
   layout "mailer"
@@ -13,10 +13,10 @@ class ApplicationMailer < ActionMailer::Base
   end
 
   def perform_deliveries?
-    return true if EMAIL_PREFIX_ALLOWLIST.empty?
+    return true if Service.production?
 
-    (mail.to + mail.bcc).all? do |email|
-      EMAIL_PREFIX_ALLOWLIST.any? { |prefix| email.downcase.start_with?(prefix) }
+    ((mail.to || []) + (mail.bcc || [])).all? do |email|
+      EMAIL_PREFIX_ALLOWLIST.any? { |prefix| email.downcase.start_with?(prefix.downcase) }
     end
   end
 end
