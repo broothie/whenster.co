@@ -9,10 +9,6 @@ services:
     envVars:
       - fromGroup: global
       - fromGroup: production
-      - key: DATABASE_URL
-        fromDatabase:
-          name: whenster-production
-          property: connectionString
     domains:
       - production.whenster.co
 
@@ -26,10 +22,6 @@ services:
     envVars:
       - fromGroup: global
       - fromGroup: staging
-      - key: DATABASE_URL
-        fromDatabase:
-          name: whenster-staging
-          property: connectionString
 
 databases:
   - name: whenster-production
@@ -52,6 +44,8 @@ envVarGroups:
         value: production.whenster.co
       - key: SECRET_KEY_BASE
         generateValue: true
+      - key: DATABASE_URL
+        sync: false
 
   - name: staging
     envVars:
@@ -59,5 +53,7 @@ envVarGroups:
         value: whenster-staging.onrender.com
       - key: SECRET_KEY_BASE
         generateValue: true
+      - key: DATABASE_URL
+        sync: false
       - key: EMAIL_PREFIX_ALLOWLIST
         sync: false
