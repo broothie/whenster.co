@@ -6,7 +6,7 @@ import { selectEventUsersByInvite } from "../../selectors";
 
 export default function ShowDetails({ event }: { event: Event }) {
   const hosts = selectEventUsersByInvite(
-    event.eventID,
+    event.id,
     (invite) => invite.role === "host"
   );
 

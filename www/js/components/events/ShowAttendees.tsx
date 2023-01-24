@@ -2,9 +2,9 @@ import { Event, User } from "../../models";
 import * as _ from "lodash";
 import UserChip from "../UserChip";
 import {
-  selectEventUsers,
-  selectCurrentUserIsHost,
   selectCurrentUser,
+  selectCurrentUserIsHost,
+  selectEventUsers,
 } from "../../selectors";
 import ToolTip from "../ToolTip";
 import { useAppDispatch, useToast } from "../../hooks";
@@ -13,8 +13,8 @@ import { ReactNode, useState } from "react";
 
 export default function ShowAttendees({ event }: { event: Event }) {
   const user = selectCurrentUser();
-  const users = selectEventUsers(event.eventID);
-  const userIsHost = selectCurrentUserIsHost(event.eventID);
+  const users = selectEventUsers(event.id);
+  const userIsHost = selectCurrentUserIsHost(event.id);
 
   const going = _.values(users).filter(
     (user) => event.invites[user.id]?.status === "going"
@@ -186,7 +186,7 @@ function AttendeeChip({ user, event }: { user: User; event: Event }) {
   const toast = useToast();
 
   const currentUser = selectCurrentUser();
-  const currentUserIsHost = selectCurrentUserIsHost(event.eventID);
+  const currentUserIsHost = selectCurrentUserIsHost(event.id);
 
   const userIsCurrentUser = user.id === currentUser.id;
   const userRole = event.invites[user.id].role;
@@ -197,7 +197,7 @@ function AttendeeChip({ user, event }: { user: User; event: Event }) {
   async function promoteToHost() {
     await dispatch(
       updateEventInviteRole({
-        eventID: event.eventID,
+        eventID: event.id,
         userID: user.id,
         role: "host",
       })
@@ -209,7 +209,7 @@ function AttendeeChip({ user, event }: { user: User; event: Event }) {
   async function demoteToGuest() {
     await dispatch(
       updateEventInviteRole({
-        eventID: event.eventID,
+        eventID: event.id,
         userID: user.id,
         role: "guest",
       })

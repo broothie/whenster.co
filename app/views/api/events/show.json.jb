@@ -1,0 +1,3 @@
+{
+  event: render("api/events/event", event: @event)
+}

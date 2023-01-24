@@ -8,7 +8,7 @@ export type User = {
 };
 
 export type Event = {
-  eventID: string;
+  id: string;
   title: string;
   description: string;
   location: string;

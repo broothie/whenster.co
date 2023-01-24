@@ -11,7 +11,7 @@ import ShowControls from "./ShowControls";
 import ShowDetails from "./ShowDetails";
 import PostsIndex from "./posts/PostsIndex";
 import FileAttachClickZone from "../FileAttachClickZone";
-import { selectEvent, selectCurrentUserIsHost } from "../../selectors";
+import { selectCurrentUserIsHost, selectEvent } from "../../selectors";
 import ToolTip from "../ToolTip";
 
 export default function ShowEvent() {
@@ -31,7 +31,7 @@ export default function ShowEvent() {
     toast.start(id, "Uploading header image", true).catch(console.error);
 
     await dispatch(
-      updateEventHeaderImage({ eventID: event.eventID, image: files[0] })
+      updateEventHeaderImage({ eventID: event.id, image: files[0] })
     );
 
     toast.stop(id).catch(console.error);

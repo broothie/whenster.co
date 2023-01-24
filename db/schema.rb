@@ -10,10 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_23_232124) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_24_082403) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "title", null: false
+    t.text "description"
+    t.string "location"
+    t.string "place_id"
+    t.string "timezone"
+    t.datetime "start_at", precision: nil
+    t.datetime "end_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["end_at"], name: "index_events_on_end_at"
+    t.index ["start_at"], name: "index_events_on_start_at"
+  end
+
+  create_table "invites", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.uuid "event_id", null: false
+    t.uuid "inviter_id", null: false
+    t.string "role", default: "guest", null: false
+    t.string "status", default: "pending", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_invites_on_event_id"
+    t.index ["user_id"], name: "index_invites_on_user_id"
+  end
 
   create_table "login_links", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false

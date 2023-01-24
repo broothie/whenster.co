@@ -11,14 +11,14 @@ export const createEvent = createAsyncThunk(
       title: string;
       description: string;
       location: string;
-      placeID: string;
-      startTime: DateTime;
-      endTime: DateTime;
+      place_id: string;
+      start_at: DateTime;
+      end_at: DateTime;
     },
     { rejectWithValue }
   ) => {
     try {
-      const response = await api.post("/events", event);
+      const response = await api.post("/events", { event });
       return response.data.event as Event;
     } catch (error: any) {
       if (error.response) {
@@ -177,7 +177,7 @@ const eventsSlice = createSlice({
       const lookup = state;
 
       events.forEach((event) => {
-        lookup[event.eventID] = event;
+        lookup[event.id] = event;
       });
 
       return lookup;
@@ -185,7 +185,7 @@ const eventsSlice = createSlice({
 
     builder.addCase(fetchEvent.fulfilled, (state, action) => {
       const event = action.payload.event;
-      return _.merge({}, state, { [event.eventID]: event });
+      return _.merge({}, state, { [event.id]: event });
     });
 
     builder.addCase(createEventInvite.fulfilled, (state, action) => {

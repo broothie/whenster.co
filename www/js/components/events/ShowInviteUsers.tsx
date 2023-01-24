@@ -34,26 +34,24 @@ export default function ShowInviteUsers({ event }: { event: Event }) {
   async function onUserClick(user: User) {
     await dispatch(
       createEventInvite({
-        eventID: event.eventID,
+        eventID: event.id,
         invite: { userID: user.id, role: "guest" },
       })
     );
 
     toast(`Invited ${user.username}`).catch(console.error);
     setQuery("");
-    dispatch(fetchEventUsers(event.eventID));
+    dispatch(fetchEventUsers(event.id));
 
     return null;
   }
 
   async function onEmailInviteClick() {
-    await dispatch(
-      createEventEmailInvite({ eventID: event.eventID, email: query })
-    );
+    await dispatch(createEventEmailInvite({ eventID: event.id, email: query }));
 
     toast(`Invited ${query} via email`).catch(console.error);
     setQuery("");
-    dispatch(fetchEventUsers(event.eventID));
+    dispatch(fetchEventUsers(event.id));
 
     return null;
   }

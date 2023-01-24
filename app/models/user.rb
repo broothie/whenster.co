@@ -1,5 +1,7 @@
 class User < ApplicationRecord
-  has_many :login_links
+  has_many :login_links, dependent: :destroy
+  has_many :invites, dependent: :destroy
+  has_many :events, through: :invites
 
   validates :email, presence: true, uniqueness: true
   validates :username, presence: true, uniqueness: true

@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     end
 
     resource :user, controller: :user, only: [:create, :show, :update]
+
+    resources :events
   end
 
   get "*path", to: "static#index", constraints: -> (request) { !request.path.start_with?("/api") }

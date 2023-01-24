@@ -56,7 +56,7 @@ export default function EventsIndex() {
 
           <div className="flex flex-row flex-wrap justify-center gap-8 px-5 sm:justify-start md:px-8">
             {_.sortBy(currentEvents, "startTime").map((event) => (
-              <Entry key={event.eventID} event={event} />
+              <Entry key={event.id} event={event} />
             ))}
           </div>
         </div>
@@ -68,7 +68,7 @@ export default function EventsIndex() {
 
           <div className="flex flex-row flex-wrap justify-center gap-8 px-5 sm:justify-start md:px-8">
             {_.sortBy(futureEvents, "startTime").map((event) => (
-              <Entry key={event.eventID} event={event} />
+              <Entry key={event.id} event={event} />
             ))}
           </div>
         </div>
@@ -80,7 +80,7 @@ export default function EventsIndex() {
 
           <div className="flex flex-row flex-wrap justify-center gap-8 px-5 sm:justify-start md:px-8">
             {_.reverse(_.sortBy(pastEvents, "startTime")).map((event) => (
-              <Entry key={event.eventID} event={event} />
+              <Entry key={event.id} event={event} />
             ))}
           </div>
         </div>
@@ -91,7 +91,7 @@ export default function EventsIndex() {
 
 function Entry({ event }: { event: Event }) {
   return (
-    <Link to={`/events/${event.eventID}`}>
+    <Link to={`/events/${event.id}`}>
       <div className="w-72 space-y-2">
         <img
           src={

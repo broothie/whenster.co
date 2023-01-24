@@ -38,7 +38,7 @@ export default function ShowRSVP({ event }: { event: Event }) {
     if (config.value !== invite.status) {
       await dispatch(
         updateEventInvite({
-          eventID: event.eventID,
+          eventID: event.id,
           invite: { status: config.value },
         })
       );

@@ -11,7 +11,7 @@ export default function ShowControls({ event }: { event: Event }) {
 
   async function onDeleteClick() {
     if (confirm(`Are you sure you want to delete "${event.title}"?`)) {
-      await dispatch(deleteEvent(event.eventID));
+      await dispatch(deleteEvent(event.id));
       toast("Event deleted").catch(console.error);
       navigate("/");
     }
@@ -22,7 +22,7 @@ export default function ShowControls({ event }: { event: Event }) {
       <p className="light font-bold">Controls</p>
 
       <div className="flex flex-row gap-3">
-        <Link to={`/events/${event.eventID}/edit`}>
+        <Link to={`/events/${event.id}/edit`}>
           <Button>Edit Event</Button>
         </Link>
 
