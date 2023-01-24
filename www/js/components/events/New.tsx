@@ -23,7 +23,7 @@ export default function NewEvent() {
     ).unwrap();
 
     toast("Event created").catch(console.error);
-    navigate(`/events/${event.eventID}`);
+    navigate(`/events/${event.id}`);
   }
 
   return <EventForm submit={submit} submitText="Create" />;

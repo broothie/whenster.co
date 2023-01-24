@@ -42,9 +42,9 @@ export const updateEvent = createAsyncThunk(
         title: string;
         description: string;
         location: string;
-        placeID: string;
-        startTime: DateTime;
-        endTime: DateTime;
+        place_id: string;
+        start_at: DateTime;
+        end_at: DateTime;
       };
     },
     { rejectWithValue }
@@ -158,12 +158,12 @@ const eventsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(createEvent.fulfilled, (state, action) => {
       const event = action.payload;
-      return _.merge({}, state, { [event.eventID]: event });
+      return _.merge({}, state, { [event.id]: event });
     });
 
     builder.addCase(updateEvent.fulfilled, (state, action) => {
       const event = action.payload;
-      return _.merge({}, state, { [event.eventID]: event });
+      return _.merge({}, state, { [event.id]: event });
     });
 
     builder.addCase(updateEventHeaderImage.fulfilled, (state, action) => {
