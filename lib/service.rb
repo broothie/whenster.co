@@ -8,7 +8,7 @@ module Service
   def env
     return "local" unless render?
 
-    render_service_name == "whenster" ? "production" : "staging"
+    render_service_name == "whenster-production" ? "production" : "staging"
   end
 
   def production?
