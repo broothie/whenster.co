@@ -15,6 +15,10 @@ class User < ApplicationRecord
     JWT.encode({ id:, exp: 30.days.from_now.to_i }, ENV.fetch("SECRET"))
   end
 
+  def calendar_url
+    Service.base_url("calendar", calendar_token)
+  end
+
   private
 
   def clean_email!

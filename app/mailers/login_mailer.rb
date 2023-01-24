@@ -1,8 +1,7 @@
 class LoginMailer < ApplicationMailer
   def login_link
-    login_link = LoginLink.find(params[:id])
-    @user = login_link.user
-    @url = "#{Service.base_url}/login/#{login_link.token}"
+    @login_link = LoginLink.find(params[:id])
+    @user = @login_link.user
 
     mail(
       to: email_address_with_name(@user.email, @user.username),
