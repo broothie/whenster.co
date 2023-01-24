@@ -1,20 +1,27 @@
-_web_service: &web_service
-  type: web
-  env: ruby
-  buildCommand: ./bin/render-build.sh
-  startCommand: bundle exec puma -C config/puma.rb
-  healthCheckPath: /api/health
-
 services:
-  - <<: *web_service
-    name: whenster-production
+  - name: whenster-production
+    type: web
+    env: ruby
+    buildCommand: ./bin/render-build.sh
+    startCommand: bundle exec puma -C config/puma.rb
+    healthCheckPath: /api/health
     autoDeploy: false
+    envVars:
+      - fromGroup: global
+      - fromGroup: production
     domains:
       - production.whenster.co
 
-  - <<: *web_service
-    name: whenster-staging
+  - name: whenster-staging
+    type: web
+    env: ruby
+    buildCommand: ./bin/render-build.sh
+    startCommand: bundle exec puma -C config/puma.rb
+    healthCheckPath: /api/health
     autoDeploy: true
+    envVars:
+      - fromGroup: global
+      - fromGroup: staging
 
 databases:
   - name: whenster-production
