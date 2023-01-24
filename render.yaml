@@ -1,24 +1,56 @@
+_web_service: &web_service
+  type: web
+  env: ruby
+  buildCommand: ./bin/render-build.sh
+  startCommand: bundle exec puma -C config/puma.rb
+  healthCheckPath: /api/health
+
+services:
+  - <<: *web_service
+    name: whenster-production
+    autoDeploy: false
+    domains:
+      - production.whenster.co
+
+  - <<: *web_service
+    name: whenster-staging
+    autoDeploy: true
+
 databases:
-  - name: whenster
+  - name: whenster-production
     databaseName: whenster
     user: whenster
 
-services:
-  - type: web
-    name: whenster
-    env: ruby
-    buildCommand: "./bin/render-build.sh"
-    startCommand: "bundle exec puma -C config/puma.rb"
+  - name: whenster-staging
+    databaseName: whenster
+    user: whenster
+
+envVarGroups:
+  - name: global
     envVars:
-      - key: DATABASE_URL
-        fromDatabase:
-          name: whenster
-          property: connectionString
       - key: SENDGRID_API_KEY
         sync: false
-      - key: SECRET_KEY_BASE
-        sync: false
-      - key: SECRET
-        sync: false
+
+  - name: production
+    envVars:
       - key: HOSTNAME
+        value: production.whenster.co
+      - key: SECRET_KEY_BASE
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: whenster-production
+          property: connectionString
+
+  - name: staging
+    envVars:
+      - key: HOSTNAME
+        value: whenster-staging.onrender.com
+      - key: SECRET_KEY_BASE
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: whenster-staging
+          property: connectionString
+      - key: EMAIL_PREFIX_ALLOWLIST
         sync: false

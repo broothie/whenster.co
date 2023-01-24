@@ -16,7 +16,7 @@ class User < ApplicationRecord
   end
 
   def generate_jwt
-    JWT.encode({ id:, exp: 30.days.from_now.to_i }, ENV.fetch("SECRET"))
+    JWT.encode({ id:, exp: 30.days.from_now.to_i }, ENV.fetch("SECRET_KEY_BASE"))
   end
 
   def calendar_url

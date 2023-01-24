@@ -14,7 +14,7 @@ module Authentication
 
   def authenticate_user!
     authenticate_or_request_with_http_token do |token|
-      jwt_payload = JWT.decode(token, ENV.fetch("SECRET")).first
+      jwt_payload = JWT.decode(token, ENV.fetch("SECRET_KEY_BASE")).first
       @current_user_id = jwt_payload["id"]
     rescue JWT::ExpiredSignature, JWT::VerificationError, JWT::DecodeError
       head :unauthorized
