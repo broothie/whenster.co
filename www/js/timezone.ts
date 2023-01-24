@@ -1,7 +1,7 @@
 import api from "./api";
 
-document.addEventListener("DOMContentLoaded", () => {
+export function updateUserTimeZone() {
   const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-  api.patch("/user", { timezone }).catch(console.error);
-});
+  api.patch("/user", { user: { timezone } }).catch(console.error);
+}

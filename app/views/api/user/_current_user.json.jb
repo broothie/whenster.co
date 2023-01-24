@@ -1,1 +1,5 @@
-render("api/users/user", user: current_user).merge(email: current_user.email)
+render("api/users/user", user: current_user).merge(
+  email: current_user.email,
+  calendarLink: Service.base_url("calendar", current_user.calendar_token),
+  timezone: current_user.timezone,
+)

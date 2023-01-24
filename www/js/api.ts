@@ -1,10 +1,16 @@
 import axios from "axios";
+import { apiToken } from "./auth";
 
-export function apiToken(): string | null {
-  return localStorage.getItem("api_token")
-}
+// TODO: rename usages to `authedApi` or something
 
-export default axios.create({
-  baseURL: "/api",
-  headers: { Authorization: `Token ${apiToken()}` }
-});
+const client = axios.create({ baseURL: "/api" });
+
+client.interceptors.request.use(
+  (cfg) => {
+    cfg.headers["Authorization"] = `Token ${apiToken()}`;
+    return cfg;
+  },
+  (error) => Promise.reject(error)
+);
+
+export default client;

@@ -1,20 +1,18 @@
 import { useAppDispatch, useToast } from "../../hooks";
-import {
-  destroySession,
-  updateUser,
-  updateUserImage,
-} from "../../store/userSlice";
+import { clear, updateUser, updateUserImage } from "../../store/userSlice";
 import FileAttachClickZone from "../FileAttachClickZone";
 import ClickToCopy from "../ClickToCopy";
 import { selectCurrentUser } from "../../selectors";
 import Button from "../Button";
 import { useState } from "react";
 import ToolTip from "../ToolTip";
+import { useLogOut } from "../../auth";
 
 export default function Account() {
   const dispatch = useAppDispatch();
   const toast = useToast();
   const user = selectCurrentUser();
+  const logOut = useLogOut();
   const [logOutIsSubmitting, setLogOutIsSubmitting] = useState(false);
 
   const [errors, setErrors] = useState({} as { [key: string]: string });
@@ -49,7 +47,7 @@ export default function Account() {
       setLogOutIsSubmitting(true);
 
       try {
-        await dispatch(destroySession());
+        logOut();
         toast("Logged out").catch(console.error);
       } catch (error) {
         console.error(error);
@@ -135,16 +133,12 @@ export default function Account() {
 
             <ToolTip
               tooltip={
-                <ClickToCopy
-                  text={`${location.origin}/calendar/${user.calendarToken}`}
-                >
+                <ClickToCopy text={user.calendarLink}>
                   <p className="link">Click here to copy</p>
                 </ClickToCopy>
               }
             >
-              <p className="truncate text-xl">
-                {`${location.origin}/calendar/${user.calendarToken}`}
-              </p>
+              <p className="truncate text-xl">{user.calendarLink}</p>
             </ToolTip>
           </div>
 

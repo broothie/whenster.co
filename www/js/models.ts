@@ -4,7 +4,7 @@ export type User = {
   email?: string;
   imageID?: string;
   gravatarURL?: string;
-  calendarToken?: string;
+  calendarLink: string;
 };
 
 export type Event = {

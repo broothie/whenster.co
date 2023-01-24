@@ -11,6 +11,7 @@ import EditEvent from "./events/Edit";
 import Account from "./users/Account";
 import Testing from "./Testing";
 import Header from "./Header";
+import LogInLink from "./auth/LogInLink";
 
 const routes = [
   {
@@ -73,6 +74,15 @@ const routes = [
       // @ts-ignore
       <RequireNoUser>
         <LogIn />
+      </RequireNoUser>
+    ),
+  },
+  {
+    path: "/login/:token",
+    element: (
+      // @ts-ignore
+      <RequireNoUser>
+        <LogInLink />
       </RequireNoUser>
     ),
   },

@@ -1,6 +1,6 @@
 {
   rails_env: Rails.env,
-  deployment_env: Deployment.env,
+  service_env: Service.env,
   env: {
     rails_env: ENV["RAILS_ENV"],
     is_pull_request: ENV["IS_PULL_REQUEST"],

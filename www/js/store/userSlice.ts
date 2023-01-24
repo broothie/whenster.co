@@ -1,14 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { User } from "../models";
 import api from "../api";
-import * as _ from "lodash";
 import axios from "axios";
+import { apiToken } from "../auth";
 
 export const createUser = createAsyncThunk(
   "user/createUser",
   async (user: { username: string; email: string }, { rejectWithValue }) => {
     try {
-      await axios.post("/user", user);
+      await axios.post("/api/user", { user });
     } catch (error: any) {
       if (error.response) {
         return rejectWithValue(error.response.data);
@@ -49,7 +49,7 @@ export const createSession = createAsyncThunk(
   "user/createSession",
   async (user: { email: string }, { rejectWithValue }) => {
     try {
-      await api.post("/session", user);
+      await axios.post("/api/session/start", { user });
     } catch (error: any) {
       if (error.response) {
         return rejectWithValue(error.response.data);
@@ -68,51 +68,33 @@ export const fetchCurrentUser = createAsyncThunk(
   }
 );
 
-export const destroySession = createAsyncThunk(
-  "user/destroySession",
-  async () => {
-    await api.delete("/session");
-    return null;
-  }
-);
-
 type SliceState =
-  | { status: "not checked"; user: null }
-  | { status: "checking"; user: null }
-  | { status: "checked"; user?: User };
+  | { apiToken: null; user: null }
+  | { apiToken: string; user: User | null };
 
 const userSlice = createSlice({
   name: "user",
-  initialState: { status: "not checked", user: null } as SliceState,
-  reducers: {},
+  initialState: {
+    apiToken: apiToken(),
+    user: null,
+  } as SliceState,
+  reducers: {
+    receiveApiToken: (state, action) => {
+      const apiToken = action.payload as string;
+      return Object.assign({}, state, { apiToken });
+    },
+    clear: () => {
+      return { apiToken: null, user: null };
+    },
+  },
   extraReducers: (builder) => {
-    builder.addCase(fetchCurrentUser.pending, (state, action) => {
-      return { status: "checking", user: null };
-    });
-
     builder.addCase(fetchCurrentUser.fulfilled, (state, action) => {
-      const user = action.payload;
-      return { status: "checked", user };
-    });
-
-    builder.addCase(fetchCurrentUser.rejected, (state, action) => {
-      return { status: "checked" };
-    });
-
-    builder.addCase(destroySession.fulfilled, (state, action) => {
-      return { status: "checked" };
-    });
-
-    builder.addCase(updateUser.fulfilled, (state, action) => {
-      const user = action.payload;
-      return { status: "checked", user };
-    });
-
-    builder.addCase(updateUserImage.fulfilled, (state, action) => {
-      const imageID = action.payload;
-      return _.merge({}, state, { user: { imageID } });
+      const user = action.payload as User;
+      return Object.assign({}, state, { user });
     });
   },
 });
 
 export default userSlice;
+
+export const { receiveApiToken, clear } = userSlice.actions;

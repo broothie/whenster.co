@@ -1,30 +1,13 @@
-import { ReactNode, useEffect } from "react";
-import { fetchCurrentUser } from "../../store/userSlice";
-import { useAppDispatch, useAppSelector } from "../../hooks";
+import { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
+import { useLoggedIn } from "../../auth";
 
 export default function RequireNoUser({ children }: { children: ReactNode }) {
-  const dispatch = useAppDispatch();
-  const checkedStatus = useAppSelector((state) => state.user.status);
-  const user = useAppSelector((state) => state.user.user);
+  const loggedIn = useLoggedIn();
 
-  useEffect(() => {
-    if (checkedStatus === "not checked") {
-      dispatch(fetchCurrentUser());
-    }
-  }, []);
-
-  switch (checkedStatus) {
-    case "not checked":
-    case "checking":
-    default:
-      return null;
-
-    case "checked":
-      if (user) {
-        return <Navigate to="/" />;
-      } else {
-        return children;
-      }
+  if (loggedIn) {
+    return <Navigate to="/" />;
   }
+
+  return children;
 }
