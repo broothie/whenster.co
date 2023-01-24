@@ -1,18 +1,18 @@
 require 'rails_helper'
 
-RSpec.describe "Sessions", type: :request do
+RSpec.describe "Api::LoginLinks", type: :request do
   describe "log in" do
     let(:user) { create(:user) }
 
     it "works" do
-      post "/api/session/start", params: { user: { email: user.email } }
+      post "/api/login_links", params: { user: { email: user.email } }
       expect(response).to be_ok
       payload = JSON.parse(response.body)
       user_data = payload.fetch("user")
       expect(user_data["email"]).to eq user.email
 
       token = user.login_links.last.token
-      post "/api/session", params: { login_link: { token: } }
+      post "/api/login_links/redeem", params: { login_link: { token: } }
       expect(response).to be_ok
       api_token = JSON.parse(response.body).fetch("token")
 

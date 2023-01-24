@@ -5,5 +5,5 @@ set -o errexit
 npm install
 npm run build
 
-bundle install
-bundle exec rake db:migrate
+bin/bundle install
+bin/rails db:migrate

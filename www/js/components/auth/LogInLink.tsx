@@ -10,7 +10,7 @@ export default function LogInLink() {
 
   useEffect(() => {
     axios
-      .post("/api/session", { login_link: { token: params.token! } })
+      .post("/api/login_links/redeem", { login_link: { token: params.token! } })
       .then((response) => {
         const apiToken = response.data.token as string;
         setApiToken(apiToken);

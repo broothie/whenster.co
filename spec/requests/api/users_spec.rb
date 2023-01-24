@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Users", type: :request do
+RSpec.describe "Api::Users", type: :request do
   describe "sign up" do
     let(:user_attrs) { attributes_for(:user) }
 
@@ -14,7 +14,7 @@ RSpec.describe "Users", type: :request do
 
       user = User.find(user_data["id"])
       token = user.login_links.last.token
-      post "/api/session", params: { login_link: { token: } }
+      post "/api/login_links/redeem", params: { login_link: { token: } }
       expect(response).to be_ok
       api_token = JSON.parse(response.body).fetch("token")
 

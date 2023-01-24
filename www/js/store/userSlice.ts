@@ -49,7 +49,7 @@ export const createSession = createAsyncThunk(
   "user/createSession",
   async (user: { email: string }, { rejectWithValue }) => {
     try {
-      await axios.post("/api/session/start", { user });
+      await axios.post("/api/login_links", { user });
     } catch (error: any) {
       if (error.response) {
         return rejectWithValue(error.response.data);

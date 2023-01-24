@@ -1,3 +1,0 @@
-{
-  user: { email: current_user.email }
-}
