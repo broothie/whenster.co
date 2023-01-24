@@ -9,10 +9,6 @@ class Event < ApplicationRecord
   validate :start_at_before_end_at!
   validate :editable!
 
-  def creator
-    invites.first&.user
-  end
-
   def future?
     start_at.future?
   end

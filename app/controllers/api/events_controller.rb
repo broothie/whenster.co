@@ -8,7 +8,7 @@ class Api::EventsController < ApplicationController
     return render_errors :bad_request, @event unless @event.valid?
     return render_errors :internal_server_error, @event unless @event.save
 
-    @event.invites.create!(user: current_user, role: :host, status: :going, inviter: current_user)
+    @event.invites.host.going.create!(user: current_user, inviter: current_user)
   end
 
   def show
