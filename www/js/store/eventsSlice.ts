@@ -4,19 +4,24 @@ import api from "../api";
 import * as _ from "lodash";
 import { DateTime } from "luxon";
 
+export type EventPayload = {
+  title: string;
+  description: string;
+  location: string;
+  place_id: string;
+  start_at: DateTime;
+  end_at: DateTime;
+};
+
+export type EventResponse = {
+  event: Event;
+  invites: Invite[];
+  users: User[];
+};
+
 export const createEvent = createAsyncThunk(
   "events/createEvent",
-  async (
-    event: {
-      title: string;
-      description: string;
-      location: string;
-      place_id: string;
-      start_at: DateTime;
-      end_at: DateTime;
-    },
-    { rejectWithValue }
-  ) => {
+  async (event: EventPayload, { rejectWithValue }) => {
     try {
       const response = await api.post("/events", { event });
       return response.data.event as Event;
@@ -38,14 +43,7 @@ export const updateEvent = createAsyncThunk(
       event,
     }: {
       eventID: string;
-      event: {
-        title: string;
-        description: string;
-        location: string;
-        place_id: string;
-        start_at: DateTime;
-        end_at: DateTime;
-      };
+      event: EventPayload;
     },
     { rejectWithValue }
   ) => {
@@ -82,7 +80,7 @@ export const fetchEvent = createAsyncThunk(
   "events/fetchEvent",
   async (eventID: string) => {
     const response = await api.get(`/events/${eventID}`);
-    return response.data as { event: Event; users: User[] };
+    return response.data as EventResponse;
   }
 );
 
@@ -158,7 +156,7 @@ const eventsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(createEvent.fulfilled, (state, action) => {
       const event = action.payload;
-      return _.merge({}, state, { [event.id]: event });
+      state[event.id] = event;
     });
 
     builder.addCase(updateEvent.fulfilled, (state, action) => {

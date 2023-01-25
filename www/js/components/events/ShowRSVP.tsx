@@ -2,7 +2,7 @@ import { useAppDispatch, useToast } from "../../hooks";
 import { Event, InviteStatus } from "../../models";
 import classNames from "classnames";
 import { updateEventInvite } from "../../store/eventsSlice";
-import { selectCurrentUser } from "../../selectors";
+import { selectCurrentUserInvite } from "../../selectors";
 
 type StatusConfig = {
   value: InviteStatus;
@@ -22,7 +22,7 @@ const statusConfig = [
     toast: "You're a maybe",
   },
   {
-    value: "not_going",
+    value: "declined",
     text: "bailing",
     toast: "You're bailing :(",
   },
@@ -31,8 +31,7 @@ const statusConfig = [
 export default function ShowRSVP({ event }: { event: Event }) {
   const dispatch = useAppDispatch();
   const toast = useToast();
-  const user = selectCurrentUser();
-  const invite = event.invites[user.id];
+  const invite = selectCurrentUserInvite(event.id)!;
 
   async function onStatusClick(config: StatusConfig) {
     if (config.value !== invite.status) {

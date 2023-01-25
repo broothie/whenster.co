@@ -1,0 +1,8 @@
+{
+  id: invite.id,
+  userID: invite.user_id,
+  eventID: invite.event_id,
+  inviterID: invite.inviter_id,
+  role: invite.role,
+  status: invite.status,
+}

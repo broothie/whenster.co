@@ -1,10 +1,11 @@
-import { Event, User } from "../../models";
-import * as _ from "lodash";
+import { EmailInvite, Event, User } from "../../models";
 import UserChip from "../UserChip";
 import {
   selectCurrentUser,
   selectCurrentUserIsHost,
   selectEventUsers,
+  selectEventUsersByInvite,
+  selectUserInvite,
 } from "../../selectors";
 import ToolTip from "../ToolTip";
 import { useAppDispatch, useToast } from "../../hooks";
@@ -16,31 +17,31 @@ export default function ShowAttendees({ event }: { event: Event }) {
   const users = selectEventUsers(event.id);
   const userIsHost = selectCurrentUserIsHost(event.id);
 
-  const going = _.values(users).filter(
-    (user) => event.invites[user.id]?.status === "going"
+  const going = selectEventUsersByInvite(
+    event.id,
+    (invite) => invite.status === "going"
   );
 
-  const tentative = _.values(users).filter(
-    (user) => event.invites[user.id]?.status === "tentative"
+  const tentative = selectEventUsersByInvite(
+    event.id,
+    (invite) => invite.status === "tentative"
   );
 
-  const notGoing = _.values(users).filter(
-    (user) => event.invites[user.id]?.status === "not_going"
+  const notGoing = selectEventUsersByInvite(
+    event.id,
+    (invite) => invite.status === "declined"
   );
 
-  const pending = _.values(users).filter(
-    (user) => event.invites[user.id]?.status === "pending"
+  const pending = selectEventUsersByInvite(
+    event.id,
+    (invite) => invite.status === "pending"
   );
 
-  const invited = _.values(users).filter((user) =>
-    _.includes(["not_going", "pending"], event.invites[user.id]?.status)
+  const invited = selectEventUsersByInvite(event.id, (invite) =>
+    ["declined", "pending"].includes(invite.status)
   );
 
-  const emailInvites = event?.emailInvites
-    ? _.values(event.emailInvites).filter(
-        (emailInvite) => emailInvite.inviterID === user.id
-      )
-    : [];
+  const emailInvites = [] as EmailInvite[];
 
   return (
     <div className="flex flex-col gap-y-2">
@@ -189,7 +190,9 @@ function AttendeeChip({ user, event }: { user: User; event: Event }) {
   const currentUserIsHost = selectCurrentUserIsHost(event.id);
 
   const userIsCurrentUser = user.id === currentUser.id;
-  const userRole = event.invites[user.id].role;
+
+  const invite = selectUserInvite(event.id, user.id)!;
+  const userRole = invite.role;
 
   if (userIsCurrentUser) return <UserChip user={user} />;
   if (!currentUserIsHost) return <UserChip user={user} />;

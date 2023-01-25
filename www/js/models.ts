@@ -16,18 +16,18 @@ export type Event = {
   startTime: string;
   endTime: string;
   headerImageID: string;
-  invites: { [key: string]: Invite };
-  emailInvites?: { [key: string]: EmailInvite };
   locationQuery: string;
   googleMapsLocationURL: string;
   defaultHeaderImageURL: string;
 };
 
 export type InviteRole = "guest" | "host";
-export type InviteStatus = "pending" | "not_going" | "tentative" | "going";
+export type InviteStatus = "pending" | "going" | "tentative" | "declined";
 
 export type Invite = {
+  id: string;
   userID: string;
+  eventID: string;
   role: InviteRole;
   status: InviteStatus;
 };

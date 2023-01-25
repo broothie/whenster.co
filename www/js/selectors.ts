@@ -14,40 +14,59 @@ export function selectEvent(eventID: string): Event {
   return useAppSelector((state) => state.events[eventID]);
 }
 
-export function selectEventUsers(eventID: string): User[] {
-  const event = selectEvent(eventID);
-  const invitedUserIDs = _.keys(event.invites);
-  const users = useAppSelector((state) => _.values(state.users));
+export function selectEventInvites(eventID: string): Invite[] {
+  return useAppSelector((state) =>
+    Object.values(state.invites).filter((invite) => invite.eventID === eventID)
+  );
+}
 
-  return users.filter((user) => invitedUserIDs.includes(user.id));
+export function selectEventUsers(eventID: string): User[] {
+  const eventInvites = selectEventInvites(eventID);
+  return useAppSelector((state) =>
+    eventInvites
+      .map((invite) => state.users[invite.userID])
+      .filter((user) => user)
+  );
 }
 
 export function selectEventUsersByInvite(
   eventID: string,
   predicate: InvitePredicate
 ): User[] {
-  const event = selectEvent(eventID);
-  const users = selectEventUsers(eventID);
+  const eventInvites = selectEventInvites(eventID);
+  const users = useAppSelector((state) =>
+    eventInvites
+      .map((invite) => state.users[invite.userID])
+      .filter((user) => user)
+  );
 
-  return users.filter((user) => predicate(event.invites[user.id]));
+  return users.filter((user) =>
+    predicate(eventInvites.find((invite) => invite.userID === user.id)!)
+  );
 }
 
-export function selectUserInviteIs(
+export function selectUserInvite(eventID: string, userID: string) {
+  const invites = selectEventInvites(eventID);
+  return invites.find((invite) => invite.userID === userID);
+}
+
+export function selectCurrentUserInvite(eventID: string) {
+  const user = selectCurrentUser();
+  return selectUserInvite(eventID, user.id);
+}
+
+export function selectCurrentUserInviteIs(
   eventID: string,
   predicate: InvitePredicate
 ): boolean {
-  const user = selectCurrentUser();
-  const event = selectEvent(eventID);
-  if (!event) return false;
-
-  const invite = event.invites[user.id];
+  const invite = selectCurrentUserInvite(eventID);
   if (!invite) return false;
 
   return predicate(invite);
 }
 
 export function selectCurrentUserIsHost(eventID: string): boolean {
-  return selectUserInviteIs(eventID, (invite) => invite.role === "host");
+  return selectCurrentUserInviteIs(eventID, (invite) => invite.role === "host");
 }
 
 export function selectPosts(eventID: string): Post[] {
