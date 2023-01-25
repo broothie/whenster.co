@@ -23,15 +23,6 @@ services:
       - fromGroup: global
       - fromGroup: staging
 
-databases:
-  - name: whenster-production
-    databaseName: whenster
-    user: whenster
-
-  - name: whenster-staging
-    databaseName: whenster
-    user: whenster
-
 envVarGroups:
   - name: global
     envVars:
