@@ -20,13 +20,13 @@ export default function ShowDetails({ event }: { event: Event }) {
 
           <div className="flex flex-row flex-wrap gap-x-2 text-xl">
             <p>
-              {DateTime.fromISO(event.startTime).toLocaleString(
+              {DateTime.fromISO(event.startAt).toLocaleString(
                 DateTime.DATETIME_MED
               )}
             </p>
             <p>to</p>
             <p>
-              {DateTime.fromISO(event.endTime).toLocaleString(
+              {DateTime.fromISO(event.endAt).toLocaleString(
                 DateTime.DATETIME_MED
               )}
             </p>

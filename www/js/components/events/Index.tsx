@@ -36,16 +36,16 @@ export default function EventsIndex() {
   const now = DateTime.now();
   const currentEvents = events.filter(
     (event) =>
-      DateTime.fromISO(event.startTime) < now &&
-      now < DateTime.fromISO(event.endTime)
+      DateTime.fromISO(event.startAt) < now &&
+      now < DateTime.fromISO(event.endAt)
   );
 
   const futureEvents = events.filter(
-    (event) => DateTime.fromISO(event.startTime) > now
+    (event) => DateTime.fromISO(event.startAt) > now
   );
 
   const pastEvents = events.filter(
-    (event) => DateTime.fromISO(event.endTime) < now
+    (event) => DateTime.fromISO(event.endAt) < now
   );
 
   return (
@@ -109,10 +109,10 @@ function Entry({ event }: { event: Event }) {
           </p>
 
           <p className="light text-sm">
-            {DateTime.fromISO(event.startTime).toLocaleString(
+            {DateTime.fromISO(event.startAt).toLocaleString(
               DateTime.DATETIME_MED
             )}{" "}
-            · {DateTime.fromISO(event.startTime).toRelative()}
+            · {DateTime.fromISO(event.startAt).toRelative()}
           </p>
 
           {event.location && <p className="light text-sm">{event.location}</p>}

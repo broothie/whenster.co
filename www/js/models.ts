@@ -13,8 +13,8 @@ export type Event = {
   description: string;
   location: string;
   placeID: string;
-  startTime: string;
-  endTime: string;
+  startAt: string;
+  endAt: string;
   headerImageID: string;
   locationQuery: string;
   googleMapsLocationURL: string;

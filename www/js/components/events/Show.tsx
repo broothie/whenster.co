@@ -45,7 +45,7 @@ export default function ShowEvent() {
           <p className="font-serif text-4xl font-medium">{event.title}</p>
 
           <div className="light flex flex-row flex-wrap gap-2">
-            <p>{DateTime.fromISO(event.startTime).toRelative()}</p>
+            <p>{DateTime.fromISO(event.startAt).toRelative()}</p>
 
             {event.location && (
               <>

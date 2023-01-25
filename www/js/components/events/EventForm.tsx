@@ -52,12 +52,12 @@ export default function EventForm({
       description: event?.description,
       location: event?.location,
       placeID: event?.placeID,
-      startTime: (event?.startTime
-        ? DateTime.fromISO(event.startTime)
+      startTime: (event?.startAt
+        ? DateTime.fromISO(event.startAt)
         : startOfHour.plus({ hours: 1 })
       ).toFormat(dateTimeLocalFormat),
-      endTime: (event?.endTime
-        ? DateTime.fromISO(event.endTime)
+      endTime: (event?.endAt
+        ? DateTime.fromISO(event.endAt)
         : startOfHour.plus({ hours: 2 })
       ).toFormat(dateTimeLocalFormat),
     },
