@@ -1,17 +1,15 @@
 Rails.application.routes.draw do
-  namespace :api, defaults: { format: :json } do
-    get :info, controller: :root
-    get :health, controller: :root
+  get :healthz, controller: :root, format: :json
+  get "*path", to: "root#index", constraints: -> (request) { !request.path.start_with?("/api") }
 
-    resources :users, only: [:show]
+  namespace :api, defaults: { format: :json } do
     resource :user, controller: :user, only: [:create, :show, :update]
 
     resource :login_links, only: [:create] do
       post :redeem
     end
 
+    resources :users, only: [:show]
     resources :events
   end
-
-  get "*path", to: "static#index", constraints: -> (request) { !request.path.start_with?("/api") }
 end

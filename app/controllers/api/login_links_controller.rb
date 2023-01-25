@@ -1,4 +1,4 @@
-class Api::LoginLinksController < ApplicationController
+class Api::LoginLinksController < Api::BaseController
   skip_before_action :authenticate_user!
 
   def create
