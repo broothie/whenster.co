@@ -1,9 +1,8 @@
 export type User = {
   id: string;
   username: string;
-  email?: string;
-  imageID?: string;
-  gravatarURL?: string;
+  email: string;
+  imageURL: string;
   calendarLink: string;
 };
 

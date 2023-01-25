@@ -3,6 +3,10 @@ class User < ApplicationRecord
   has_many :invites, dependent: :destroy
   has_many :events, through: :invites
 
+  has_one_attached :image do |image|
+    image.variant :thumb, resize_to_limit: [300, 300]
+  end
+
   validates :email, presence: true, uniqueness: true
   validates :username, presence: true, uniqueness: true
   validates :calendar_token, presence: true, uniqueness: true
@@ -15,6 +19,10 @@ class User < ApplicationRecord
     find_by("email ILIKE ?", email)
   end
 
+  def image_url
+    image.attached? ? UrlHelpers.url_for(image) : gravatar_url
+  end
+
   def generate_jwt
     JWT.encode({ id:, exp: 30.days.from_now.to_i }, ENV.fetch("SECRET_KEY_BASE"))
   end
@@ -24,6 +32,10 @@ class User < ApplicationRecord
   end
 
   private
+
+  def gravatar_url
+    "https://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(email.downcase)}?d=retro"
+  end
 
   def clean_email!
     email&.strip!

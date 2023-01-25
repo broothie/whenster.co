@@ -12,7 +12,7 @@ class Api::UserController < Api::BaseController
 
   def update
     current_user.assign_attributes(update_params)
-    return unless current_user.changed?
+    return unless current_user.changed? || current_user.image.changed?
     return render_errors :bad_request, current_user unless current_user.valid?
     return render_errors :internal_server_error, current_user unless current_user.save
   end
@@ -27,6 +27,6 @@ class Api::UserController < Api::BaseController
   end
 
   def update_params
-    params.require(:user).permit(:username, :timezone)
+    params.require(:user).permit(:username, :timezone, :image)
   end
 end

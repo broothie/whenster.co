@@ -1,5 +1,5 @@
 import { useAppDispatch, useToast } from "../../hooks";
-import { clear, updateUser, updateUserImage } from "../../store/userSlice";
+import { updateUser } from "../../store/userSlice";
 import FileAttachClickZone from "../FileAttachClickZone";
 import ClickToCopy from "../ClickToCopy";
 import { selectCurrentUser } from "../../selectors";
@@ -23,7 +23,7 @@ export default function Account() {
     const id = "profile-image-upload";
     toast.start(id, "Uploading profile image", true).catch(console.error);
 
-    await dispatch(updateUserImage(files[0]));
+    await dispatch(updateUser({ image: files[0] }));
 
     toast.stop(id).catch(console.error);
     toast("Profile image updated").catch(console.error);
@@ -71,11 +71,7 @@ export default function Account() {
             }
           >
             <img
-              src={
-                user?.imageID
-                  ? `/images/${user.imageID}?variant=small`
-                  : user.gravatarURL
-              }
+              src={user?.imageURL}
               alt="Your profile image"
               className="h-24 w-24 rounded-full object-cover"
             />

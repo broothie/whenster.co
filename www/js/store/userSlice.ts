@@ -21,9 +21,14 @@ export const createUser = createAsyncThunk(
 
 export const updateUser = createAsyncThunk(
   "user/updateUser",
-  async ({ username }: { username: string }, { rejectWithValue }) => {
+  async (user: { username?: string; image?: File }, { rejectWithValue }) => {
     try {
-      const response = await api.patch("/user", { username });
+      const data = new FormData();
+      for (const key in user) {
+        data.append(`user[${key}]`, user[key]);
+      }
+
+      const response = await api.patch("/user", data);
       return response.data.user;
     } catch (error: any) {
       if (error.response) {
@@ -32,16 +37,6 @@ export const updateUser = createAsyncThunk(
         throw error;
       }
     }
-  }
-);
-
-export const updateUserImage = createAsyncThunk(
-  "user/updateUserImage",
-  async (image: File) => {
-    const formData = new FormData();
-    formData.append("image", image);
-    const response = await api.put("/user/image", formData);
-    return response.data.imageID;
   }
 );
 
@@ -91,6 +86,10 @@ const userSlice = createSlice({
     builder.addCase(fetchCurrentUser.fulfilled, (state, action) => {
       const user = action.payload as User;
       return Object.assign({}, state, { user });
+    });
+
+    builder.addCase(updateUser.fulfilled, (state, action) => {
+      state.user = action.payload as User;
     });
   },
 });

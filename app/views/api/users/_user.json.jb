@@ -1,4 +1,5 @@
 {
   id: user.id,
   username: user.username,
+  imageURL: user.image_url,
 }
