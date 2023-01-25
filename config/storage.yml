@@ -18,7 +18,7 @@ local:
 google_development:
   service: GCS
   project: whenster
-  credentials: <%= Rails.root.join(ENV.fetch("GCLOUD_KEY_FILE", "missing-file")) %>
+  credentials: <%= ENV.key?("GCLOUD_KEY_FILE") && Rails.root.join(ENV.fetch("GCLOUD_KEY_FILE")) %>
   bucket: whenster-development-img
 
 google:
