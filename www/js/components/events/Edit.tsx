@@ -23,9 +23,9 @@ export default function EditEvent() {
           title: data.title,
           description: data.description,
           location: data.location,
-          placeID: data.placeID,
-          startTime: DateTime.fromFormat(data.startTime, dateTimeLocalFormat),
-          endTime: DateTime.fromFormat(data.endTime, dateTimeLocalFormat),
+          place_id: data.placeID,
+          start_at: DateTime.fromFormat(data.startTime, dateTimeLocalFormat),
+          end_at: DateTime.fromFormat(data.endTime, dateTimeLocalFormat),
         },
       })
     );
