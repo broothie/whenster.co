@@ -37,6 +37,8 @@ envVarGroups:
         generateValue: true
       - key: DATABASE_URL
         sync: false
+      - key: GOOGLE_MAPS_API_KEY
+        sync: false
 
   - name: staging
     envVars:
@@ -45,6 +47,8 @@ envVarGroups:
       - key: SECRET_KEY_BASE
         generateValue: true
       - key: DATABASE_URL
+        sync: false
+      - key: GOOGLE_MAPS_API_KEY
         sync: false
       - key: EMAIL_PREFIX_ALLOWLIST
         sync: false

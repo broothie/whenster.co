@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import TextareaAutosize from "react-textarea-autosize";
 import { useEffect, useMemo, useState } from "react";
-import upsertPosition from "../../upsertPosition";
+import upsertGeolocation from "../../upsertGeolocation";
 import api from "../../api";
 import * as _ from "lodash";
 import { DateTime } from "luxon";
@@ -73,11 +73,11 @@ export default function EventForm({
   }
 
   async function findPlace(query: string) {
-    const response = await api.get(`/proxy/google/find_place`, {
-      params: { query },
+    const response = await api.get(`/proxy/google_maps_places_search`, {
+      params: { input: query },
     });
 
-    setPlaces(response.data.places);
+    setPlaces(response.data.candidates);
   }
 
   const debouncedFindPlace = useMemo(() => _.debounce(findPlace, 200), []);
@@ -117,7 +117,7 @@ export default function EventForm({
   }
 
   useEffect(() => {
-    upsertPosition();
+    upsertGeolocation();
   }, []);
 
   return (

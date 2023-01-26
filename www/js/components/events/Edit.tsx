@@ -1,4 +1,4 @@
-import EventForm, { EventFormData } from "./EventForm";
+import EventForm, { EventFormData } from "./Form";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useToast } from "../../hooks";
 import { useEffect } from "react";

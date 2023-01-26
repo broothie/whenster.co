@@ -50,9 +50,11 @@ end
 group :test do
   gem "rspec-rails", "~> 6.0"
   gem "shoulda-matchers", "~> 5.3"
+  gem "webmock", "~> 3.18"
 end
 
 gem "google-cloud-storage", "~> 1.44", require: false
+gem "httparty", "~> 0.21.0"
 gem "jb", "~> 0.8.0"
 gem "jwt", "~> 2.6"
 gem "pry", "~> 0.14.2"

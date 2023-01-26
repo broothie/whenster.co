@@ -1,4 +1,4 @@
-import EventForm, { EventFormData } from "./EventForm";
+import EventForm, { EventFormData } from "./Form";
 import { useAppDispatch, useToast } from "../../hooks";
 import { createEvent } from "../../store/eventsSlice";
 import { DateTime } from "luxon";

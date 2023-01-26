@@ -37,5 +37,9 @@ module Whenster
     config.api_only = true
 
     config.autoload_paths << "#{root}/lib"
+
+    config.session_store :cookie_store, key: :whenster
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use config.session_store, config.session_options
   end
 end

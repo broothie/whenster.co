@@ -1,11 +1,12 @@
 FactoryBot.define do
   factory :user do
     email { Faker::Internet.email }
-    username { Faker::Internet.username }
+    username { Faker::Internet.username(specifier: 5) }
   end
 
   factory :event do
     title { Faker::Esport.event }
+    description { Faker::Lorem.paragraph(sentence_count: 3) }
     start_at { 1.hour.from_now }
     end_at { 2.hours.from_now }
 

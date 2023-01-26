@@ -1,10 +1,21 @@
 Rails.application.routes.draw do
-  get :healthz, controller: :root, format: :json
-  get "*path", to: "root#index", constraints: -> (request) do
-    %w[/api /rails].none? { |prefix| request.path.start_with?(prefix) }
+  controller :root do
+    get :healthz
+
+    get "*path", action: :index, constraints: -> (request) do
+      %w[/api /rails].none? { |prefix| request.path.start_with?(prefix) }
+    end
   end
 
   namespace :api, defaults: { format: :json } do
+    scope :session, controller: :session do
+      patch :geolocation
+    end
+
+    scope :proxy, controller: :proxy do
+      get :google_maps_places_search
+    end
+
     resource :user, controller: :user, only: [:create, :show, :update]
 
     resource :login_links, only: [:create] do
