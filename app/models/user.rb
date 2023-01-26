@@ -15,27 +15,17 @@ class User < ApplicationRecord
   before_validation :clean_username!
   before_validation :ensure_calendar_token!
 
+  # @param email [String]
+  # @return [User]
   def self.find_by_email(email)
     find_by("email ILIKE ?", email)
-  end
-
-  def image_url
-    image.attached? ? UrlHelpers.url_for(image) : gravatar_url
   end
 
   def generate_jwt
     JWT.encode({ id:, exp: 30.days.from_now.to_i }, ENV.fetch("SECRET_KEY_BASE"))
   end
 
-  def calendar_url
-    Service.base_url("calendar", calendar_token)
-  end
-
   private
-
-  def gravatar_url
-    "https://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(email.downcase)}?d=retro"
-  end
 
   def clean_email!
     email&.strip!

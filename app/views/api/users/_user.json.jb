@@ -1,5 +1,5 @@
 {
   id: user.id,
   username: user.username,
-  imageURL: user.image_url,
+  imageURL: user_image_url(user),
 }

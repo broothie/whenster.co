@@ -1,7 +1,7 @@
 class Api::BaseController < ApplicationController
   abstract!
 
-  include Authentication
+  include ApiAuthentication
 
   private
 
