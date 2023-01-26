@@ -1,13 +1,23 @@
 import { Comment, Event, Invite, Post, User } from "./models";
-import { useAppSelector } from "./hooks";
-import _ from "lodash";
+import { useAppDispatch, useAppSelector } from "./hooks";
+import { useEffect } from "react";
+import { fetchUser } from "./store/usersSlice";
 
 export type InvitePredicate = { (invite: Invite): boolean };
 
-export function selectCurrentUser(): User {
-  const user = useAppSelector((state) => state.user.user);
+export function selectCurrentUser(): User | null {
+  return useAppSelector((state) => state.user.user);
+}
 
-  return user!;
+export function selectUser(userID: string): User | null {
+  const user = useAppSelector((state) => state.users[userID]);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchUser(userID));
+  }, []);
+
+  return user;
 }
 
 export function selectEvent(eventID: string): Event {
@@ -52,7 +62,7 @@ export function selectUserInvite(eventID: string, userID: string) {
 
 export function selectCurrentUserInvite(eventID: string) {
   const user = selectCurrentUser();
-  return selectUserInvite(eventID, user.id);
+  return user && selectUserInvite(eventID, user.id);
 }
 
 export function selectCurrentUserInviteIs(
@@ -70,11 +80,11 @@ export function selectCurrentUserIsHost(eventID: string): boolean {
 }
 
 export function selectPosts(eventID: string): Post[] {
-  const posts = useAppSelector((state) => _.values(state.posts));
+  const posts = useAppSelector((state) => Object.values(state.posts));
   return posts.filter((post) => post.eventID === eventID);
 }
 
 export function selectComments(postID: string): Comment[] {
-  const comments = useAppSelector((state) => _.values(state.comments));
+  const comments = useAppSelector((state) => Object.values(state.comments));
   return comments.filter((comment) => comment.postID === postID);
 }

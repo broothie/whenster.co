@@ -4,7 +4,8 @@
   "scripts": {
     "watch": "npm run clean && parcel watch www/index.html --dist-dir public",
     "build": "npm run clean && parcel build www/index.html --dist-dir public",
-    "clean": "rm -rf public/index.* public/logo.*.png .parcel-cache"
+    "clean": "rm -rf public/index.* public/logo.*.png .parcel-cache",
+    "check": "tsc --noEmit"
   },
   "volta": {
     "node": "18.12.1",
@@ -18,8 +19,10 @@
     "@tailwindcss/typography": "^0.5.9",
     "@types/lodash": "^4.14.191",
     "@types/luxon": "^3.2.0",
+    "@types/marked": "^4.0.8",
     "@types/react-dom": "^18.0.10",
     "@types/redux-logger": "^3.0.9",
+    "@types/sanitize-html": "^2.8.0",
     "axios": "^1.2.3",
     "buffer": "^5.7.1",
     "classnames": "^2.3.2",
@@ -38,6 +41,7 @@
     "react-textarea-autosize": "^8.4.0",
     "redux-logger": "^3.0.6",
     "sanitize-html": "^2.8.1",
-    "tailwindcss": "^3.2.4"
+    "tailwindcss": "^3.2.4",
+    "typescript": "^4.9.4"
   }
 }

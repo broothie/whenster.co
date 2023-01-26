@@ -10,10 +10,12 @@ import {
 } from "../../store/eventsSlice";
 import { fetchEventUsers } from "../../store/usersSlice";
 import { emailPattern, onEnterKeyDown } from "../../util";
+import { selectEventInvites } from "../../selectors";
 
 export default function ShowInviteUsers({ event }: { event: Event }) {
   const dispatch = useAppDispatch();
   const toast = useToast();
+  const eventInvites = selectEventInvites(event.id);
   const [query, setQuery] = useState("");
   const [users, setUsers] = useState([] as User[]);
 
@@ -28,7 +30,11 @@ export default function ShowInviteUsers({ event }: { event: Event }) {
     const response = await api.get("/users/search", { params: { query } });
     const users = response.data.users as User[];
 
-    setUsers(_.filter(users, (user) => !event.invites[user.id]));
+    setUsers(
+      users.filter(
+        (user) => !eventInvites.find((invite) => invite.userID === user.id)
+      )
+    );
   }
 
   async function onUserClick(user: User) {

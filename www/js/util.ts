@@ -6,7 +6,7 @@ export const dateTimeLocalFormat = "yyyy-MM-dd'T'HH:mm";
 export const emailPattern = /[\w+-]+@[\w+-]+\.[\w+-]+/;
 
 type ApiError = {
-  errors?: { message: any; name: string }[];
+  errors: { message: any; name: string }[];
 };
 
 export function handleAPIFormError<T>(

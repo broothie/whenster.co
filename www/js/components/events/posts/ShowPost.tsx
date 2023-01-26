@@ -1,17 +1,21 @@
 import { Post } from "../../../models";
-import { useAppDispatch, useAppSelector, useToast } from "../../../hooks";
+import { useAppDispatch, useToast } from "../../../hooks";
 import UserChip from "../../UserChip";
 import { DateTime } from "luxon";
 import { deleteEventPost } from "../../../store/postsSlice";
 import Markdown from "../../Markdown";
-import { selectComments, selectCurrentUser } from "../../../selectors";
+import {
+  selectComments,
+  selectCurrentUser,
+  selectUser,
+} from "../../../selectors";
 import CommentsIndex from "./CommentsIndex";
 import { useState } from "react";
 import Lightbox from "../../Lightbox";
 
 export default function ShowPost({ post }: { post: Post }) {
-  const user = selectCurrentUser();
-  const users = useAppSelector((state) => state.users);
+  const currentUser = selectCurrentUser();
+  const user = selectUser(post.userID);
   const comments = selectComments(post.postID);
   const dispatch = useAppDispatch();
   const toast = useToast();
@@ -42,7 +46,7 @@ export default function ShowPost({ post }: { post: Post }) {
       <div className="flex flex-col gap-y-8">
         <div className="flex flex-col gap-y-2">
           <div className="flex flex-row flex-wrap items-center gap-1">
-            <UserChip user={users[post.userID]} />
+            {user && <UserChip user={user} />}
 
             <div className="flex flex-row gap-1 text-sm text-gray-500">
               <p>·</p>
@@ -58,7 +62,7 @@ export default function ShowPost({ post }: { post: Post }) {
                 Comment
               </p>
 
-              {user.id === post.userID && (
+              {currentUser?.id === post.userID && (
                 <>
                   <p>·</p>
                   <p className="link whitespace-nowrap" onClick={onDeleteClick}>

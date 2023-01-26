@@ -189,7 +189,7 @@ function AttendeeChip({ user, event }: { user: User; event: Event }) {
   const currentUser = selectCurrentUser();
   const currentUserIsHost = selectCurrentUserIsHost(event.id);
 
-  const userIsCurrentUser = user.id === currentUser.id;
+  const userIsCurrentUser = user.id === currentUser?.id;
 
   const invite = selectUserInvite(event.id, user.id)!;
   const userRole = invite.role;

@@ -217,12 +217,12 @@ const eventsSlice = createSlice({
       }
     });
 
-    builder.addCase(updateEventInvite.fulfilled, (state, action) => {
-      const eventID = action.meta.arg.eventID;
-      const invite = action.payload;
-
-      _.merge(state[eventID].invites[invite.userID], invite);
-    });
+    // builder.addCase(updateEventInvite.fulfilled, (state, action) => {
+    //   const eventID = action.meta.arg.eventID;
+    //   const invite = action.payload;
+    //
+    //   _.merge(state[eventID].invites[invite.userID], invite);
+    // });
 
     builder.addCase(updateEventInviteRole.fulfilled, (state, action) => {
       const eventID = action.meta.arg.eventID;

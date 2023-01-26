@@ -50,7 +50,7 @@ export default function Form({
 
   return (
     <div className="flex flex-col space-y-3">
-      {focused && <UserChip user={user} />}
+      {focused && user && <UserChip user={user} />}
 
       <TextareaAutosize
         {...register("body", { required: true })}

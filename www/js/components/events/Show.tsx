@@ -11,7 +11,11 @@ import ShowControls from "./ShowControls";
 import ShowDetails from "./ShowDetails";
 import PostsIndex from "./posts/PostsIndex";
 import FileAttachClickZone from "../FileAttachClickZone";
-import { selectCurrentUserIsHost, selectEvent } from "../../selectors";
+import {
+  selectCurrentUserIsHost,
+  selectEvent,
+  selectEventInvites,
+} from "../../selectors";
 import ToolTip from "../ToolTip";
 
 export default function ShowEvent() {
@@ -20,6 +24,7 @@ export default function ShowEvent() {
   const eventID = params.eventID!;
   const toast = useToast();
   const event = selectEvent(eventID);
+  const eventInvites = selectEventInvites(eventID);
   const userIsHost = selectCurrentUserIsHost(eventID);
 
   useEffect(() => {
@@ -92,7 +97,7 @@ export default function ShowEvent() {
             )}
 
             <div className="block space-y-5 md:hidden">
-              <ShowRSVP event={event} />
+              {eventInvites.length > 0 && <ShowRSVP event={event} />}
             </div>
 
             {event.location && (
@@ -119,7 +124,7 @@ export default function ShowEvent() {
             <div className="sticky top-5 col-span-1 hidden flex-col gap-y-8 md:flex">
               {userIsHost && <ShowControls event={event} />}
 
-              <ShowRSVP event={event} />
+              {eventInvites.length > 0 && <ShowRSVP event={event} />}
 
               {event.location && <ShowLocationMap event={event} />}
 

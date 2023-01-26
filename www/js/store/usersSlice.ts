@@ -5,6 +5,14 @@ import { fetchCurrentUser } from "./userSlice";
 import * as _ from "lodash";
 import { fetchEvent } from "./eventsSlice";
 
+export const fetchUser = createAsyncThunk(
+  "users/fetchUser",
+  async (userID: string) => {
+    const response = await api.get(`/users/${userID}`);
+    return response.data.user as User;
+  }
+);
+
 export const fetchEventUsers = createAsyncThunk(
   "users/fetchEventUsers",
   async (eventID: string) => {
@@ -18,6 +26,11 @@ const usersSlice = createSlice({
   initialState: {} as { [key: string]: User },
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(fetchUser.fulfilled, (state, action) => {
+      const user = action.payload;
+      state[user.id] = user;
+    });
+
     builder.addCase(fetchCurrentUser.fulfilled, (state, action) => {
       const user = action.payload;
       return _.merge({}, state, { [user.id]: user });
