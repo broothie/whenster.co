@@ -10,7 +10,7 @@ export default function ShowLocationMap({ event }: { event: Event }) {
         allowFullScreen
         referrerPolicy="no-referrer-when-downgrade"
         // @ts-ignore
-        src={`https://www.google.com/maps/embed/v1/place?key=${window.googleMapsEmbedKey}&q=${event.locationQuery}`}
+        src={event.googleMapsEmbedURL}
         className="w-full rounded-lg"
       ></iframe>
     </div>

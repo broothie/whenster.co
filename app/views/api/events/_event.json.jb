@@ -11,5 +11,7 @@
     original: file_url(event.header_image, header_image_url(event)),
     size300: file_url(event.header_image.variant(:size_300), header_image_url(event)),
     size1500: file_url(event.header_image.variant(:size_1500), header_image_url(event)),
-  }
+  },
+  googleMapsLocationURL: google_maps_location_url(event),
+  googleMapsEmbedURL: google_maps_embed_url(event),
 }

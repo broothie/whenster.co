@@ -35,4 +35,22 @@ module ViewHelpers
     index = event.id.chars.map(&:ord).sum
     EVENT_HEADER_IMAGE_URLS[index % EVENT_HEADER_IMAGE_URLS.length]
   end
+
+  # @param event [Event]
+  # @return [String]
+  def event_location_query(event)
+    event.place_id? ? "place_id:#{event.place_id}" : event.location
+  end
+
+  # @param event [Event]
+  # @return [String]
+  def google_maps_location_url(event)
+    "https://maps.google.com?q=#{event_location_query(event)}"
+  end
+
+  # @param event [Event]
+  # @return [String]
+  def google_maps_embed_url(event)
+    "https://www.google.com/maps/embed/v1/place?key=#{ENV["GOOGLE_MAPS_EMBED_KEY"]}&q=#{event_location_query(event)}"
+  end
 end

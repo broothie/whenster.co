@@ -16,9 +16,8 @@ export type Event = {
   endAt: string;
   headerImageURLs: { [key: string]: string };
   headerImageID: string;
-  locationQuery: string;
   googleMapsLocationURL: string;
-  defaultHeaderImageURL: string;
+  googleMapsEmbedURL: string;
 };
 
 export type InviteRole = "guest" | "host";
