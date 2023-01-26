@@ -87,36 +87,30 @@ export default function ShowEvent() {
 
             {userIsHost && (
               <div className="block space-y-5 md:hidden">
-                {/*<div className="w-full border-b border-gray-500" />*/}
                 <ShowControls event={event} />
               </div>
             )}
 
             <div className="block space-y-5 md:hidden">
-              {/*<div className="w-full border-b border-gray-500" />*/}
               <ShowRSVP event={event} />
             </div>
 
             {event.location && (
               <div className="block space-y-5 md:hidden">
-                {/*<div className="w-full border-b border-gray-500" />*/}
                 <ShowLocationMap event={event} />
               </div>
             )}
 
             {userIsHost && (
               <div className="block space-y-5 md:hidden">
-                {/*<div className="w-full border-b border-gray-500" />*/}
                 <ShowInviteUsers event={event} />
               </div>
             )}
 
             <div className="block space-y-5 md:hidden">
-              {/*<div className="w-full border-b border-gray-500" />*/}
               <ShowAttendees event={event} />
             </div>
 
-            {/*<div className="w-full border-b border-gray-500" />*/}
             <PostsIndex event={event} />
           </div>
 
