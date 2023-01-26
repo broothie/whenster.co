@@ -53,7 +53,7 @@ export function parameterizeData(
   _isTop = true
 ): { [key: string]: any } {
   if (typeof data !== "object") return { "": data }; // Primitives / catch-all
-  if (typeof data.name === "string") return { "": data }; // File or Blob
+  if (typeof data?.name === "string") return { "": data }; // File or Blob
 
   const result = {} as { [key: string]: any };
   for (const index in data) {

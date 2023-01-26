@@ -54,6 +54,7 @@ export const updateEvent = createAsyncThunk(
         `/events/${eventID}`,
         formDataFrom({ event })
       );
+
       return response.data.event as Event;
     } catch (error: any) {
       if (error.response) {
