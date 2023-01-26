@@ -2,7 +2,7 @@ export type User = {
   id: string;
   username: string;
   email: string;
-  imageURL: string;
+  imageURLs: { [key: string]: string };
   calendarLink: string;
 };
 
@@ -14,6 +14,7 @@ export type Event = {
   placeID: string;
   startAt: string;
   endAt: string;
+  headerImageURLs: { [key: string]: string };
   headerImageID: string;
   locationQuery: string;
   googleMapsLocationURL: string;

@@ -71,7 +71,7 @@ export default function Account() {
             }
           >
             <img
-              src={user?.imageURL}
+              src={user.imageURLs.original}
               alt="Your profile image"
               className="h-24 w-24 rounded-full object-cover"
             />

@@ -1,7 +1,7 @@
 import { useAppDispatch, useToast } from "../../hooks";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
-import { fetchEvent, updateEventHeaderImage } from "../../store/eventsSlice";
+import { fetchEvent, updateEvent } from "../../store/eventsSlice";
 import { DateTime } from "luxon";
 import ShowLocationMap from "./ShowLocationMap";
 import ShowAttendees from "./ShowAttendees";
@@ -31,7 +31,7 @@ export default function ShowEvent() {
     toast.start(id, "Uploading header image", true).catch(console.error);
 
     await dispatch(
-      updateEventHeaderImage({ eventID: event.id, image: files[0] })
+      updateEvent({ eventID: event.id, event: { header_image: files[0] } })
     );
 
     toast.stop(id).catch(console.error);
@@ -72,11 +72,7 @@ export default function ShowEvent() {
             }
           >
             <img
-              src={
-                event?.headerImageID
-                  ? `/images/${event.headerImageID}?variant=large`
-                  : event.defaultHeaderImageURL
-              }
+              src={event.headerImageURLs.size1500}
               alt={`header image for ${event.title}`}
               className="max-h-48 w-full rounded-3xl object-cover md:max-h-96"
             />

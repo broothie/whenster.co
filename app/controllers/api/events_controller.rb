@@ -18,7 +18,7 @@ class Api::EventsController < Api::BaseController
   def update
     @event = Event.find(params[:id])
     @event.assign_attributes(update_params)
-    return unless @event.changed?
+    return unless @event.changed? || @event.header_image.changed?
     return render_errors :bad_request, @event unless @event.valid?
     return render_errors :internal_server_error, @event unless @event.save
   end
@@ -49,6 +49,7 @@ class Api::EventsController < Api::BaseController
       :place_id,
       :start_at,
       :end_at,
+      :header_image,
     )
   end
 end

@@ -3,6 +3,7 @@ import { User } from "../models";
 import api from "../api";
 import axios from "axios";
 import { apiToken } from "../auth";
+import { formDataFrom } from "../util";
 
 export const createUser = createAsyncThunk(
   "user/createUser",
@@ -23,12 +24,7 @@ export const updateUser = createAsyncThunk(
   "user/updateUser",
   async (user: { username?: string; image?: File }, { rejectWithValue }) => {
     try {
-      const data = new FormData();
-      for (const key in user) {
-        data.append(`user[${key}]`, user[key]);
-      }
-
-      const response = await api.patch("/user", data);
+      const response = await api.patch("/user", formDataFrom({ user }));
       return response.data.user;
     } catch (error: any) {
       if (error.response) {

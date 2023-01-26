@@ -7,8 +7,13 @@ class User < ApplicationRecord
     image.variant :thumb, resize_to_limit: [300, 300]
   end
 
-  validates :email, presence: true, uniqueness: true
-  validates :username, presence: true, uniqueness: true
+  validates :username,
+    presence: true,
+    uniqueness: true,
+    length: { minimum: 5 },
+    format: { with: /\A[a-zA-Z\d_.-]+\Z/ }
+
+  validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :calendar_token, presence: true, uniqueness: true
 
   before_validation :clean_email!

@@ -9,6 +9,7 @@ const invitesSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchEvent.fulfilled, (state, action) => {
       action.payload.invites.forEach((invite) => {
+        console.log({ invite });
         state[invite.id] = invite;
       });
     });

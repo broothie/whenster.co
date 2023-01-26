@@ -1,5 +1,8 @@
 {
   id: user.id,
   username: user.username,
-  imageURL: user_image_url(user),
+  imageURLs: {
+    original: file_url(user.image, gravatar_url(user)),
+    thumb: file_url(user.image.variant(:thumb), gravatar_url(user)),
+  }
 }

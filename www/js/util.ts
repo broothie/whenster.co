@@ -37,3 +37,33 @@ export function onEnterKeyDown(run: { (event: KeyboardEvent): void }): {
     }
   };
 }
+
+export function formDataFrom(data: any, _isTop = true): FormData {
+  const formData = new FormData();
+  const result = parameterizeData(data);
+  for (const key in result) {
+    formData.append(key, result[key]);
+  }
+
+  return formData;
+}
+
+export function parameterizeData(
+  data: any,
+  _isTop = true
+): { [key: string]: any } {
+  if (typeof data !== "object") return { "": data }; // Primitives / catch-all
+  if (typeof data.name === "string") return { "": data }; // File or Blob
+
+  const result = {} as { [key: string]: any };
+  for (const index in data) {
+    const prefix = _isTop ? index : `[${index}]`;
+
+    const subResult = parameterizeData(data[index], false);
+    for (const key in subResult) {
+      result[`${prefix}${key}`] = subResult[key];
+    }
+  }
+
+  return result;
+}

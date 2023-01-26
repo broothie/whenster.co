@@ -94,11 +94,7 @@ function Entry({ event }: { event: Event }) {
     <Link to={`/events/${event.id}`}>
       <div className="w-72 space-y-2">
         <img
-          src={
-            event.headerImageID
-              ? `/images/${event.headerImageID}?variant=medium`
-              : event.defaultHeaderImageURL
-          }
+          src={event.headerImageURLs.size300}
           alt={`header image for ${event.title}`}
           className="h-36 w-full rounded-lg object-cover"
         />

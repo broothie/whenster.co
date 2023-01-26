@@ -2,7 +2,13 @@ class Event < ApplicationRecord
   has_many :invites, dependent: :destroy
   has_many :users, through: :invites
 
+  has_one_attached :header_image do |image|
+    image.variant :size_300, resize_to_limit: [300, 300], auto_orient: false
+    image.variant :size_1500, resize_to_limit: [1500, 1500], auto_orient: false
+  end
+
   validates :title, presence: true
+  validates :description, presence: true
   validates :start_at, presence: true
   validates :end_at, presence: true
   validate :start_at_in_future!, on: :create

@@ -3,14 +3,16 @@ import { EmailInvite, Event, Invite, InviteStatus, User } from "../models";
 import api from "../api";
 import * as _ from "lodash";
 import { DateTime } from "luxon";
+import { formDataFrom } from "../util";
 
 export type EventPayload = {
-  title: string;
-  description: string;
-  location: string;
-  place_id: string;
-  start_at: DateTime;
-  end_at: DateTime;
+  title?: string;
+  description?: string;
+  location?: string;
+  place_id?: string;
+  start_at?: DateTime;
+  end_at?: DateTime;
+  header_image?: File;
 };
 
 export type EventResponse = {
@@ -48,7 +50,10 @@ export const updateEvent = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const response = await api.put(`/events/${eventID}`, event);
+      const response = await api.patch(
+        `/events/${eventID}`,
+        formDataFrom({ event })
+      );
       return response.data.event as Event;
     } catch (error: any) {
       if (error.response) {
