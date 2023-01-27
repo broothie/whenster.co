@@ -1,14 +1,8 @@
 module Service
   module_function
 
-  def render?
-    ENV["RENDER"] == "true"
-  end
-
   def env
-    return "local" unless render?
-
-    render_service_name == "whenster-production" ? "production" : "staging"
+    Rails.env.production? ? deploy_env : "local"
   end
 
   def production?
@@ -27,16 +21,8 @@ module Service
     !local?
   end
 
-  def render_service_name
-    ENV["RENDER_SERVICE_NAME"]
-  end
-
-  def render_service_type
-    ENV["RENDER_SERVICE_TYPE"]
-  end
-
-  def service_type_web?
-    render_service_type == "web"
+  def deploy_env
+    ENV["DEPLOY_ENV"]
   end
 
   def base_url(*path_segments)

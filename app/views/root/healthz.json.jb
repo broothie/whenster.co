@@ -1,13 +1,4 @@
 {
   rails_env: Rails.env,
   service_env: Service.env,
-  env: {
-    rails_env: ENV["RAILS_ENV"],
-    is_pull_request: ENV["IS_PULL_REQUEST"],
-    render: ENV["RENDER"],
-    branch: ENV["RENDER_GIT_BRANCH"],
-    commit: ENV["RENDER_GIT_COMMIT"],
-    render_service_id: ENV["RENDER_SERVICE_ID"],
-    render_service_name: ENV["RENDER_SERVICE_NAME"],
-  },
 }
