@@ -13,7 +13,7 @@ module ViewHelpers
   # @param user [User]
   # @return [String]
   def user_calendar_url(user)
-    Service.base_url("calendar", user.calendar_token)
+    Service.base_url("calendar", "#{user.calendar_token}.ics")
   end
 
   # @param user [User]

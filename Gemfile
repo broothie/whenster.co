@@ -57,6 +57,7 @@ end
 
 gem "google-cloud-storage", "~> 1.44", require: false
 gem "httparty", "~> 0.21.0"
+gem "icalendar", "~> 2.8"
 gem "jb", "~> 0.8.0"
 gem "jwt", "~> 2.6"
 gem "pry", "~> 0.14.2"
