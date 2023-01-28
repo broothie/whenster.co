@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   controller :root do
-    get :healthz
+    get :healthz, format: :json
 
     get "*path", action: :index, constraints: -> (request) do
       %w[/api /rails].none? { |prefix| request.path.start_with?(prefix) }
