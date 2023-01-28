@@ -1,0 +1,5 @@
+{
+  id: post.id,
+  inviteID: post.invite_id,
+  body: post.body,
+}

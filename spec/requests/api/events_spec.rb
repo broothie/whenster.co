@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "Api::Events", type: :request do
-  let(:user) { create(:user) }
+  let(:user) { event.users.first }
   let(:event) { create(:event) }
   let(:event_attrs) { attributes_for(:event) }
 

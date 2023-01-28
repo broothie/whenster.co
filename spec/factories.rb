@@ -35,4 +35,9 @@ FactoryBot.define do
       end
     end
   end
+
+  factory :post do
+    invite { create(:invite, :self_invite) }
+    body { Faker::Lorem.paragraph(sentence_count: 3) }
+  end
 end

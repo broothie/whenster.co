@@ -4,11 +4,11 @@ class Api::PostsController < ApplicationController
   end
 
   def create
-    @post = event.posts.new(create_params)
+    @post = invite.posts.new(create_params)
     return render_errors :bad_request, @post unless @post.valid?
     return render_errors :internal_server_error, @post unless @post.save
 
-    render status: :created
+    render :show, status: :created
   end
 
   def show
@@ -16,17 +16,33 @@ class Api::PostsController < ApplicationController
   end
 
   def update
-    @post = event.posts.find(params[:id])
+    @post = invite.posts.find(params[:id])
+    @post.assign_attributes(update_params)
+    return render_errors :bad_request, @post unless @post.valid?
+    return render_errors :internal_server_error, @post unless @post.save
 
+    render :show
   end
 
   def destroy
+    @post = invite.posts.find(params[:id])
+    @post.destroy!
+
+    render :show
   end
 
   private
 
   def create_params
     params.require(:post).permit(:body)
+  end
+
+  def update_params
+    params.require(:post).permit(:body)
+  end
+
+  def invite
+    @invite ||= Invite.find_by(user_id: @current_user_id, event_id: params[:event_id])
   end
 
   def event

@@ -12,11 +12,11 @@ class Api::EventsController < ApplicationController
   end
 
   def show
-    @event = Event.find(params[:id])
+    @event = current_user.events.find(params[:id])
   end
 
   def update
-    @event = Event.find(params[:id])
+    @event = current_user.events.find(params[:id])
     @event.assign_attributes(update_params)
     return unless @event.changed? || @event.header_image.changed?
     return render_errors :bad_request, @event unless @event.valid?
@@ -24,7 +24,7 @@ class Api::EventsController < ApplicationController
   end
 
   def destroy
-    @event = Event.find(params[:id])
+    @event = current_user.events.find(params[:id])
     @event.destroy!
   end
 
