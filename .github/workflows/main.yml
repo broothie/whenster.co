@@ -3,6 +3,8 @@ name: Main
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
 
 env:
   PROJECT_ID: whenster-375808
@@ -37,7 +39,6 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
-          ruby-version: 3.2.0
 
       - name: Set up database schema
         run: bin/rails db:schema:load
@@ -47,6 +48,7 @@ jobs:
 
   deploy:
     needs: test
+    if: github.ref == 'refs/heads/main'
 
     permissions:
       contents: 'read'
@@ -70,11 +72,11 @@ jobs:
           username: _json_key
           password: '${{ secrets.GCP_CREDENTIALS }}'
 
-      - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v1
-
-      - name: Configure Docker
-        run: gcloud auth configure-docker us-central1-docker.pkg.dev
+#      - name: Set up Cloud SDK
+#        uses: google-github-actions/setup-gcloud@v1
+#
+#      - name: Configure Docker
+#        run: gcloud auth configure-docker us-central1-docker.pkg.dev
 
       - name: Build and Push Container
         run: |
