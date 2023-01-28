@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_25_075300) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_28_084424) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -77,6 +77,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_25_075300) do
     t.datetime "updated_at", null: false
     t.index ["token"], name: "index_login_links_on_token", unique: true
     t.index ["user_id"], name: "index_login_links_on_user_id"
+  end
+
+  create_table "posts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "invite_id", null: false
+    t.text "body", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["invite_id"], name: "index_posts_on_invite_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
