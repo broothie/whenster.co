@@ -4,18 +4,12 @@ RSpec.describe ICalendar do
   describe "#to_s" do
     subject(:icalendar) { ICalendar.new(user) }
 
-    let(:user) { create(:user) }
-    let(:event) do
-      create(
-        :event,
-        description: Faker::Lorem.sentence,
-        invites: [{ user:, status: :going }],
-      )
-    end
+    let(:event) { create(:event, description: Faker::Lorem.sentence,) }
+    let(:user) { event.users.first }
 
     it "renders ics" do
       Timecop.freeze do
-        ics = <<~ICS
+        expect(icalendar.to_s).to eq <<~ICS
           BEGIN:VCALENDAR\r
           VERSION:2.0\r
           PRODID:icalendar-ruby\r
@@ -32,8 +26,6 @@ RSpec.describe ICalendar do
           END:VEVENT\r
           END:VCALENDAR\r
         ICS
-
-        expect(icalendar.to_s).to eq ics
       end
     end
   end
