@@ -11,4 +11,15 @@ RSpec.describe "Root", type: :request do
       expect(payload).to include "service_env"
     end
   end
+
+  describe "#calendar" do
+    let(:event) { create(:event) }
+    let(:user) { event.users.first }
+
+    it "returns ics" do
+      get "/calendar/#{user.calendar_token}.ics"
+      expect(response).to be_ok
+      expect(response.body).to include event.title
+    end
+  end
 end

@@ -7,4 +7,10 @@ class RootController < ApplicationController
 
   def healthz
   end
+
+  def calendar
+    user = User.find_by(calendar_token: params[:token])
+
+    render body: ICalendar.new(user), content_type: 'text/calendar'
+  end
 end

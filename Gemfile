@@ -52,11 +52,13 @@ group :test do
   gem "shoulda-matchers", "~> 5.3"
   gem "simplecov", "~> 0.22.0", require: false
   gem "simplecov-cobertura", "~> 2.1", require: false
+  gem "timecop", "~> 0.9.6"
   gem "webmock", "~> 3.18"
 end
 
 gem "google-cloud-storage", "~> 1.44", require: false
 gem "httparty", "~> 0.21.0"
+gem "icalendar", "~> 2.8"
 gem "jb", "~> 0.8.0"
 gem "jwt", "~> 2.6"
 gem "pry", "~> 0.14.2"

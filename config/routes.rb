@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   controller :root do
     get :healthz, format: :json
+    get "/calendar/:token.ics", action: :calendar
 
     get "*path", action: :index, constraints: -> (request) do
       %w[/api /rails].none? { |prefix| request.path.start_with?(prefix) }
