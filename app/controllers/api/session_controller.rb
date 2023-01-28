@@ -1,4 +1,4 @@
-class Api::SessionController < Api::BaseController
+class Api::SessionController < ApplicationController
   include Geolocation
 
   def geolocation

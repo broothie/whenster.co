@@ -1,4 +1,4 @@
-class Api::ProxyController < Api::BaseController
+class Api::ProxyController < ApplicationController
   include Geolocation
 
   def google_maps_places_search

@@ -1,4 +1,4 @@
-class Api::UserController < Api::BaseController
+class Api::UserController < ApplicationController
   skip_before_action :authenticate_user!, only: [:create]
 
   def create
