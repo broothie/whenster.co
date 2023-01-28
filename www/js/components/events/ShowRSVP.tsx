@@ -1,8 +1,8 @@
 import { useAppDispatch, useToast } from "../../hooks";
 import { Event, InviteStatus } from "../../models";
 import classNames from "classnames";
-import { updateEventInvite } from "../../store/eventsSlice";
 import { selectCurrentUserInvite } from "../../selectors";
+import { updateUserInvite } from "../../store/invitesSlice";
 
 type StatusConfig = {
   value: InviteStatus;
@@ -36,7 +36,7 @@ export default function ShowRSVP({ event }: { event: Event }) {
   async function onStatusClick(config: StatusConfig) {
     if (config.value !== invite.status) {
       await dispatch(
-        updateEventInvite({
+        updateUserInvite({
           eventID: event.id,
           invite: { status: config.value },
         })
