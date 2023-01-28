@@ -52,6 +52,7 @@ group :test do
   gem "shoulda-matchers", "~> 5.3"
   gem "simplecov", "~> 0.22.0", require: false
   gem "simplecov-cobertura", "~> 2.1", require: false
+  gem "timecop", "~> 0.9.6"
   gem "webmock", "~> 3.18"
 end
 

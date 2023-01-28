@@ -7,6 +7,8 @@ class Event < ApplicationRecord
     image.variant :size_1500, resize_to_limit: [1500, 1500], auto_orient: false
   end
 
+  accepts_nested_attributes_for :invites
+
   validates :title, presence: true
   validates :description, presence: true
   validates :start_at, presence: true

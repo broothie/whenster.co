@@ -4,11 +4,9 @@ class Api::EventsController < ApplicationController
   end
 
   def create
-    @event = Event.new(create_params)
+    @event = current_user.create_event(create_params)
     return render_errors :bad_request, @event unless @event.valid?
-    return render_errors :internal_server_error, @event unless @event.save
-
-    @event.invites.host.going.create!(user: current_user, inviter: current_user)
+    return render_errors :internal_server_error, @event unless @event.persisted?
 
     render status: :created
   end

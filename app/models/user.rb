@@ -30,6 +30,20 @@ class User < ApplicationRecord
     JWT.encode({ id:, exp: 30.days.from_now.to_i }, ENV.fetch("SECRET_KEY_BASE"))
   end
 
+  # @param event_params [Hash]
+  # @return [Event]
+  def create_event(event_params)
+    Event.create(event_params.merge(
+      timezone:,
+      invites_attributes: [{
+        user: self,
+        inviter: self,
+        role: :host,
+        status: :going,
+      }],
+    ))
+  end
+
   private
 
   def clean_email!

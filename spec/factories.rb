@@ -12,10 +12,16 @@ FactoryBot.define do
 
     transient do
       creator { create(:user) }
+      invites { [] }
     end
 
     after :create do |event, evaluator|
       event.invites.host.going.create!(user: evaluator.creator, inviter: evaluator.creator)
+
+      if evaluator.invites.any?
+        evaluator.invites.each { |invite| invite[:inviter] ||= evaluator.creator }
+        event.invites.create!(evaluator.invites)
+      end
     end
   end
 

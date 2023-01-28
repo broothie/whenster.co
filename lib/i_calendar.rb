@@ -25,12 +25,17 @@ class ICalendar
 
     @user.invites.not_pending.includes(:event).each do |invite|
       calendar.event do |event|
-        event.dtstart = invite.event.start_at
-        event.dtend = invite.event.end_at
+        event.uid = invite.event.id
+        event.dtstart = invite.event.start_at.utc
+        event.dtend = invite.event.end_at.utc
         event.summary = invite.event.title
         event.description = invite.event.description
         event.status = STATUSES[invite.status]
         event.url = Service.base_url("events", invite.event.id)
+
+        if invite.event.header_image.attached?
+          event.image = UrlHelpers.url_for(invite.event.header_image.variant(:size_1500))
+        end
       end
     end
 
