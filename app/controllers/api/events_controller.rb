@@ -1,4 +1,4 @@
-class Api::EventsController < Api::BaseController
+class Api::EventsController < ApplicationController
   def index
     @events = current_user.events.last(20)
   end
@@ -9,6 +9,8 @@ class Api::EventsController < Api::BaseController
     return render_errors :internal_server_error, @event unless @event.save
 
     @event.invites.host.going.create!(user: current_user, inviter: current_user)
+
+    render status: :created
   end
 
   def show
