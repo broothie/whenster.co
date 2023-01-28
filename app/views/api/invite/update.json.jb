@@ -1,0 +1,3 @@
+{
+  invite: render("api/invites/invite", invite: @invite)
+}

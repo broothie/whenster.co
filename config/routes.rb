@@ -24,6 +24,8 @@ Rails.application.routes.draw do
     end
 
     resources :users, only: [:show]
-    resources :events
+    resources :events do
+      resource :invite, controller: :invite, only: [:update]
+    end
   end
 end
