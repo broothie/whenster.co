@@ -46,6 +46,8 @@ jobs:
         run: bin/rspec
 
   deploy:
+    needs: test
+
     permissions:
       contents: 'read'
       id-token: 'write'
