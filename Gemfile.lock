@@ -85,6 +85,7 @@ GEM
     diff-lcs (1.5.0)
     digest-crc (0.6.4)
       rake (>= 12.0.0, < 14.0.0)
+    docile (1.4.0)
     dotenv (2.8.1)
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
@@ -257,6 +258,12 @@ GEM
       faraday (>= 0.17.5, < 3.a)
       jwt (>= 1.5, < 3.0)
       multi_json (~> 1.10)
+    simplecov (0.22.0)
+      docile (~> 1.1)
+      simplecov-html (~> 0.11)
+      simplecov_json_formatter (~> 0.1)
+    simplecov-html (0.12.3)
+    simplecov_json_formatter (0.1.4)
     thor (1.2.1)
     timeout (0.3.1)
     trailblazer-option (0.1.2)
@@ -296,6 +303,7 @@ DEPENDENCIES
   rails (~> 7.0.2, >= 7.0.2.3)
   rspec-rails (~> 6.0)
   shoulda-matchers (~> 5.3)
+  simplecov (~> 0.22.0)
   tzinfo-data
   webmock (~> 3.18)
 
