@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe "Root", type: :request do
-  describe "#healthz" do
+  describe "#info" do
     it "works" do
-      get "/healthz.json"
+      get "/info.json"
       expect(response).to be_ok
 
       payload = JSON.parse(response.body)

@@ -5,7 +5,7 @@ class RootController < ApplicationController
     render file: Rails.root.join("public", "index.html")
   end
 
-  def healthz
+  def info
     TestWorker.perform_async
   end
 
