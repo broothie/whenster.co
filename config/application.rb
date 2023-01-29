@@ -41,5 +41,7 @@ module Whenster
     config.session_store :cookie_store, key: :whenster
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use config.session_store, config.session_options
+
+    config.active_job.queue_adapter = :cloudtasker
   end
 end

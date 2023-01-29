@@ -59,6 +59,7 @@ group :test do
   gem "webmock", "~> 3.18"
 end
 
+gem "cloudtasker", "~> 0.13.0"
 gem "google-cloud-storage", "~> 1.44", require: false
 gem "httparty", "~> 0.21.0"
 gem "icalendar", "~> 2.8"
@@ -67,4 +68,3 @@ gem "jwt", "~> 2.6"
 gem "pry", "~> 0.14.2"
 gem "pry-rails", "~> 0.3.9"
 gem "sorbet-runtime", "~> 0.5.10634"
-
