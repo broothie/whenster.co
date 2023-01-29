@@ -45,6 +45,9 @@ end
 group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+
+  gem "sorbet", "~> 0.5.10634"
+  gem "tapioca", "~> 0.10.5", require: false
 end
 
 group :test do
@@ -63,3 +66,5 @@ gem "jb", "~> 0.8.0"
 gem "jwt", "~> 2.6"
 gem "pry", "~> 0.14.2"
 gem "pry-rails", "~> 0.3.9"
+gem "sorbet-runtime", "~> 0.5.10634"
+
