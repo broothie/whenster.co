@@ -1,6 +1,10 @@
 class Api::EventsController < ApplicationController
   def index
-    @events = current_user.events.last(20)
+    @events = current_user
+      .events
+      .with_attached_header_image
+      .order(start_at: :desc)
+      .limit(params.fetch(:limit, 20))
   end
 
   def invite_search
