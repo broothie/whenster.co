@@ -6,6 +6,7 @@ class RootController < ApplicationController
   end
 
   def healthz
+    TestWorker.perform_async
   end
 
   def calendar
