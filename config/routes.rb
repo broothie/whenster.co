@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   controller :root do
-    get :healthz, format: :json
+    get :info, format: :json
     get "/calendar/:token.ics", action: :calendar
 
     get "*path", action: :index, constraints: -> (request) do
