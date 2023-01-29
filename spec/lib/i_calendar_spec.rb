@@ -4,7 +4,7 @@ RSpec.describe ICalendar do
   describe "#to_s" do
     subject(:icalendar) { ICalendar.new(user) }
 
-    let(:event) { create(:event, description: Faker::Lorem.sentence,) }
+    let(:event) { create(:event, description: Faker::Lorem.sentence) }
     let(:user) { event.users.first }
 
     it "renders ics" do

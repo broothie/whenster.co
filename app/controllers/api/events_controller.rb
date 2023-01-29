@@ -3,6 +3,11 @@ class Api::EventsController < ApplicationController
     @events = current_user.events.last(20)
   end
 
+  def invite_search
+    event = current_user.events.find(params[:id])
+    @users = InviteSearch.search(event, params.fetch(:query).to_s, limit: params.fetch(:limit, 25).to_i)
+  end
+
   def create
     @event = current_user.create_event(create_params)
     return render_errors :bad_request, @event unless @event.valid?
