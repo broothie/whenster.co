@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :user do
-    email { Faker::Internet.email }
+    email { Faker::Internet.safe_email }
     username { Faker::Internet.username(specifier: 5) }
   end
 
@@ -9,6 +9,8 @@ FactoryBot.define do
     description { Faker::Lorem.paragraph(sentence_count: 3) }
     start_at { 1.hour.from_now }
     end_at { 2.hours.from_now }
+    location { Faker::Address.city }
+    place_id { Faker::Internet.base64 }
 
     transient do
       creator { create(:user) }

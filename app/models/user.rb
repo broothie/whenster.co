@@ -1,4 +1,7 @@
+# typed: false
 class User < ApplicationRecord
+  extend T::Sig
+
   has_many :login_links, dependent: :destroy
   has_many :invites, dependent: :destroy
   has_many :events, through: :invites
@@ -21,18 +24,17 @@ class User < ApplicationRecord
   before_validation :clean_username!
   before_validation :ensure_calendar_token!
 
-  # @param email [String]
-  # @return [User]
+  sig {params(email: String).returns(User)}
   def self.find_by_email(email)
     find_by("email ILIKE ?", email)
   end
 
+  sig {returns(String)}
   def generate_jwt
     JWT.encode({ id:, exp: 30.days.from_now.to_i }, ENV.fetch("SECRET_KEY_BASE"))
   end
 
-  # @param event_params [Hash]
-  # @return [Event]
+  sig {params(event_params: T.any(Hash, ActionController::Parameters)).returns(Event)}
   def create_event(event_params)
     Event.create(event_params.merge(
       timezone:,
@@ -47,14 +49,17 @@ class User < ApplicationRecord
 
   private
 
+  sig {void}
   def clean_email!
     email&.strip!
   end
 
+  sig {void}
   def clean_username!
     username&.strip!
   end
 
+  sig {void}
   def ensure_calendar_token!
     self.calendar_token ||= SecureRandom.urlsafe_base64
   end

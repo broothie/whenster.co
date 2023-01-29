@@ -1,14 +1,15 @@
+# typed: true
 class ApplicationController < ActionController::API
+  extend T::Sig
+
   include ApiAuthentication
 
   helper ViewHelpers
 
   private
 
-  # @param status [Symbol]
-  # @param resource [ApplicationRecord]
-  # @param errors [Hash{Symbol=>Array<String>}]
-  def render_errors(status, resource = nil, errors: resource.errors)
+  sig {params(status: Symbol, resource: T.nilable(ApplicationRecord), errors: ActiveModel::Errors).void}
+  def render_errors(status, resource = nil, errors: resource&.errors)
     render status:, json: { errors: }
   end
 end
