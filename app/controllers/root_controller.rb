@@ -6,7 +6,6 @@ class RootController < ApplicationController
   end
 
   def info
-    TestWorker.perform_async
   end
 
   def calendar
