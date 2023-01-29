@@ -3,7 +3,7 @@ require_relative "../../lib/service" # Initializer runs before lib is loaded
 Cloudtasker.configure do |config|
   config.secret = ENV.fetch("SECRET_KEY_BASE")
 
-  if Rails.env.production?
+  if Service.deployed?
     config.processor_host = ENV.fetch("CLOUDTASKER_PROCESSOR_HOST")
     config.gcp_location_id = "us-central1"
     config.gcp_project_id = "whenster-375808"
