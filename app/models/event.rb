@@ -18,6 +18,8 @@ class Event < ApplicationRecord
   validate :start_at_before_end_at!
   validate :editable!
 
+  after_save :set_timezone_from_place_id!, if: -> { place_id? && saved_change_to_place_id? }
+
   def future?
     start_at.future?
   end
@@ -49,5 +51,9 @@ class Event < ApplicationRecord
     return unless end_at
 
     errors.add(:event, "is no longer editable") if past?
+  end
+
+  def set_timezone_from_place_id!
+    SetEventTimezoneFromPlaceId.perform_async(id)
   end
 end
