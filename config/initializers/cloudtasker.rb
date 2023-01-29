@@ -1,5 +1,3 @@
-require_relative "../../lib/service" # Initializer runs before lib is loaded
-
 Cloudtasker.configure do |config|
   config.secret = ENV.fetch("SECRET_KEY_BASE")
 
