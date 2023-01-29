@@ -4,6 +4,7 @@ import api from "../api";
 import { fetchCurrentUser } from "./userSlice";
 import * as _ from "lodash";
 import { fetchEvent } from "./eventsSlice";
+import { createInvite } from "./invitesSlice";
 
 export const fetchUser = createAsyncThunk(
   "users/fetchUser",
@@ -13,6 +14,7 @@ export const fetchUser = createAsyncThunk(
   }
 );
 
+// TODO: figure out if this is necessary
 export const fetchEventUsers = createAsyncThunk(
   "users/fetchEventUsers",
   async (eventID: string) => {
@@ -54,6 +56,11 @@ const usersSlice = createSlice({
         lookup[user.id] = user;
       });
       return lookup;
+    });
+
+    builder.addCase(createInvite.fulfilled, (state, action) => {
+      const user = action.payload.user;
+      state[user.id] = user;
     });
   },
 });

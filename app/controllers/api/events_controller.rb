@@ -4,8 +4,11 @@ class Api::EventsController < ApplicationController
   end
 
   def invite_search
-    event = current_user.events.find(params[:id])
-    @users = InviteSearch.search(event, params.fetch(:query).to_s, limit: params.fetch(:limit, 25).to_i)
+    event = current_user.events.find(params[:event_id])
+
+    @users = InviteSearch
+      .search(event, params.fetch(:query).to_s, limit: params.fetch(:limit, 25).to_i)
+      .with_attached_image
   end
 
   def create
@@ -18,6 +21,8 @@ class Api::EventsController < ApplicationController
 
   def show
     @event = current_user.events.find(params[:id])
+    @invites = @event.invites
+    @users = @event.users.with_attached_image
   end
 
   def update
