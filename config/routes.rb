@@ -25,7 +25,9 @@ Rails.application.routes.draw do
 
     resources :users, only: [:show]
     resources :events do
+      get :invite_search
       resource :invite, controller: :invite, only: [:update]
+      resources :invites, only: [:create, :update]
       resources :posts
     end
   end

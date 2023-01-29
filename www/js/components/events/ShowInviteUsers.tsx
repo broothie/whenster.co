@@ -4,13 +4,11 @@ import api from "../../api";
 import * as _ from "lodash";
 import UserChip from "../UserChip";
 import { useAppDispatch, useToast } from "../../hooks";
-import {
-  createEventEmailInvite,
-  createEventInvite,
-} from "../../store/eventsSlice";
+import { createEventEmailInvite } from "../../store/eventsSlice";
 import { fetchEventUsers } from "../../store/usersSlice";
 import { emailPattern, onEnterKeyDown } from "../../util";
 import { selectEventInvites } from "../../selectors";
+import { createInvite } from "../../store/invitesSlice";
 
 export default function ShowInviteUsers({ event }: { event: Event }) {
   const dispatch = useAppDispatch();
@@ -27,7 +25,9 @@ export default function ShowInviteUsers({ event }: { event: Event }) {
       return null;
     }
 
-    const response = await api.get("/users/search", { params: { query } });
+    const response = await api.get(`/events/${event.id}/invite_search`, {
+      params: { query },
+    });
     const users = response.data.users as User[];
 
     setUsers(
@@ -39,15 +39,15 @@ export default function ShowInviteUsers({ event }: { event: Event }) {
 
   async function onUserClick(user: User) {
     await dispatch(
-      createEventInvite({
+      createInvite({
         eventID: event.id,
-        invite: { userID: user.id, role: "guest" },
+        invite: { user_id: user.id, role: "guest" },
       })
     );
 
     toast(`Invited ${user.username}`).catch(console.error);
     setQuery("");
-    dispatch(fetchEventUsers(event.id));
+    // dispatch(fetchEventUsers(event.id));
 
     return null;
   }

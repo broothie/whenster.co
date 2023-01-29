@@ -9,11 +9,10 @@ import {
 } from "../../selectors";
 import ToolTip from "../ToolTip";
 import { useAppDispatch, useToast } from "../../hooks";
-import { updateEventInviteRole } from "../../store/eventsSlice";
 import { ReactNode, useState } from "react";
+import { updateInvite } from "../../store/invitesSlice";
 
 export default function ShowAttendees({ event }: { event: Event }) {
-  const user = selectCurrentUser();
   const users = selectEventUsers(event.id);
   const userIsHost = selectCurrentUserIsHost(event.id);
 
@@ -199,10 +198,10 @@ function AttendeeChip({ user, event }: { user: User; event: Event }) {
 
   async function promoteToHost() {
     await dispatch(
-      updateEventInviteRole({
+      updateInvite({
         eventID: event.id,
-        userID: user.id,
-        role: "host",
+        inviteID: invite.id,
+        invite: { role: "host" },
       })
     );
 
@@ -211,10 +210,10 @@ function AttendeeChip({ user, event }: { user: User; event: Event }) {
 
   async function demoteToGuest() {
     await dispatch(
-      updateEventInviteRole({
+      updateInvite({
         eventID: event.id,
-        userID: user.id,
-        role: "guest",
+        inviteID: invite.id,
+        invite: { role: "guest" },
       })
     );
 

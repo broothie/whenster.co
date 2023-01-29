@@ -1,0 +1,4 @@
+{
+  invite: render("api/invites/invite", invite: @invite),
+  user: render("api/users/user", user: @user),
+}

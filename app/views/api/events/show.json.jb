@@ -1,5 +1,5 @@
 {
   event: render("api/events/event", event: @event),
-  invites: render(partial: "api/invites/invite", collection: @event.invites, as: :invite),
-  users: render(partial: "api/users/user", collection: @event.users, as: :user),
+  invites: render(partial: "api/invites/invite", collection: @invites, as: :invite),
+  users: render(partial: "api/users/user", collection: @users, as: :user),
 }
