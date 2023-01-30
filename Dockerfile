@@ -23,9 +23,15 @@ ENV RAILS_LOG_TO_STDOUT="1" \
     BUNDLE_WITHOUT="development:test"
 
 COPY . .
+
+# Take advantage of cache to speed up builds
+RUN gem install bundler:2.4.4
+RUN gem install rails:7.0.4.1
+RUN gem install grpc:1.51.0
+
 RUN bundle install
 RUN bundle exec bootsnap precompile --gemfile app/ lib/
 
 COPY --from=frontend /usr/src/app/public public
 
-CMD ["bin/docker-entrypoint.sh"]
+CMD ["bin/rails", "server"]
