@@ -34,11 +34,11 @@ class Api::PostsController < ApplicationController
   private
 
   def create_params
-    params.require(:post).permit(:body)
+    params.require(:post).permit(:body, images: [])
   end
 
   def update_params
-    params.require(:post).permit(:body)
+    params.require(:post).permit(:body, images: [])
   end
 
   def invite

@@ -57,7 +57,8 @@ export function parameterizeData(
 
   const result = {} as { [key: string]: any };
   for (const index in data) {
-    const prefix = _isTop ? index : `[${index}]`;
+    const indexString = Array.isArray(data) ? "" : index.toString();
+    const prefix = _isTop ? indexString : `[${indexString}]`;
 
     const subResult = parameterizeData(data[index], false);
     for (const key in subResult) {

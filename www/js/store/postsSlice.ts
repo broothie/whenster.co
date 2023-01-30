@@ -6,7 +6,13 @@ import { fetchEvent } from "./eventsSlice";
 
 export const createPost = createAsyncThunk(
   "posts/createPost",
-  async ({ eventID, post }: { eventID: string; post: { body: string } }) => {
+  async ({
+    eventID,
+    post,
+  }: {
+    eventID: string;
+    post: { body: string; images: File[] };
+  }) => {
     const response = await api.post(
       `/events/${eventID}/posts`,
       formDataFrom({ post })

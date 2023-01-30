@@ -11,7 +11,7 @@ export default function NewPost({ eventID }: { eventID: string }) {
     if (images.length > 0)
       toast.start(id, "Uploading images...", true).catch(console.error);
 
-    await dispatch(createPost({ eventID, post: { body } }));
+    await dispatch(createPost({ eventID, post: { body, images } }));
 
     if (images.length > 0) toast.stop(id).catch(console.error);
 
