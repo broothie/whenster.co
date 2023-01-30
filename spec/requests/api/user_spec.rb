@@ -13,7 +13,7 @@ RSpec.describe "Api::User", type: :request do
           params: { user: { username: user_attrs.fetch(:username) } }
       }.to change { user.reload.username }
 
-      expect(response).to be_ok
+      expect(response.status).to eq 200
     end
   end
 end

@@ -9,7 +9,7 @@ RSpec.describe "Api::Session", type: :request do
         headers: { Authorization: "Token #{user.generate_jwt}" },
         params: { latitude: 4.5, longitude: 33.9 }
 
-      expect(response).to be_no_content
+      expect(response.status).to eq 204
     end
   end
 end

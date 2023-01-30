@@ -4,7 +4,7 @@ RSpec.describe "Root", type: :request do
   describe "#info" do
     it "works" do
       get "/info.json"
-      expect(response).to be_ok
+      expect(response.status).to eq 200
 
       payload = JSON.parse(response.body)
       expect(payload).to include "rails_env"
@@ -18,7 +18,7 @@ RSpec.describe "Root", type: :request do
 
     it "returns ics" do
       get "/calendar/#{user.calendar_token}.ics"
-      expect(response).to be_ok
+      expect(response.status).to eq 200
       expect(response.body).to include event.title
     end
   end

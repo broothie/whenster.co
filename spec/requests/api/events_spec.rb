@@ -13,14 +13,14 @@ RSpec.describe "Api::Events", type: :request do
           params: { event: event_attrs }
       }.to change { user.events.count }.by(1)
 
-      expect(response).to be_created
+      expect(response.status).to eq 201
     end
   end
 
   describe "#show" do
     it "returns event data" do
       get "/api/events/#{event.id}", headers: { Authorization: "Token #{user.generate_jwt}" }
-      expect(response).to be_ok
+      expect(response.status).to eq 200
       payload = JSON.parse(response.body)
       expect(payload.dig("event", "title")).to eq event.title
     end
@@ -34,7 +34,7 @@ RSpec.describe "Api::Events", type: :request do
           params: { event: event_attrs }
       }.to change { event.reload.slice(:title, :description) }
 
-      expect(response).to be_ok
+      expect(response.status).to eq 200
     end
   end
 
@@ -43,7 +43,7 @@ RSpec.describe "Api::Events", type: :request do
       expect { delete "/api/events/#{event.id}", headers: { Authorization: "Token #{user.generate_jwt}" } }
         .to change { Event.exists?(event.id) }.from(true).to(false)
 
-      expect(response).to be_ok
+      expect(response.status).to eq 200
     end
   end
 end

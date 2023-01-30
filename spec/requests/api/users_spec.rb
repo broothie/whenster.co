@@ -6,7 +6,7 @@ RSpec.describe "Api::Users", type: :request do
 
     it "returns user data" do
       get "/api/users/#{user.id}", headers: { Authorization: "Token #{user.generate_jwt}" }
-      expect(response).to be_ok
+      expect(response.status).to eq 200
 
       payload = JSON.parse(response.body)
       user_data = payload.fetch("user")

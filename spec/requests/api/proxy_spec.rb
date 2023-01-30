@@ -13,7 +13,7 @@ RSpec.describe "Api::Proxy", type: :request do
         headers: { Authorization: "Token #{user.generate_jwt}" },
         params: { input: "bobs on baker" }
 
-      expect(response).to be_ok
+      expect(response.status).to eq 200
       expect(JSON.parse(response.body)).to eq "candidates" => [{ "name" => "Bob's Donuts" }]
     end
   end

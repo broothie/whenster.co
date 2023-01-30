@@ -1,34 +1,25 @@
 class Api::PostsController < ApplicationController
   def index
     @posts = event.posts
-
-    render status: 200
   end
 
   def create
     @post = invite.posts.create!(create_params)
-
     render status: 201
   end
 
   def show
     @post = event.posts.find(params[:id])
-
-    render status: 200
   end
 
   def update
     @post = invite.posts.find(params[:id])
     @post.update!(update_params)
-
-    render status: 200
   end
 
   def destroy
     @post = invite.posts.find(params[:id])
     @post.destroy!
-
-    render status: 200
   end
 
   private
