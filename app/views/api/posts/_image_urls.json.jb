@@ -1,0 +1,4 @@
+{
+  original: url_for(image),
+  size300: url_for(image.variant(:size_300)),
+}

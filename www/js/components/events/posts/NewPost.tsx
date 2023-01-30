@@ -1,6 +1,6 @@
 import { useAppDispatch, useToast } from "../../../hooks";
 import Form, { PostData } from "./Form";
-import { createEventPost } from "../../../store/postsSlice";
+import { createPost } from "../../../store/postsSlice";
 
 export default function NewPost({ eventID }: { eventID: string }) {
   const dispatch = useAppDispatch();
@@ -11,7 +11,7 @@ export default function NewPost({ eventID }: { eventID: string }) {
     if (images.length > 0)
       toast.start(id, "Uploading images...", true).catch(console.error);
 
-    await dispatch(createEventPost({ eventID, body, images }));
+    await dispatch(createPost({ eventID, post: { body } }));
 
     if (images.length > 0) toast.stop(id).catch(console.error);
 

@@ -2,7 +2,7 @@ class Api::EventsController < ApplicationController
   def index
     @events = current_user
       .events
-      .with_attached_header_image
+      .eager_load(index_eager_load)
       .order(start_at: :desc)
       .limit(params.fetch(:limit, 20))
   end
@@ -24,9 +24,10 @@ class Api::EventsController < ApplicationController
   end
 
   def show
-    @event = current_user.events.find(params[:id])
+    @event = current_user.events.eager_load(show_eager_load).find(params[:id])
     @invites = @event.invites
-    @users = @event.users.with_attached_image
+    @users = @event.users
+    @posts = @event.posts
   end
 
   def update
@@ -66,4 +67,20 @@ class Api::EventsController < ApplicationController
       :header_image,
     )
   end
+
+  def index_eager_load
+    { header_image_attachment: { blob: :variant_records } }
+  end
+
+  def show_eager_load
+    [
+      :header_image_attachment,
+      :invites,
+      {
+        users: { image_attachment: { blob: :variant_records } },
+        posts: [:user, :event, { images_attachments: { blob: :variant_records } }],
+      }
+    ]
+  end
 end
+

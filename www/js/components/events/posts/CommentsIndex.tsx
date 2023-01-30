@@ -11,7 +11,7 @@ export default function CommentsIndex({
   post: Post;
   showNew: boolean;
 }) {
-  const comments = selectComments(post.postID);
+  const comments = selectComments(post.id);
 
   return (
     <div className="space-y-5">

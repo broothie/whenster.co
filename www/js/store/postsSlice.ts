@@ -1,39 +1,23 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { Comment, Post } from "../models";
+import { Post } from "../models";
 import api from "../api";
-import * as _ from "lodash";
+import { formDataFrom } from "../util";
+import { fetchEvent } from "./eventsSlice";
 
-export const fetchEventPosts = createAsyncThunk(
-  "posts/fetchEventPosts",
-  async (eventID: string) => {
-    const response = await api.get(`/events/${eventID}/posts`);
-    return response.data as { posts: Post[]; comments: Comment[] };
-  }
-);
+export const createPost = createAsyncThunk(
+  "posts/createPost",
+  async ({ eventID, post }: { eventID: string; post: { body: string } }) => {
+    const response = await api.post(
+      `/events/${eventID}/posts`,
+      formDataFrom({ post })
+    );
 
-export const createEventPost = createAsyncThunk(
-  "posts/createEventPost",
-  async ({
-    eventID,
-    body,
-    images,
-  }: {
-    eventID: string;
-    body: string;
-    images: File[];
-  }) => {
-    const formData = new FormData();
-    formData.append("body", body);
-    formData.append("image_count", images.length.toString());
-    images.forEach((image, index) => formData.append(`image_${index}`, image));
-
-    const response = await api.post(`/events/${eventID}/posts`, formData);
     return response.data.post as Post;
   }
 );
 
-export const deleteEventPost = createAsyncThunk(
-  "posts/deleteEventPost",
+export const deletePost = createAsyncThunk(
+  "posts/deletePost",
   async ({ eventID, postID }: { eventID: string; postID: string }) => {
     return await api.delete(`/events/${eventID}/posts/${postID}`);
   }
@@ -44,23 +28,17 @@ const postsSlice = createSlice({
   initialState: {} as { [key: string]: Post },
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchEventPosts.fulfilled, (state, action) => {
+    builder.addCase(fetchEvent.fulfilled, (state, action) => {
       const posts = action.payload.posts;
-      const lookup = state;
-
-      posts?.forEach((post) => {
-        lookup[post.postID] = post;
-      });
-
-      return lookup;
+      posts.forEach((post) => (state[post.id] = post));
     });
 
-    builder.addCase(createEventPost.fulfilled, (state, action) => {
+    builder.addCase(createPost.fulfilled, (state, action) => {
       const post = action.payload;
-      return _.merge({}, state, { [post.postID]: post });
+      state[post.id] = post;
     });
 
-    builder.addCase(deleteEventPost.fulfilled, (state, action) => {
+    builder.addCase(deletePost.fulfilled, (state, action) => {
       const lookup = state;
       delete lookup[action.meta.arg.postID];
       return lookup;
