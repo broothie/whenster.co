@@ -6,9 +6,7 @@ class Api::PostsController < ApplicationController
   end
 
   def create
-    @post = invite.posts.new(create_params)
-    return render_errors :bad_request, @post unless @post.valid?
-    return render_errors :internal_server_error, @post unless @post.save
+    @post = invite.posts.create!(create_params)
 
     render status: 201
   end
@@ -21,9 +19,7 @@ class Api::PostsController < ApplicationController
 
   def update
     @post = invite.posts.find(params[:id])
-    @post.assign_attributes(update_params)
-    return render_errors :bad_request, @post unless @post.valid?
-    return render_errors :internal_server_error, @post unless @post.save
+    @post.update!(update_params)
 
     render status: 200
   end
