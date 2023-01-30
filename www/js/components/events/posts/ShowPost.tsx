@@ -2,7 +2,7 @@ import { Post } from "../../../models";
 import { useAppDispatch, useToast } from "../../../hooks";
 import UserChip from "../../UserChip";
 import { DateTime } from "luxon";
-import { deleteEventPost } from "../../../store/postsSlice";
+import { deletePost } from "../../../store/postsSlice";
 import Markdown from "../../Markdown";
 import {
   selectComments,
@@ -16,7 +16,7 @@ import Lightbox from "../../Lightbox";
 export default function ShowPost({ post }: { post: Post }) {
   const currentUser = selectCurrentUser();
   const user = selectUser(post.userID);
-  const comments = selectComments(post.postID);
+  const comments = selectComments(post.id);
   const dispatch = useAppDispatch();
   const toast = useToast();
   const [showCommentForm, setShowCommentForm] = useState(false);
@@ -25,9 +25,7 @@ export default function ShowPost({ post }: { post: Post }) {
 
   async function onDeleteClick() {
     if (confirm("Are you sure you want to delete this post?")) {
-      await dispatch(
-        deleteEventPost({ eventID: post.eventID, postID: post.postID })
-      );
+      await dispatch(deletePost({ eventID: post.eventID, postID: post.id }));
 
       toast("Post deleted").catch(console.error);
     }
@@ -37,7 +35,7 @@ export default function ShowPost({ post }: { post: Post }) {
     <div>
       {lightbox && (
         <Lightbox
-          imageURLs={post.imageIDs!.map((imageID) => `/images/${imageID}`)}
+          imageURLs={post.imageURLs.map((imageURLs) => imageURLs.original)}
           startIndex={lightboxIndex}
           close={() => setLightbox(false)}
         />
@@ -75,12 +73,12 @@ export default function ShowPost({ post }: { post: Post }) {
 
           <Markdown markdown={post.body} />
 
-          {post?.imageIDs && post.imageIDs?.length > 0 && (
+          {post.imageURLs.length > 0 && (
             <div className="flex flex-row flex-wrap gap-3">
-              {post.imageIDs.map((imageID, index) => (
+              {post.imageURLs.map((imageURLs, index) => (
                 <img
-                  key={imageID}
-                  src={`/images/${imageID}?variant=medium`}
+                  key={imageURLs.size300}
+                  src={imageURLs.size300}
                   alt={`post image #${index}`}
                   className="object-fit h-44 w-auto cursor-pointer"
                   onClick={() => {

@@ -37,12 +37,12 @@ export type EmailInvite = {
 };
 
 export type Post = {
-  postID: string;
+  id: string;
   eventID: string;
   userID: string;
   body: string;
   createdAt: string;
-  imageIDs?: string[];
+  imageURLs: { [key: string]: string }[];
 };
 
 export type Comment = {

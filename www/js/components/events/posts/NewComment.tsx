@@ -14,14 +14,14 @@ export default function NewComment({
   const dispatch = useAppDispatch();
 
   async function onSubmit({ body, images }: PostData) {
-    const id = `${post.postID}-event-submit`;
+    const id = `${post.id}-event-submit`;
     if (images.length > 0)
       toast.start(id, "Uploading images...", true).catch(console.error);
 
     await dispatch(
       createEventComment({
         eventID: post.eventID,
-        postID: post.postID,
+        postID: post.id,
         body,
         images,
       })

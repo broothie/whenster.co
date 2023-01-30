@@ -1,5 +1,8 @@
 {
   id: post.id,
-  inviteID: post.invite_id,
+  userID: post.user.id,
+  eventID: post.event.id,
   body: post.body,
+  createdAt: post.created_at,
+  imageURLs: render(partial: "api/posts/image_urls", collection: post.images, as: :image),
 }

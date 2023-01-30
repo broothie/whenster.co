@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Comment } from "../models";
 import api from "../api";
 import * as _ from "lodash";
-import { fetchEventPosts } from "./postsSlice";
 
 export const createEventComment = createAsyncThunk(
   "comments/createEventComment",
@@ -43,17 +42,6 @@ const commentsSlice = createSlice({
   initialState: {} as { [key: string]: Comment },
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchEventPosts.fulfilled, (state, action) => {
-      const comments = action.payload.comments;
-      const lookup = state;
-
-      comments?.forEach((comment) => {
-        lookup[comment.commentID] = comment;
-      });
-
-      return lookup;
-    });
-
     builder.addCase(createEventComment.fulfilled, (state, action) => {
       const post = action.payload;
       return _.merge({}, state, { [post.postID]: post });
