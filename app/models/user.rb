@@ -35,8 +35,8 @@ class User < ApplicationRecord
   end
 
   sig {params(event_params: T.any(Hash, ActionController::Parameters)).returns(Event)}
-  def create_event(event_params)
-    Event.create(event_params.merge(
+  def create_event!(event_params)
+    Event.create!(event_params.merge(
       timezone:,
       invites_attributes: [{
         user: self,

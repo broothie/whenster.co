@@ -13,7 +13,7 @@ class Api::LoginLinksController < ApplicationController
 
   def redeem
     login_link = LoginLink.find_by(token: redeem_params[:token])
-    return render_errors :unauthorized, errors: { "login link" => ["expired"] } if login_link.expired?
+    return render status: 401, json: { errors: { "login link" => ["expired"] } } if login_link.expired?
 
     @current_user = login_link.user
     login_link.destroy!

@@ -13,7 +13,7 @@ RSpec.describe "Api::Invite", type: :request do
           params: { invite: { status: :tentative } }
       }.to change { invite.reload.status }
 
-      expect(response).to be_ok
+      expect(response.status).to eq 200
     end
   end
 end
