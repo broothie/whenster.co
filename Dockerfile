@@ -1,12 +1,12 @@
-ARG NODE_VERSION=18.12.1
-FROM node:18.12.1 AS frontend
-
-WORKDIR /usr/src/app
-
-COPY . .
-
-RUN npm install
-RUN npm run build
+#ARG NODE_VERSION=18.12.1
+#FROM node:18.12.1 AS frontend
+#
+#WORKDIR /usr/src/app
+#
+#COPY . .
+#
+#RUN npm install
+#RUN npm run build
 
 FROM ruby:3.2.0
 
@@ -27,11 +27,11 @@ ENV RAILS_LOG_TO_STDOUT="1" \
 # Install application gems
 COPY Gemfile Gemfile.lock ./
 
-# Take advantage of cache to speed up builds
-RUN gem install bundler:2.4.4
-RUN gem install rails:7.0.4.1
-RUN gem install grpc:1.51.0
-RUN bundle install
+## Take advantage of cache to speed up builds
+#RUN gem install bundler:2.4.4
+#RUN gem install rails:7.0.4.1
+#RUN gem install grpc:1.51.0
+#RUN bundle install
 
 # Copy application code
 COPY . .
