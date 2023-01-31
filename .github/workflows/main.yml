@@ -93,7 +93,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          load: true
+          load: true # This (poorly-named) option tells the action to output the right type of docker manifest
           tags: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.IMAGE }}:${{ github.sha }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
