@@ -25,13 +25,13 @@ ENV \
     RAILS_SERVE_STATIC_FILES="true" \
     BUNDLE_WITHOUT="development:test"
 
-# Install application gems
-COPY Gemfile Gemfile.lock ./
-
 # Take advantage of cache to speed up builds
 RUN gem install bundler:2.4.4
 RUN gem install rails:7.0.4.1
 RUN gem install grpc:1.51.0
+
+# Install application gems
+COPY Gemfile Gemfile.lock ./
 RUN bundle install
 
 # Copy application code
