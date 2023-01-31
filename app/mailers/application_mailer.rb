@@ -6,6 +6,8 @@ class ApplicationMailer < ActionMailer::Base
 
   after_action :set_perform_deliveries
 
+  helper ViewHelpers
+
   private
 
   def set_perform_deliveries

@@ -9,6 +9,7 @@ Rails.application.configure do
   }
 
   FactoryBot.find_definitions
+  config.action_mailer.preview_path = "#{Rails.root}/spec/mailers/previews"
 
   # In the development environment your application's code is reloaded any time
   # it changes. This slows down response time but is perfect for development

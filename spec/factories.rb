@@ -28,8 +28,9 @@ FactoryBot.define do
   end
 
   factory :invite do
-    user { create(:user) }
-    event { create(:event) }
+    user
+    event
+    inviter factory: :user
 
     trait :self_invite do
       before :create do |invite|

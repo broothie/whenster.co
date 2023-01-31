@@ -1,10 +1,10 @@
 require "rails_helper"
 
-RSpec.describe LoginLinksMailer, type: :mailer do
+RSpec.describe LoginLinkMailer, type: :mailer do
   describe "#login_link" do
     let(:user) { create(:user) }
     let(:login_link) { user.login_links.create }
-    let(:email) { LoginLinksMailer.with(id: login_link.id).created }
+    let(:email) { LoginLinkMailer.with(id: login_link.id).created }
 
     it "works" do
       expect(email.to).to include user.email

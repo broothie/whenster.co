@@ -67,5 +67,6 @@ gem "jb", "~> 0.8.0"
 gem "jwt", "~> 2.6"
 gem "pry", "~> 0.14.2"
 gem "pry-rails", "~> 0.3.9"
+gem "redcarpet", "~> 3.6"
 gem "sorbet-runtime", "~> 0.5.10634"
 gem "stackdriver", "~> 0.21.1", require: false

@@ -1,4 +1,4 @@
-class LoginLinksMailer < ApplicationMailer
+class LoginLinkMailer < ApplicationMailer
   def created
     @login_link = LoginLink.find(params[:id])
     @user = @login_link.user
