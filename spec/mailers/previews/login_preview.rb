@@ -4,6 +4,6 @@ class LoginPreview < ActionMailer::Preview
     user = User.first_or_create(username: "broothie-preview", email: "adbooth8+preview@gmail.com")
     login_link = user.login_links.create!
 
-    LoginMailer.with(id: login_link.id).login_link
+    LoginLinksMailer.with(id: login_link.id).created
   end
 end
