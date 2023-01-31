@@ -8,4 +8,12 @@ RSpec.describe Invite, type: :model do
     it { should validate_presence_of :event }
     it { should validate_presence_of :inviter }
   end
+
+  describe "emails" do
+    it "sends an invite email" do
+      expect(InviteMailer).to receive(:with).and_call_original
+
+      create(:invite)
+    end
+  end
 end
