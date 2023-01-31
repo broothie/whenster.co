@@ -5,6 +5,35 @@ RSpec.describe "Api::Events", type: :request do
   let(:event) { create(:event) }
   let(:event_attrs) { attributes_for(:event) }
 
+  describe "#index" do
+    let!(:events) { create_list(:invite, 3, user:) }
+
+    it "returns events" do
+      get "/api/events", headers: { Authorization: "Token #{user.generate_jwt}" }
+
+      expect(response.status).to eq 200
+      payload = JSON.parse(response.body)
+      expect(payload.dig("events")).to_not be_empty
+    end
+  end
+
+  describe "#invite_search" do
+    let(:invited_user) { create(:user, username: "user_invited") }
+    let!(:uninvited_user) { create(:user, username: "user_uninvited") }
+    let(:event) { create(:event, invites: [{ user: invited_user }]) }
+
+    it "returns uninvited users" do
+      get "/api/events/#{event.id}/invite_search",
+        headers: { Authorization: "Token #{user.generate_jwt}" },
+        params: { query: "user" }
+
+      expect(response.status).to eq 200
+      payload = JSON.parse(response.body)
+      expect(payload.dig("users").map { |user| user["id"] }).to include uninvited_user.id
+      expect(payload.dig("users").map { |user| user["id"] }).to_not include invited_user.id
+    end
+  end
+
   describe "#create" do
     it "creates an event for the user" do
       expect {
