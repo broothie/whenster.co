@@ -39,6 +39,6 @@ COPY . .
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile --gemfile app/ lib/
 
-COPY --from=frontend /usr/src/app/public public
+#COPY --from=frontend /usr/src/app/public public
 
 CMD ["bin/rails", "server"]
