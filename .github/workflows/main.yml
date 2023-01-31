@@ -11,51 +11,50 @@ env:
   GAR_LOCATION: us-central1
   REPOSITORY: whenster
   IMAGE: whenster
-#  SERVICE: whenster-staging
-  SERVICE: testing-dockerfiles
+  SERVICE: whenster-staging
   REGION: us-central1
 
 jobs:
-#  test:
-#    runs-on: ubuntu-latest
-#    services:
-#      postgres:
-#        image: postgres:14
-#        ports:
-#          - "5432:5432"
-#        env:
-#          POSTGRES_DB: rails_test
-#          POSTGRES_USER: rails
-#          POSTGRES_PASSWORD: password
-#
-#    env:
-#      SECRET_KEY_BASE: asdf
-#      RAILS_ENV: test
-#      DATABASE_URL: "postgres://rails:password@localhost:5432/rails_test"
-#
-#    steps:
-#      - name: Checkout code
-#        uses: actions/checkout@v3
-#
-#      - name: Install Ruby and gems
-#        uses: ruby/setup-ruby@v1
-#        with:
-#          bundler-cache: true
-#
-#      - name: Set up database schema
-#        run: bin/rails db:schema:load
-#
-#      - name: Run tests
-#        run: bin/rspec
-#
-#      - name: Upload to Codecov
-#        uses: codecov/codecov-action@v3
-#        with:
-#          token: ${{ secrets.CODECOV_TOKEN }}
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:14
+        ports:
+          - "5432:5432"
+        env:
+          POSTGRES_DB: rails_test
+          POSTGRES_USER: rails
+          POSTGRES_PASSWORD: password
+
+    env:
+      SECRET_KEY_BASE: asdf
+      RAILS_ENV: test
+      DATABASE_URL: "postgres://rails:password@localhost:5432/rails_test"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Ruby and gems
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Set up database schema
+        run: bin/rails db:schema:load
+
+      - name: Run tests
+        run: bin/rspec
+
+      - name: Upload to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   deploy:
-#    needs: test
-#    if: github.ref == 'refs/heads/main'
+    needs: test
+    if: github.ref == 'refs/heads/main'
 
     permissions:
       contents: 'read'
@@ -65,14 +64,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
-#      - name: Prepare
-#        id: prep
-#        run: |
-#          TAG=$(echo $GITHUB_SHA | head -c7)
-#          IMAGE="${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.IMAGE }}"
-#          echo ::set-output name=tagged_image::${IMAGE}:${TAG}
-#          echo ::set-output name=tag::${TAG}
 
         # https://evilmartians.com/chronicles/build-images-on-github-actions-with-docker-layer-caching
       - name: Set up Docker Buildx
@@ -110,13 +101,13 @@ jobs:
       - name: Push docker image
         run: docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.IMAGE }}:${{ github.sha }}"
 
-#      - name: Deploy to Cloud Run
-#        id: deploy
-#        uses: google-github-actions/deploy-cloudrun@v1
-#        with:
-#          service: ${{ env.SERVICE }}
-#          region: ${{ env.REGION }}
-#          image: ${{ steps.prep.outputs.tagged_image }}
+      - name: Deploy to Cloud Run
+        id: deploy
+        uses: google-github-actions/deploy-cloudrun@v1
+        with:
+          service: ${{ env.SERVICE }}
+          region: ${{ env.REGION }}
+          image: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.IMAGE }}:${{ github.sha }}
 
         # This ugly bit is necessary if you don't want your cache to grow forever
         # until it hits GitHub's limit of 5GB.
