@@ -19,6 +19,6 @@ class LoginLink < ApplicationRecord
   end
 
   def send_email!
-    LoginMailer.with(id:).login_link.deliver_now
+    LoginLinkMailer.with(id:).created.deliver_later
   end
 end

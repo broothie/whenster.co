@@ -1,0 +1,5 @@
+Hey <%= @user.username %> 👋
+
+<%= @inviter.username %> invited you to <%= @event.title %>! <%= Service.base_url("events", @event.id) %>
+
+<%= render "invite_mailer/event_details", event: @event, user: @user %>

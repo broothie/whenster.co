@@ -1,0 +1,13 @@
+What
+<%= event.title %>
+
+When
+<%= event.start_at.in_time_zone(user.timezone || event.timezone).strftime(long_time_format) %>
+
+<% if event.location %>
+Where
+<%= event.location %>
+<% end %>
+
+Details
+<%= event.description %>

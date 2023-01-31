@@ -13,6 +13,19 @@ module ViewHelpers
     "https://images.unsplash.com/photo-1546050680-d4305dcff705?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3432&q=80",
   ]
 
+  def self.markdown_renderer
+    @markdown_renderer ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(escape_html: true), autolink: true)
+  end
+
+  sig {params(markdown: String).returns(String)}
+  def markdown(markdown)
+    ViewHelpers.markdown_renderer.render(markdown)
+  end
+
+  def long_time_format
+    "%A, %B %e, %l%P %Z"
+  end
+
   sig {params(user: User).returns(String)}
   def user_calendar_url(user)
     Service.base_url("calendar", "#{user.calendar_token}.ics")
