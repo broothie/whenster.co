@@ -24,6 +24,7 @@ class Api::EventsController < ApplicationController
     @invites = @event.invites
     @users = @event.users
     @posts = @event.posts
+    @comments = @event.comments
   end
 
   def update
@@ -72,6 +73,7 @@ class Api::EventsController < ApplicationController
       {
         users: { image_attachment: { blob: :variant_records } },
         posts: [:user, :event, { images_attachments: { blob: :variant_records } }],
+        comments: [:user, :event, :post, { images_attachments: { blob: :variant_records } }]
       }
     ]
   end

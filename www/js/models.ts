@@ -46,13 +46,14 @@ export type Post = {
 };
 
 export type Comment = {
-  commentID: string;
+  id: string;
   postID: string;
   eventID: string;
   userID: string;
   body: string;
   createdAt: string;
   imageIDs?: string[];
+  imageURLs: { [key: string]: string }[];
 };
 
 export type Toast = {

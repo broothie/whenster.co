@@ -1,7 +1,7 @@
 import { selectCurrentUser, selectUser } from "../../../selectors";
 import { useAppDispatch, useToast } from "../../../hooks";
 import { Comment } from "../../../models";
-import { deleteEventComment } from "../../../store/commentsSlice";
+import { deleteComment } from "../../../store/commentsSlice";
 import UserChip from "../../UserChip";
 import { DateTime } from "luxon";
 import Markdown from "../../Markdown";
@@ -18,12 +18,7 @@ export default function ShowComment({ comment }: { comment: Comment }) {
 
   async function onDeleteClick() {
     if (confirm("Are you sure you want to delete this comment?")) {
-      await dispatch(
-        deleteEventComment({
-          eventID: comment.eventID,
-          commentID: comment.commentID,
-        })
-      );
+      await dispatch(deleteComment(comment.id));
 
       toast("Comment deleted").catch(console.error);
     }
@@ -33,7 +28,7 @@ export default function ShowComment({ comment }: { comment: Comment }) {
     <div>
       {lightbox && (
         <Lightbox
-          imageURLs={comment.imageIDs!.map((imageID) => `/images/${imageID}`)}
+          imageURLs={comment.imageURLs.map((imageURL) => imageURL.original)}
           startIndex={lightboxIndex}
           close={() => setLightbox(false)}
         />
@@ -66,12 +61,12 @@ export default function ShowComment({ comment }: { comment: Comment }) {
 
         <Markdown markdown={comment.body} />
 
-        {comment?.imageIDs && comment.imageIDs?.length > 0 && (
+        {comment.imageURLs.length > 0 && (
           <div className="flex flex-row flex-wrap gap-3">
-            {comment.imageIDs.map((imageID, index) => (
+            {comment.imageURLs.map((imageURL, index) => (
               <img
-                key={imageID}
-                src={`/images/${imageID}?variant=medium`}
+                key={imageURL.size300}
+                src={imageURL.size300}
                 alt={`comment image #${index}`}
                 className="object-fit h-44 w-auto cursor-pointer"
                 onClick={() => {

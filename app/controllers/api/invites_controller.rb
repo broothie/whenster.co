@@ -1,6 +1,6 @@
 class Api::InvitesController < ApplicationController
   def create
-    @invite = event.invites.create!(create_params.merge(inviter: current_user))
+    @invite = event.invites.create!(create_params)
     @user = @invite.user
 
     render status: 201
@@ -14,7 +14,7 @@ class Api::InvitesController < ApplicationController
   private
 
   def create_params
-    params.require(:invite).permit(:user_id, :role)
+    params.require(:invite).permit(:user_id, :role).merge(inviter: current_user)
   end
 
   def update_params

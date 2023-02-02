@@ -1,0 +1,9 @@
+{
+  id: comment.id,
+  userID: comment.user.id,
+  eventID: comment.event.id,
+  postID: comment.post.id,
+  body: comment.body,
+  createdAt: comment.created_at,
+  imageURLs: render(partial: "api/comments/image_urls", collection: comment.images, as: :image),
+}

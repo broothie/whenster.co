@@ -28,7 +28,9 @@ Rails.application.routes.draw do
       get :invite_search
       resource :invite, controller: :invite, only: [:update]
       resources :invites, only: [:create, :update]
-      resources :posts
+      resources :posts do
+        resources :comments, only: [:create, :update, :destroy], shallow: true
+      end
     end
   end
 end

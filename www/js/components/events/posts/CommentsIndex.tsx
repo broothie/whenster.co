@@ -1,27 +1,21 @@
 import { Post } from "../../../models";
-import NewComment from "./NewComment";
 import { selectComments } from "../../../selectors";
 import ShowComment from "./ShowComment";
-import _ from "lodash";
+import { DateTime } from "luxon";
 
-export default function CommentsIndex({
-  post,
-  showNew,
-}: {
-  post: Post;
-  showNew: boolean;
-}) {
+export default function CommentsIndex({ post }: { post: Post }) {
   const comments = selectComments(post.id);
+
+  const sortedComments = comments.slice().sort((a, b) => {
+    return DateTime.fromISO(a.createdAt).diff(DateTime.fromISO(b.createdAt))
+      .milliseconds;
+  });
 
   return (
     <div className="space-y-5">
-      {_.sortBy(comments, "createdAt").map((comment) => (
-        <ShowComment key={comment.commentID} comment={comment} />
+      {sortedComments.map((comment) => (
+        <ShowComment key={comment.id} comment={comment} />
       ))}
-
-      {(showNew || comments.length > 0) && (
-        <NewComment post={post} focus={showNew} />
-      )}
     </div>
   );
 }
