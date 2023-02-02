@@ -1,39 +1,37 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Comment } from "../models";
 import api from "../api";
-import * as _ from "lodash";
+import { formDataFrom } from "../util";
+import { fetchEvent } from "./eventsSlice";
 
-export const createEventComment = createAsyncThunk(
-  "comments/createEventComment",
+export const createComment = createAsyncThunk(
+  "comments/createComment",
   async ({
     eventID,
     postID,
-    body,
-    images,
+    comment,
   }: {
     eventID: string;
     postID: string;
-    body: string;
-    images: File[];
+    comment: {
+      body: string;
+      images: File[];
+    };
   }) => {
-    const formData = new FormData();
-    formData.append("body", body);
-    formData.append("image_count", images.length.toString());
-    images.forEach((image, index) => formData.append(`image_${index}`, image));
-
     const response = await api.post(
       `/events/${eventID}/posts/${postID}/comments`,
-      formData
+      formDataFrom({ comment })
     );
 
     return response.data.comment as Comment;
   }
 );
 
-export const deleteEventComment = createAsyncThunk(
+export const deleteComment = createAsyncThunk(
   "comments/deleteEventComment",
-  async ({ eventID, commentID }: { eventID: string; commentID: string }) => {
-    return await api.delete(`/events/${eventID}/comments/${commentID}`);
+  async (commentID: string) => {
+    const response = await api.delete(`/comments/${commentID}`);
+    return response.data.comment;
   }
 );
 
@@ -42,15 +40,22 @@ const commentsSlice = createSlice({
   initialState: {} as { [key: string]: Comment },
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(createEventComment.fulfilled, (state, action) => {
-      const post = action.payload;
-      return _.merge({}, state, { [post.postID]: post });
+    builder.addCase(fetchEvent.fulfilled, (state, action) => {
+      const comments = action.payload.comments;
+
+      comments.forEach((comment) => {
+        state[comment.id] = comment;
+      });
     });
 
-    builder.addCase(deleteEventComment.fulfilled, (state, action) => {
-      const lookup = state;
-      delete lookup[action.meta.arg.commentID];
-      return lookup;
+    builder.addCase(createComment.fulfilled, (state, action) => {
+      const comment = action.payload;
+      state[comment.id] = comment;
+    });
+
+    builder.addCase(deleteComment.fulfilled, (state, action) => {
+      const commentID = action.meta.arg;
+      delete state[commentID];
     });
   },
 });

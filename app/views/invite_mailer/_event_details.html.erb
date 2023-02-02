@@ -23,7 +23,7 @@
 
 <div>
   <u>Details</u>
-  <div>
-    <%= markdown(event.description).html_safe %>
+  <div class="prose">
+    <%= markdown event.description %>
   </div>
 </div>

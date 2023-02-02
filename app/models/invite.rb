@@ -3,6 +3,7 @@ class Invite < ApplicationRecord
   belongs_to :event
   belongs_to :inviter, class_name: "User"
   has_many :posts, dependent: :destroy
+  has_many :comments, dependent: :destroy
 
   str_enum :status, %i[pending going tentative declined]
   str_enum :role, %i[guest host]

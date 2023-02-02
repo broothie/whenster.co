@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { EmailInvite, Event, Invite, Post, User } from "../models";
+import { Comment, EmailInvite, Event, Invite, Post, User } from "../models";
 import api from "../api";
 import * as _ from "lodash";
 import { DateTime } from "luxon";
@@ -20,6 +20,7 @@ export type EventResponse = {
   invites: Invite[];
   users: User[];
   posts: Post[];
+  comments: Comment[];
 };
 
 export const createEvent = createAsyncThunk(

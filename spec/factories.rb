@@ -40,7 +40,17 @@ FactoryBot.define do
   end
 
   factory :post do
-    invite { create(:invite, :self_invite) }
+    invite
     body { Faker::Lorem.paragraph(sentence_count: 3) }
+  end
+
+  factory :comment do
+    post
+    invite
+    body { Faker::Lorem.paragraph(sentence_count: 3) }
+
+    before :create do |comment|
+      comment.post.event = comment.invite.event
+    end
   end
 end

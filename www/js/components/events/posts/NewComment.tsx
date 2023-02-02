@@ -1,7 +1,7 @@
 import { Post } from "../../../models";
 import Form, { PostData } from "./Form";
 import { useAppDispatch, useToast } from "../../../hooks";
-import { createEventComment } from "../../../store/commentsSlice";
+import { createComment } from "../../../store/commentsSlice";
 
 export default function NewComment({
   post,
@@ -15,19 +15,21 @@ export default function NewComment({
 
   async function onSubmit({ body, images }: PostData) {
     const id = `${post.id}-event-submit`;
-    if (images.length > 0)
+    if (images.length > 0) {
       toast.start(id, "Uploading images...", true).catch(console.error);
+    }
 
     await dispatch(
-      createEventComment({
+      createComment({
         eventID: post.eventID,
         postID: post.id,
-        body,
-        images,
+        comment: { body, images },
       })
     );
 
-    if (images.length > 0) toast.stop(id).catch(console.error);
+    if (images.length > 0) {
+      toast.stop(id).catch(console.error);
+    }
 
     toast("Comment added").catch(console.error);
   }

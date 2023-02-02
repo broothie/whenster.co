@@ -44,4 +44,4 @@ RUN bundle exec bootsnap precompile --gemfile app/ lib/
 COPY --from=frontend /usr/src/app/public public
 RUN rm -rf www
 
-CMD ["bin/rails", "server"]
+CMD ["bin/docker-entrypoint.sh"]

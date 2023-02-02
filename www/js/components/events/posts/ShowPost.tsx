@@ -12,6 +12,7 @@ import {
 import CommentsIndex from "./CommentsIndex";
 import { useState } from "react";
 import Lightbox from "../../Lightbox";
+import NewComment from "./NewComment";
 
 export default function ShowPost({ post }: { post: Post }) {
   const currentUser = selectCurrentUser();
@@ -91,13 +92,17 @@ export default function ShowPost({ post }: { post: Post }) {
           )}
         </div>
 
-        {comments.length > 0 && (
-          <div className="flex flex-row justify-end">
-            <div className="w-11/12">
-              <CommentsIndex post={post} showNew={showCommentForm} />
-            </div>
+        <div className="flex flex-row justify-end">
+          <div className="w-11/12 space-y-5">
+            {comments.length > 0 && <CommentsIndex post={post} />}
+
+            {showCommentForm && (
+              <div className="w-11/12">
+                <NewComment post={post} />
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
     </div>
   );

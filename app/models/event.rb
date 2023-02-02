@@ -2,6 +2,7 @@ class Event < ApplicationRecord
   has_many :invites, dependent: :destroy
   has_many :users, through: :invites
   has_many :posts, through: :invites
+  has_many :comments, through: :posts
 
   has_one_attached :header_image do |image|
     image.variant :size_300, resize_to_limit: [300, 300], auto_orient: false

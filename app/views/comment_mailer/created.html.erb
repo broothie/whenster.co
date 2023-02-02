@@ -1,0 +1,17 @@
+<div class="space-y-3">
+  <p>Hey there 👋</p>
+
+  <p><%= @user.username %> commented on a post in <%= link_to @event.title, Service.base_url("events", @event.id) %>:</p>
+
+  <div class="px-5">
+    <div class="prose">
+      <%= markdown @comment.body %>
+    </div>
+
+    <div>
+      <% @comment.images.each do |image| %>
+        <%= url_for image.variant(:size_300) %>
+      <% end %>
+    </div>
+  </div>
+</div>

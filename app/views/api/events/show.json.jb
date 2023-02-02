@@ -3,4 +3,5 @@
   invites: render(partial: "api/invites/invite", collection: @invites, as: :invite),
   users: render(partial: "api/users/user", collection: @users, as: :user),
   posts: render(partial: "api/posts/post", collection: @posts, as: :post),
+  comments: render(partial: "api/comments/comment", collection: @comments, as: :comment),
 }

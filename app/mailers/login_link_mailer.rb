@@ -5,7 +5,7 @@ class LoginLinkMailer < ApplicationMailer
 
     mail(
       to: email_address_with_name(@user.email, @user.username),
-      subject: "Whenster login link ✨",
+      subject: "✨ Whenster login link",
     )
   end
 end
