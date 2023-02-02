@@ -17,9 +17,14 @@ module ViewHelpers
     @markdown_renderer ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(escape_html: true), autolink: true)
   end
 
+  sig {returns(String)}
+  def public_css_filename
+    File.basename(Dir.glob("public/index.*.css").first)
+  end
+
   sig {params(markdown: String).returns(String)}
   def markdown(markdown)
-    ViewHelpers.markdown_renderer.render(markdown)
+    ViewHelpers.markdown_renderer.render(markdown).html_safe
   end
 
   def long_time_format

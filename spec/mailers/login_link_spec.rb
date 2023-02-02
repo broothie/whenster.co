@@ -8,12 +8,12 @@ RSpec.describe LoginLinkMailer, type: :mailer do
 
     it "works" do
       expect(email.to).to include user.email
-      expect(email.subject).to eq "Whenster login link ✨"
+      expect(email.subject).to eq "✨ Whenster login link"
 
-      expect(email.html_part.body).to include "Hey #{user.username}"
+      expect(email.html_part.body).to include "Hey #{user.username} 👋"
       expect(email.html_part.body).to include login_link.url
 
-      expect(email.text_part.body).to include "Hey #{user.username}"
+      expect(email.text_part.body).to include "Hey #{user.username} 👋"
       expect(email.text_part.body).to include login_link.url
     end
   end

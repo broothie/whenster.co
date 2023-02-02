@@ -7,7 +7,7 @@ class InviteMailer < ApplicationMailer
 
     mail(
       to: email_address_with_name(@user.email, @user.username),
-      subject: "You're invited to #{@event.title}!",
+      subject: "✉️ #{@inviter.username} invited you to #{@event.title}",
     )
   end
 end

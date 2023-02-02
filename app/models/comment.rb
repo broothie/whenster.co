@@ -10,4 +10,17 @@ class Comment < ApplicationRecord
 
   validates :post, presence: true
   validates :invite, presence: true
+  validate :post_and_invite_share_event!
+
+  after_create :send_created_email!
+
+  private
+
+  def send_created_email!
+    CommentMailer.with(id:).created.deliver_later
+  end
+
+  def post_and_invite_share_event!
+    errors.add(:post, "and invite must share the same event") unless post&.invite&.event_id == invite&.event_id
+  end
 end
