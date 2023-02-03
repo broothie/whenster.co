@@ -51,6 +51,7 @@ group :development do
 end
 
 group :test do
+  gem "fuubar", "~> 2.5"
   gem "rspec-rails", "~> 6.0"
   gem "shoulda-matchers", "~> 5.3"
   gem "simplecov", "~> 0.22.0", require: false
