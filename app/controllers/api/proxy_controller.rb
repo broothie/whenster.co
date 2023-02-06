@@ -1,5 +1,6 @@
 class Api::ProxyController < ApplicationController
   include Geolocation
+  skip_authorization_check
 
   def google_maps_places_search
     query = {

@@ -60,6 +60,7 @@ group :test do
   gem "webmock", "~> 3.18"
 end
 
+gem "cancancan", "~> 3.4"
 gem "cloudtasker", "~> 0.13.0"
 gem "google-cloud-storage", "~> 1.44", require: false
 gem "httparty", "~> 0.21.0"

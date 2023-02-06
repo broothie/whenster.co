@@ -6,6 +6,8 @@ module ApiAuthentication
   included do
     include ActionController::HttpAuthentication::Token::ControllerMethods
 
+    attr_reader :current_user_id
+
     before_action :authenticate_user!
 
     helper_method :signed_in?

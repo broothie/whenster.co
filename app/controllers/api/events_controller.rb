@@ -1,5 +1,9 @@
 class Api::EventsController < ApplicationController
+  load_and_authorize_resource except: [:index, :show]
+
   def index
+    authorize! :read, Event
+
     @events = current_user
       .events
       .eager_load(index_eager_load)
@@ -9,18 +13,22 @@ class Api::EventsController < ApplicationController
 
   def invite_search
     event = current_user.events.find(params[:event_id])
+    authorize! :read, event
+
     @users = InviteSearch
       .search(event, params.fetch(:query).to_s, limit: params.fetch(:limit, 25).to_i)
       .with_attached_image
   end
 
   def create
-    @event = current_user.create_event!(create_params)
+    @event.save!
     render status: 201
   end
 
   def show
-    @event = current_user.events.eager_load(show_eager_load).find(params[:id])
+    @event = Event.eager_load(show_eager_load).find(params[:id])
+    authorize! :read, @event
+
     @invites = @event.invites
     @users = @event.users
     @posts = @event.posts
@@ -28,12 +36,10 @@ class Api::EventsController < ApplicationController
   end
 
   def update
-    @event = current_user.events.find(params[:id])
     @event.update!(update_params)
   end
 
   def destroy
-    @event = current_user.events.find(params[:id])
     @event.destroy!
   end
 
@@ -47,6 +53,14 @@ class Api::EventsController < ApplicationController
       :place_id,
       :start_at,
       :end_at,
+    ).merge(
+      timezone: current_user.timezone,
+      invites_attributes: [{
+        user: current_user,
+        inviter: current_user,
+        role: :host,
+        status: :going,
+      }],
     )
   end
 

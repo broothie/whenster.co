@@ -1,5 +1,6 @@
 class Api::LoginLinksController < ApplicationController
   skip_before_action :authenticate_user!
+  skip_authorization_check
 
   def create
     @email = create_params[:email]

@@ -1,5 +1,6 @@
 class RootController < ApplicationController
   skip_before_action :authenticate_user!
+  skip_authorization_check
 
   def index
     render file: Rails.root.join("public", "index.html")

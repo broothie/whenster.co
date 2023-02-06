@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Api::Invites", type: :request do
   let(:invited_user) { create(:user) }
-  let(:event) { create(:event, invites: [{ user: invited_user }]) }
+  let(:event) { create(:event, invites: [{ user: invited_user, role: :host }]) }
   let(:uninvited_user) { create(:user) }
 
   describe "#create" do
@@ -18,7 +18,7 @@ RSpec.describe "Api::Invites", type: :request do
   end
 
   describe "#update" do
-    let(:invite) { event.invites.find_by(user_id: invited_user.id) }
+    let(:invite) { create(:invite, event:) }
 
     it "updates the invite" do
       expect {

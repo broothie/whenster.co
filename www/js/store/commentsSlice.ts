@@ -28,9 +28,19 @@ export const createComment = createAsyncThunk(
 );
 
 export const deleteComment = createAsyncThunk(
-  "comments/deleteEventComment",
-  async (commentID: string) => {
-    const response = await api.delete(`/comments/${commentID}`);
+  "comments/deleteComment",
+  async ({
+    eventID,
+    postID,
+    commentID,
+  }: {
+    eventID: string;
+    postID: string;
+    commentID: string;
+  }) => {
+    const response = await api.delete(
+      `/events/${eventID}/posts/${postID}/comments/${commentID}`
+    );
     return response.data.comment;
   }
 );
@@ -54,7 +64,7 @@ const commentsSlice = createSlice({
     });
 
     builder.addCase(deleteComment.fulfilled, (state, action) => {
-      const commentID = action.meta.arg;
+      const commentID = action.meta.arg.commentID;
       delete state[commentID];
     });
   },

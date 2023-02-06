@@ -5,4 +5,6 @@ class ApplicationController < ActionController::API
   include ErrorHandling
 
   helper ViewHelpers
+
+  check_authorization
 end
