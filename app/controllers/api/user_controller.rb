@@ -1,5 +1,6 @@
 class Api::UserController < ApplicationController
   skip_before_action :authenticate_user!, only: [:create]
+  skip_authorization_check
 
   def create
     @current_user = User.create!(create_params)

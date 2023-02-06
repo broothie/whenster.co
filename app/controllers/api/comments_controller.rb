@@ -1,16 +1,16 @@
 class Api::CommentsController < ApplicationController
+  load_and_authorize_resource
+
   def create
-    @comment = Comment.create!(create_params)
+    @comment.save!
     render status: 201
   end
 
   def update
-    @comment = Comment.find(params[:id])
     @comment.update!(update_params)
   end
 
   def destroy
-    @comment = Comment.find(params[:id])
     @comment.destroy!
   end
 
@@ -25,6 +25,6 @@ class Api::CommentsController < ApplicationController
   end
 
   def invite
-    @invite ||= Invite.find_by(user_id: @current_user_id, event_id: params[:event_id])
+    @invite ||= Invite.find_by(user_id: current_user_id, event_id: params[:event_id])
   end
 end

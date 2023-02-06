@@ -24,6 +24,8 @@ class User < ApplicationRecord
   before_validation :clean_username!
   before_validation :ensure_calendar_token!
 
+  delegate :can?, :cannot?, to: :ability
+
   sig {params(email: String).returns(User)}
   def self.find_by_email(email)
     find_by("email ILIKE ?", email)
@@ -32,19 +34,6 @@ class User < ApplicationRecord
   sig {returns(String)}
   def generate_jwt
     JWT.encode({ id:, exp: 30.days.from_now.to_i }, ENV.fetch("SECRET_KEY_BASE"))
-  end
-
-  sig {params(event_params: T.any(Hash, ActionController::Parameters)).returns(Event)}
-  def create_event!(event_params)
-    Event.create!(event_params.merge(
-      timezone:,
-      invites_attributes: [{
-        user: self,
-        inviter: self,
-        role: :host,
-        status: :going,
-      }],
-    ))
   end
 
   private
@@ -62,5 +51,10 @@ class User < ApplicationRecord
   sig {void}
   def ensure_calendar_token!
     self.calendar_token ||= SecureRandom.urlsafe_base64
+  end
+
+  sig {returns(Ability)}
+  def ability
+    @ability ||= Ability.new(self)
   end
 end

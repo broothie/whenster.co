@@ -26,7 +26,7 @@ RSpec.describe "Api::Comments", type: :request do
 
     it "updates the comment" do
       expect {
-        patch "/api/comments/#{comment.id}",
+        patch "/api/events/#{event.id}/posts/#{poast.id}/comments/#{comment.id}",
           headers: { Authorization: "Token #{user.generate_jwt}" },
           params: { comment: { body: comment_attrs[:body] } }
       }.to change { comment.reload.body }.from(comment.body).to(comment_attrs[:body])
@@ -40,9 +40,11 @@ RSpec.describe "Api::Comments", type: :request do
   describe "#destroy" do
     let!(:comment) { create(:comment, invite:, post: poast) }
 
-    it "updates the comment" do
-      expect { delete "/api/comments/#{comment.id}", headers: { Authorization: "Token #{user.generate_jwt}" } }
-        .to change { poast.comments.count }.by(-1)
+    it "destroys the comment" do
+      expect {
+        delete "/api/events/#{event.id}/posts/#{poast.id}/comments/#{comment.id}",
+          headers: { Authorization: "Token #{user.generate_jwt}" }
+      }.to change { poast.comments.count }.by(-1)
 
       expect(response.status).to eq 200
     end

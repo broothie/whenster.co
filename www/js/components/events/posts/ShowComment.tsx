@@ -18,7 +18,13 @@ export default function ShowComment({ comment }: { comment: Comment }) {
 
   async function onDeleteClick() {
     if (confirm("Are you sure you want to delete this comment?")) {
-      await dispatch(deleteComment(comment.id));
+      await dispatch(
+        deleteComment({
+          eventID: comment.eventID,
+          postID: comment.postID,
+          commentID: comment.id,
+        })
+      );
 
       toast("Comment deleted").catch(console.error);
     }
