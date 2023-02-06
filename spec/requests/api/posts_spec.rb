@@ -10,7 +10,7 @@ RSpec.describe "Api::Posts", type: :request do
     it "creates a post" do
       expect {
         post "/api/events/#{event.id}/posts",
-          headers: { Authorization: "Token #{user.generate_jwt}" },
+          headers: auth_headers(user),
           params: { post: { body: post_attrs[:body] } }
       }.to change { user.posts.count }
 
@@ -26,7 +26,7 @@ RSpec.describe "Api::Posts", type: :request do
     it "updates a post" do
       expect {
         patch "/api/events/#{event.id}/posts/#{poast.id}",
-          headers: { Authorization: "Token #{user.generate_jwt}" },
+          headers: auth_headers(user),
           params: { post: { body: post_attrs[:body] } }
       }.to change { poast.reload.body }
 

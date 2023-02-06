@@ -9,7 +9,7 @@ RSpec.describe "Api::User", type: :request do
     it "updates the user" do
       expect {
         patch "/api/user",
-          headers: { Authorization: "Token #{user.generate_jwt}" },
+          headers: auth_headers(user),
           params: { user: { username: user_attrs.fetch(:username) } }
       }.to change { user.reload.username }
 

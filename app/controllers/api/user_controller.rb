@@ -1,5 +1,5 @@
 class Api::UserController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:create]
+  skip_before_action :authorize_access_request!, only: [:create]
   skip_authorization_check
 
   def create

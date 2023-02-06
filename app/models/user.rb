@@ -31,11 +31,6 @@ class User < ApplicationRecord
     find_by("email ILIKE ?", email)
   end
 
-  sig {returns(String)}
-  def generate_jwt
-    JWT.encode({ id:, exp: 30.days.from_now.to_i }, ENV.fetch("SECRET_KEY_BASE"))
-  end
-
   private
 
   sig {void}

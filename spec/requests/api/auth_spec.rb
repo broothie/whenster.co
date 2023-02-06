@@ -16,9 +16,10 @@ RSpec.describe "auth", type: :request do
       token = user.login_links.last.token
       post "/api/login_links/redeem", params: { login_link: { token: } }
       expect(response.status).to eq 200
-      api_token = JSON.parse(response.body).fetch("token")
+      payload = JSON.parse(response.body)
+      access_token = payload.dig("login", "access")
 
-      get "/api/user", headers: { Authorization: "Token #{api_token}" }
+      get "/api/user", headers: { Authorization: "Bearer #{access_token}" }
       expect(response.status).to eq 200
       payload = JSON.parse(response.body)
       user_data = payload.fetch("user")
@@ -40,9 +41,9 @@ RSpec.describe "auth", type: :request do
       token = user.login_links.last.token
       post "/api/login_links/redeem", params: { login_link: { token: } }
       expect(response.status).to eq 200
-      api_token = JSON.parse(response.body).fetch("token")
+      access_token = JSON.parse(response.body).dig("login", "access")
 
-      get "/api/user", headers: { Authorization: "Token #{api_token}" }
+      get "/api/user", headers: { Authorization: "Bearer #{access_token}" }
       expect(response.status).to eq 200
       payload = JSON.parse(response.body)
       user_data = payload.fetch("user")

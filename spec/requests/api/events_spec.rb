@@ -9,7 +9,7 @@ RSpec.describe "Api::Events", type: :request do
     let!(:events) { create_list(:invite, 3, user:) }
 
     it "returns events" do
-      get "/api/events", headers: { Authorization: "Token #{user.generate_jwt}" }
+      get "/api/events", headers: auth_headers(user)
 
       expect(response.status).to eq 200
       payload = JSON.parse(response.body)
@@ -24,7 +24,7 @@ RSpec.describe "Api::Events", type: :request do
 
     it "returns uninvited users" do
       get "/api/events/#{event.id}/invite_search",
-        headers: { Authorization: "Token #{user.generate_jwt}" },
+        headers: auth_headers(user),
         params: { query: "user" }
 
       expect(response.status).to eq 200
@@ -38,7 +38,7 @@ RSpec.describe "Api::Events", type: :request do
     it "creates an event for the user" do
       expect {
         post "/api/events",
-          headers: { Authorization: "Token #{user.generate_jwt}" },
+          headers: auth_headers(user),
           params: { event: event_attrs }
       }.to change { user.events.count }.by(1)
 
@@ -48,7 +48,7 @@ RSpec.describe "Api::Events", type: :request do
 
   describe "#show" do
     it "returns event data" do
-      get "/api/events/#{event.id}", headers: { Authorization: "Token #{user.generate_jwt}" }
+      get "/api/events/#{event.id}", headers: auth_headers(user)
       expect(response.status).to eq 200
       payload = JSON.parse(response.body)
       expect(payload.dig("event", "title")).to eq event.title
@@ -59,7 +59,7 @@ RSpec.describe "Api::Events", type: :request do
     it "updates an event" do
       expect {
         patch "/api/events/#{event.id}",
-          headers: { Authorization: "Token #{user.generate_jwt}" },
+          headers: auth_headers(user),
           params: { event: event_attrs }
       }.to change { event.reload.slice(:title, :description) }
 
@@ -69,7 +69,7 @@ RSpec.describe "Api::Events", type: :request do
 
   describe "#destroy" do
     it "destroys the event" do
-      expect { delete "/api/events/#{event.id}", headers: { Authorization: "Token #{user.generate_jwt}" } }
+      expect { delete "/api/events/#{event.id}", headers: auth_headers(user) }
         .to change { Event.exists?(event.id) }.from(true).to(false)
 
       expect(response.status).to eq 200

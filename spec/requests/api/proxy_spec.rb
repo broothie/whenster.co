@@ -10,7 +10,7 @@ RSpec.describe "Api::Proxy", type: :request do
         .to_return(body: { candidates: [{ name: "Bob's Donuts" }] }.to_json)
 
       get "/api/proxy/google_maps_places_search",
-        headers: { Authorization: "Token #{user.generate_jwt}" },
+        headers: auth_headers(user),
         params: { input: "bobs on baker" }
 
       expect(response.status).to eq 200

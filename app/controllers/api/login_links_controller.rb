@@ -1,5 +1,5 @@
 class Api::LoginLinksController < ApplicationController
-  skip_before_action :authenticate_user!
+  skip_before_action :authorize_access_request!
   skip_authorization_check
 
   def create
@@ -8,7 +8,7 @@ class Api::LoginLinksController < ApplicationController
     if user
       user.login_links.create!
     else
-      logger.info "no user found with email #{@email}, still returning OK"
+      logger.info "no user found with provided email, still returning OK"
     end
   end
 
@@ -19,7 +19,8 @@ class Api::LoginLinksController < ApplicationController
     @current_user = login_link.user
     login_link.destroy!
 
-    @token = @current_user.generate_jwt
+    session = JWTSessions::Session.new(payload: { user_id: @current_user.id })
+    @login = session.login
   end
 
   private

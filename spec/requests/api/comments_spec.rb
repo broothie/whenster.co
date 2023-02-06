@@ -11,7 +11,7 @@ RSpec.describe "Api::Comments", type: :request do
     it "creates a comment" do
       expect {
         post "/api/events/#{event.id}/posts/#{poast.id}/comments",
-          headers: { Authorization: "Token #{user.generate_jwt}" },
+          headers: auth_headers(user),
           params: { comment: { body: comment_attrs[:body] } }
       }.to change { poast.comments.count }.by(1)
 
@@ -27,7 +27,7 @@ RSpec.describe "Api::Comments", type: :request do
     it "updates the comment" do
       expect {
         patch "/api/events/#{event.id}/posts/#{poast.id}/comments/#{comment.id}",
-          headers: { Authorization: "Token #{user.generate_jwt}" },
+          headers: auth_headers(user),
           params: { comment: { body: comment_attrs[:body] } }
       }.to change { comment.reload.body }.from(comment.body).to(comment_attrs[:body])
 
@@ -43,7 +43,7 @@ RSpec.describe "Api::Comments", type: :request do
     it "destroys the comment" do
       expect {
         delete "/api/events/#{event.id}/posts/#{poast.id}/comments/#{comment.id}",
-          headers: { Authorization: "Token #{user.generate_jwt}" }
+          headers: auth_headers(user)
       }.to change { poast.comments.count }.by(-1)
 
       expect(response.status).to eq 200

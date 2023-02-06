@@ -23,6 +23,8 @@ Rails.application.routes.draw do
       post :redeem
     end
 
+    resources :refresh, only: [:create]
+
     resources :users, only: [:show]
     resources :events do
       get :invite_search

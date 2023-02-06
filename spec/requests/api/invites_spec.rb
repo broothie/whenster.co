@@ -9,7 +9,7 @@ RSpec.describe "Api::Invites", type: :request do
     it "creates an invite" do
       expect {
         post "/api/events/#{event.id}/invites",
-          headers: { Authorization: "Token #{invited_user.generate_jwt}" },
+          headers: auth_headers(invited_user),
           params: { invite: { user_id: uninvited_user.id } }
       }.to change { uninvited_user.events.count }
 
@@ -23,7 +23,7 @@ RSpec.describe "Api::Invites", type: :request do
     it "updates the invite" do
       expect {
         patch "/api/events/#{event.id}/invites/#{invite.id}",
-          headers: { Authorization: "Token #{invited_user.generate_jwt}" },
+          headers: auth_headers(invited_user),
           params: { invite: { role: :host } }
       }.to change { invite.reload.role }
 

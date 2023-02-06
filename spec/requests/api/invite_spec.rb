@@ -9,7 +9,7 @@ RSpec.describe "Api::Invite", type: :request do
     it "updates the user's invite" do
       expect {
         patch "/api/events/#{event.id}/invite",
-          headers: { Authorization: "Token #{user.generate_jwt}" },
+          headers: auth_headers(user),
           params: { invite: { status: :tentative } }
       }.to change { invite.reload.status }
 
