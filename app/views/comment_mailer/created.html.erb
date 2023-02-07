@@ -1,17 +1,17 @@
-<div class="space-y-3">
+<div class="space-y-3 p-3">
   <p>Hey there 👋</p>
 
-  <p><%= @user.username %> commented on a post in <%= link_to @event.title, Service.base_url("events", @event.id) %>:</p>
+  <p><%= @user.username %> commented on a post in <%= link_to @event.title, Service.base_url("events", @event.id), class: "link" %>:</p>
 
-  <div class="px-5">
+  <div class="rounded bg-gray-50 p-3 w-fit border border-gray-100">
     <div class="prose">
       <%= markdown @comment.body %>
     </div>
+  </div>
 
-    <div>
-      <% @comment.images.each do |image| %>
-        <%= url_for image.variant(:size_300) %>
-      <% end %>
-    </div>
+  <div class="space-3">
+    <% @comment.images.each do |image| %>
+      <%= image_tag image.variant(:size_300) %>
+    <% end %>
   </div>
 </div>
