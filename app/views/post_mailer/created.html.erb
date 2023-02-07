@@ -1,0 +1,17 @@
+<div class="space-y-3 p-3">
+  <p>Hey there 👋</p>
+
+  <p><%= @user.username %> posted in <%= link_to @event.title, Service.base_url("events", @event.id), class: "link" %>:</p>
+
+  <div class="rounded bg-gray-50 p-3 w-fit border border-gray-100">
+    <div class="prose">
+      <%= markdown @post.body %>
+    </div>
+  </div>
+
+  <div class="space-3">
+    <% @post.images.each do |image| %>
+      <%= image_tag image.variant(:size_300) %>
+    <% end %>
+  </div>
+</div>
