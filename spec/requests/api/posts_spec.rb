@@ -25,7 +25,7 @@ RSpec.describe "Api::Posts", type: :request do
 
     it "updates a post" do
       expect {
-        patch "/api/events/#{event.id}/posts/#{poast.id}",
+        patch "/api/posts/#{poast.id}",
           headers: { Authorization: "Token #{user.generate_jwt}" },
           params: { post: { body: post_attrs[:body] } }
       }.to change { poast.reload.body }

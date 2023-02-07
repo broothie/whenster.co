@@ -25,6 +25,10 @@ class Api::CommentsController < ApplicationController
   end
 
   def invite
-    @invite ||= Invite.find_by(user_id: current_user_id, event_id: params[:event_id])
+    @invite ||= Invite.find_by(user_id: current_user_id, event: post.event)
+  end
+
+  def post
+    @post ||= Post.find(params[:post_id])
   end
 end
