@@ -21,7 +21,6 @@ export default function NewComment({
 
     await dispatch(
       createComment({
-        eventID: post.eventID,
         postID: post.id,
         comment: { body, images },
       })

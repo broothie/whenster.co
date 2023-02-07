@@ -24,13 +24,13 @@ Rails.application.routes.draw do
     end
 
     resources :users, only: [:show]
-    resources :events do
+    resources :events, shallow: true do
       get :invite_search
 
       resource :invite, controller: :invite, only: [:update]
-      resources :invites, only: [:create, :update]
-      resources :posts, only: [:create, :update, :destroy] do
-        resources :comments, only: [:create, :update, :destroy]
+      resources :invites, only: [:create, :update], shallow: true
+      resources :posts, only: [:create, :update, :destroy], shallow: true do
+        resources :comments, only: [:create, :update, :destroy], shallow: true
       end
     end
   end

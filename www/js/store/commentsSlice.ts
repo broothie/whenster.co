@@ -7,11 +7,9 @@ import { fetchEvent } from "./eventsSlice";
 export const createComment = createAsyncThunk(
   "comments/createComment",
   async ({
-    eventID,
     postID,
     comment,
   }: {
-    eventID: string;
     postID: string;
     comment: {
       body: string;
@@ -19,7 +17,7 @@ export const createComment = createAsyncThunk(
     };
   }) => {
     const response = await api.post(
-      `/events/${eventID}/posts/${postID}/comments`,
+      `/posts/${postID}/comments`,
       formDataFrom({ comment })
     );
 
@@ -29,18 +27,8 @@ export const createComment = createAsyncThunk(
 
 export const deleteComment = createAsyncThunk(
   "comments/deleteComment",
-  async ({
-    eventID,
-    postID,
-    commentID,
-  }: {
-    eventID: string;
-    postID: string;
-    commentID: string;
-  }) => {
-    const response = await api.delete(
-      `/events/${eventID}/posts/${postID}/comments/${commentID}`
-    );
+  async (commentID: string) => {
+    const response = await api.delete(`/comments/${commentID}`);
     return response.data.comment;
   }
 );
@@ -64,7 +52,7 @@ const commentsSlice = createSlice({
     });
 
     builder.addCase(deleteComment.fulfilled, (state, action) => {
-      const commentID = action.meta.arg.commentID;
+      const commentID = action.meta.arg;
       delete state[commentID];
     });
   },

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { Comment, EmailInvite, Event, Invite, Post, User } from "../models";
+import { Comment, Event, Invite, Post, User } from "../models";
 import api from "../api";
 import * as _ from "lodash";
 import { DateTime } from "luxon";
@@ -81,16 +81,6 @@ export const fetchEvent = createAsyncThunk(
   }
 );
 
-export const createEventEmailInvite = createAsyncThunk(
-  "events/createEventEmailInvite",
-  async ({ eventID, email }: { eventID: string; email: string }) => {
-    const response = await api.post(`/events/${eventID}/invites/email`, {
-      email,
-    });
-    return response.data as { invite?: Invite; emailInvite?: EmailInvite };
-  }
-);
-
 export const deleteEvent = createAsyncThunk(
   "events/deleteEvent",
   async (eventID: string) => {
@@ -127,23 +117,6 @@ const eventsSlice = createSlice({
     builder.addCase(fetchEvent.fulfilled, (state, action) => {
       const event = action.payload.event;
       return _.merge({}, state, { [event.id]: event });
-    });
-
-    builder.addCase(createEventEmailInvite.fulfilled, (state, action) => {
-      const { eventID, email } = action.meta.arg;
-      const { invite, emailInvite } = action.payload;
-
-      if (!!invite) {
-        return _.merge({}, state, {
-          [eventID]: { invites: { [invite.userID]: invite } },
-        });
-      } else if (!!emailInvite) {
-        return _.merge({}, state, {
-          [eventID]: { emailInvites: { [email]: emailInvite } },
-        });
-      } else {
-        throw "no invite data on response";
-      }
     });
 
     builder.addCase(deleteEvent.fulfilled, (state, action) => {

@@ -199,7 +199,6 @@ function AttendeeChip({ user, event }: { user: User; event: Event }) {
   async function promoteToHost() {
     await dispatch(
       updateInvite({
-        eventID: event.id,
         inviteID: invite.id,
         invite: { role: "host" },
       })
@@ -211,7 +210,6 @@ function AttendeeChip({ user, event }: { user: User; event: Event }) {
   async function demoteToGuest() {
     await dispatch(
       updateInvite({
-        eventID: event.id,
         inviteID: invite.id,
         invite: { role: "guest" },
       })
