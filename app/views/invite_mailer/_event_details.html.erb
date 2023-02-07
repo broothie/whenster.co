@@ -1,29 +1,27 @@
 <div>
-  <u>What</u>
-  <br/>
-  <strong><%= event.title %></strong>
+  <p class="light font-bold">What</p>
+  <p class="text-xl"><%= event.title %></p>
 </div>
 <br/>
 
 <div>
-  <u>When</u>
-  <br/>
-  <strong><%= event.start_at.in_time_zone(user.timezone || event.timezone).strftime(long_time_format) %></strong>
+  <p class="light font-bold">When</p>
+  <p class="text-xl"><%= event.start_at.in_time_zone(user.timezone || event.timezone).strftime(long_time_format) %></p>
 </div>
 <br/>
 
 <% if event.location %>
   <div>
-    <u>Where</u>
-    <br/>
-    <strong><%= link_to event.location, google_maps_location_url(event) %></strong>
+    <p class="light font-bold">Where</p>
+    <p class="text-xl"><%= link_to event.location, google_maps_location_url(event), class: "link" %></p>
   </div>
   <br/>
 <% end %>
 
 <div>
-  <u>Details</u>
-  <div class="prose">
+  <p class="light font-bold">Details</p>
+
+  <div class="prose text-xl">
     <%= markdown event.description %>
   </div>
 </div>

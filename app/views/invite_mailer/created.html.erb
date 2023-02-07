@@ -1,5 +1,7 @@
-<p>Hey <%= @user.username %> 👋</p>
+<div class="space-y-3 p-3">
+  <p>Hey <%= @user.username %> 👋</p>
 
-<p><%= @inviter.username %> invited you to <%= link_to @event.title, Service.base_url("events", @event.id) %>!</p>
+  <p><%= @inviter.username %> invited you to <%= link_to @event.title, Service.base_url("events", @event.id), class: "link" %>!</p>
 
-<%= render "invite_mailer/event_details", event: @event, user: @user %>
+  <%= render "invite_mailer/event_details", event: @event, user: @user %>
+</div>
