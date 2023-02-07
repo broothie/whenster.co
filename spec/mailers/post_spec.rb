@@ -4,10 +4,11 @@ RSpec.describe PostMailer, type: :mailer do
   describe "#created" do
     let(:post) { create(:post) }
     let(:event) { post.event }
+    let!(:other_invite) { create(:invite, event:) }
     let(:email) { PostMailer.with(id: post.id).created }
 
     it "works" do
-      expect(email.bcc).to include event.users.first.email
+      expect(email.bcc).to include other_invite.user.email
       expect(email.subject).to eq "📢 #{post.user.username} posted in #{event.title}"
 
       expect(email.html_part.body).to include "Hey there 👋"
