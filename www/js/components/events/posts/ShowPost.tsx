@@ -26,7 +26,7 @@ export default function ShowPost({ post }: { post: Post }) {
 
   async function onDeleteClick() {
     if (confirm("Are you sure you want to delete this post?")) {
-      await dispatch(deletePost({ eventID: post.eventID, postID: post.id }));
+      await dispatch(deletePost(post.id));
 
       toast("Post deleted").catch(console.error);
     }

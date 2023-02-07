@@ -14,7 +14,7 @@ export function selectUser(userID: string): User | null {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchUser(userID));
+    if (!user) dispatch(fetchUser(userID));
   }, []);
 
   return user;

@@ -4,9 +4,7 @@ import api from "../../api";
 import * as _ from "lodash";
 import UserChip from "../UserChip";
 import { useAppDispatch, useToast } from "../../hooks";
-import { createEventEmailInvite } from "../../store/eventsSlice";
-import { fetchEventUsers } from "../../store/usersSlice";
-import { emailPattern, onEnterKeyDown } from "../../util";
+import { onEnterKeyDown } from "../../util";
 import { selectEventInvites } from "../../selectors";
 import { createInvite } from "../../store/invitesSlice";
 
@@ -17,7 +15,7 @@ export default function ShowInviteUsers({ event }: { event: Event }) {
   const [query, setQuery] = useState("");
   const [users, setUsers] = useState([] as User[]);
 
-  const isEmail = emailPattern.test(query);
+  // const isEmail = emailPattern.test(query);
 
   async function searchForUser(query: string) {
     if (!query) {
@@ -47,28 +45,13 @@ export default function ShowInviteUsers({ event }: { event: Event }) {
 
     toast(`Invited ${user.username}`).catch(console.error);
     setQuery("");
-    // dispatch(fetchEventUsers(event.id));
-
-    return null;
-  }
-
-  async function onEmailInviteClick() {
-    await dispatch(createEventEmailInvite({ eventID: event.id, email: query }));
-
-    toast(`Invited ${query} via email`).catch(console.error);
-    setQuery("");
-    dispatch(fetchEventUsers(event.id));
 
     return null;
   }
 
   async function onEnter() {
-    if (isEmail) {
-      await onEmailInviteClick();
-    } else {
-      if (users.length > 0) {
-        await onUserClick(users[0]);
-      }
+    if (users.length > 0) {
+      await onUserClick(users[0]);
     }
   }
 
@@ -95,29 +78,18 @@ export default function ShowInviteUsers({ event }: { event: Event }) {
           onKeyDown={onEnterKeyDown(onEnter)}
         />
 
-        {isEmail ? (
-          <div
-            className="b-on-w absolute z-10 cursor-pointer rounded border border-gray-500 p-3"
-            onClick={onEmailInviteClick}
-          >
-            <p className="link">
-              Invite <span className="link font-medium">{query}</span> via email
-            </p>
+        {users.length > 0 && (
+          <div className="b-on-w absolute z-10 flex max-w-md flex-row flex-wrap gap-1 rounded border border-gray-500 p-3">
+            {users.map((user) => (
+              <div
+                key={user.id}
+                onClick={() => onUserClick(user)}
+                className="cursor-pointer"
+              >
+                <UserChip user={user} />
+              </div>
+            ))}
           </div>
-        ) : (
-          users.length > 0 && (
-            <div className="b-on-w absolute z-10 flex max-w-md flex-row flex-wrap gap-1 rounded border border-gray-500 p-3">
-              {users.map((user) => (
-                <div
-                  key={user.id}
-                  onClick={() => onUserClick(user)}
-                  className="cursor-pointer"
-                >
-                  <UserChip user={user} />
-                </div>
-              ))}
-            </div>
-          )
         )}
       </div>
     </div>

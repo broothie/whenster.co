@@ -24,8 +24,8 @@ export const createPost = createAsyncThunk(
 
 export const deletePost = createAsyncThunk(
   "posts/deletePost",
-  async ({ eventID, postID }: { eventID: string; postID: string }) => {
-    const response = await api.delete(`/events/${eventID}/posts/${postID}`);
+  async (postID: string) => {
+    const response = await api.delete(`/posts/${postID}`);
     return response.data.post as Post;
   }
 );
@@ -46,7 +46,8 @@ const postsSlice = createSlice({
     });
 
     builder.addCase(deletePost.fulfilled, (state, action) => {
-      delete state[action.meta.arg.postID];
+      const postID = action.meta.arg;
+      delete state[postID];
     });
   },
 });

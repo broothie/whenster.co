@@ -29,21 +29,16 @@ export const updateInvite = createAsyncThunk(
   "invites/updateInvite",
   async (
     {
-      eventID,
       inviteID,
       invite,
     }: {
-      eventID: string;
       inviteID: string;
       invite: { role: InviteRole };
     },
     { rejectWithValue }
   ) => {
     try {
-      const response = await api.patch(
-        `/events/${eventID}/invites/${inviteID}`,
-        { invite }
-      );
+      const response = await api.patch(`/invites/${inviteID}`, { invite });
 
       return response.data.invite as Invite;
     } catch (error: any) {
