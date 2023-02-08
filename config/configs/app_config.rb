@@ -1,3 +1,4 @@
+# typed: false
 class AppConfig < Anyway::Config
   extend T::Sig
   include Singleton
