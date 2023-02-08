@@ -1,0 +1,13 @@
+development:
+  deploy_env: local
+  secret: fake-secret
+  port: 3000
+  hostname: localhost
+
+test:
+  deploy_env: local
+  secret: fake-secret
+  port: 3000
+  hostname: localhost
+  google_maps_api_key: fake-google-maps-api-key
+  google_maps_embed_key: fake-google-maps-embed-key

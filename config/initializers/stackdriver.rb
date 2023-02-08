@@ -1,1 +1,1 @@
-require "stackdriver" if Service.deployed?
+require "stackdriver" if AppConfig.deployed?

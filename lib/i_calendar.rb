@@ -31,7 +31,7 @@ class ICalendar
         event.summary = invite.event.title
         event.description = invite.event.description
         event.status = STATUSES[invite.status]
-        event.url = Service.base_url("events", invite.event.id)
+        event.url = AppConfig.base_url("events", invite.event.id)
 
         if invite.event.header_image.attached?
           event.image = UrlHelpers.url_for(invite.event.header_image.variant(:size_1500))

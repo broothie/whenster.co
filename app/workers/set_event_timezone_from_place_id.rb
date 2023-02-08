@@ -18,7 +18,7 @@ class SetEventTimezoneFromPlaceId
     return nil unless @event.place_id?
 
     @place_details_response ||= HTTParty.get("https://maps.googleapis.com/maps/api/place/details/json", query: {
-      key: ENV.fetch("GOOGLE_MAPS_API_KEY"),
+      key: AppConfig.google_maps_api_key,
       place_id: @event.place_id,
       fields: "geometry",
     })
@@ -38,7 +38,7 @@ class SetEventTimezoneFromPlaceId
     return nil unless latlng
 
     @timezone_response ||= HTTParty.get("https://maps.googleapis.com/maps/api/timezone/json", query: {
-      key: ENV.fetch("GOOGLE_MAPS_API_KEY"),
+      key: AppConfig.google_maps_api_key,
       location: "#{latlng["lat"]},#{latlng["lng"]}",
       timestamp: Time.now.to_i,
     })

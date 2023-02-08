@@ -25,6 +25,11 @@ module ViewHelpers
     File.basename(filepath)
   end
 
+  sig {params(path_segments: String).returns(String)}
+  def base_url(*path_segments)
+    AppConfig.base_url(*path_segments)
+  end
+
   sig {params(markdown: String).returns(String)}
   def markdown(markdown)
     ViewHelpers.markdown_renderer.render(markdown).html_safe
@@ -36,7 +41,7 @@ module ViewHelpers
 
   sig {params(user: User).returns(String)}
   def user_calendar_url(user)
-    Service.base_url("calendar", "#{user.calendar_token}.ics")
+    base_url("calendar", "#{user.calendar_token}.ics")
   end
 
   sig {params(user: User).returns(String)}
@@ -67,6 +72,6 @@ module ViewHelpers
 
   sig {params(event: Event).returns(String)}
   def google_maps_embed_url(event)
-    "https://www.google.com/maps/embed/v1/place?key=#{ENV["GOOGLE_MAPS_EMBED_KEY"]}&q=#{event_location_query(event)}"
+    "https://www.google.com/maps/embed/v1/place?key=#{AppConfig.google_maps_embed_key}&q=#{event_location_query(event)}"
   end
 end

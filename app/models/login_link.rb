@@ -5,7 +5,7 @@ class LoginLink < ApplicationRecord
   after_create :send_email!
 
   def url
-    Service.base_url("login", token)
+    AppConfig.base_url("login", token)
   end
 
   def expired?

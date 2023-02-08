@@ -1,6 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  EMAIL_PREFIX_ALLOWLIST = ENV.fetch("EMAIL_PREFIX_ALLOWLIST", "").split(/\s+/).freeze
-
   default from: email_address_with_name("hello@whenster.co", "whenster")
   layout "mailer"
 
@@ -15,10 +13,11 @@ class ApplicationMailer < ActionMailer::Base
   end
 
   def perform_deliveries?
-    return true if Service.production?
+    return false if Rails.env.test?
+    return true if AppConfig.production?
 
     ((mail.to || []) + (mail.bcc || [])).all? do |email|
-      EMAIL_PREFIX_ALLOWLIST.any? { |prefix| email.downcase.start_with?(prefix.downcase) }
+      AppConfig.email_prefix_allowlist.any? { |prefix| email.downcase.start_with?(prefix.downcase) }
     end
   end
 end

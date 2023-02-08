@@ -14,7 +14,7 @@ RSpec.describe PostMailer, type: :mailer do
       expect(email.html_part.body).to include "Hey there 👋"
       expect(email.html_part.body).to include "#{post.user.username} posted in"
       expect(email.html_part.body).to include event.title
-      expect(email.html_part.body).to include Service.base_url("events", event.id)
+      expect(email.html_part.body).to include AppConfig.base_url("events", event.id)
 
       expect(email.text_part.body).to include "Hey there 👋"
       expect(email.text_part.body).to include "#{post.user.username} posted in #{event.title}"
