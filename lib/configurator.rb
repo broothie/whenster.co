@@ -20,7 +20,7 @@ module Configurator
       value =
         if ENV.key?(env_name)
           if type.is_a?(Array)
-            ENV[env_name].split(/\s*,\s*/).map { |element| method(type.first.to_s).call(element) }
+            ENV.fetch(env_name, "").split(/\s*,\s*/).map { |element| method(type.first.to_s).call(element) }
           else
             method(type.to_s).call(ENV[env_name])
           end
