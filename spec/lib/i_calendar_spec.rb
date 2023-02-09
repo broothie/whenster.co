@@ -22,7 +22,7 @@ RSpec.describe ICalendar do
           DTEND:#{event.end_at.strftime(ICalendar::TIMESTAMP_FORMAT)}\r
           DESCRIPTION:#{event.description}\r
           SUMMARY:#{event.title}\r
-          URL:#{Service.base_url("events", event.id)}\r
+          URL:#{Config.base_url("events", event.id)}\r
           END:VEVENT\r
           END:VCALENDAR\r
         ICS

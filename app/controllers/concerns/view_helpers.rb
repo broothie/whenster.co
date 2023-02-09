@@ -13,6 +13,8 @@ module ViewHelpers
     "https://images.unsplash.com/photo-1546050680-d4305dcff705?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3432&q=80",
   ]
 
+  delegate :base_url, to: Config
+
   def self.markdown_renderer
     @markdown_renderer ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(escape_html: true), autolink: true)
   end
@@ -36,7 +38,7 @@ module ViewHelpers
 
   sig {params(user: User).returns(String)}
   def user_calendar_url(user)
-    Service.base_url("calendar", "#{user.calendar_token}.ics")
+    base_url("calendar", "#{user.calendar_token}.ics")
   end
 
   sig {params(user: User).returns(String)}
@@ -67,6 +69,6 @@ module ViewHelpers
 
   sig {params(event: Event).returns(String)}
   def google_maps_embed_url(event)
-    "https://www.google.com/maps/embed/v1/place?key=#{ENV["GOOGLE_MAPS_EMBED_KEY"]}&q=#{event_location_query(event)}"
+    "https://www.google.com/maps/embed/v1/place?key=#{Config.google_maps_embed_key}&q=#{event_location_query(event)}"
   end
 end

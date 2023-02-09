@@ -15,11 +15,11 @@ RSpec.describe InviteMailer, type: :mailer do
       expect(email.html_part.body).to include "Hey #{user.username} 👋"
       expect(email.html_part.body).to include "#{inviter.username} invited you to"
       expect(email.html_part.body).to include event.title
-      expect(email.html_part.body).to include Service.base_url("events", event.id)
+      expect(email.html_part.body).to include Config.base_url("events", event.id)
 
       expect(email.text_part.body).to include "Hey #{user.username} 👋"
       expect(email.text_part.body).to include "#{inviter.username} invited you to #{event.title}!"
-      expect(email.text_part.body).to include Service.base_url("events", event.id)
+      expect(email.text_part.body).to include Config.base_url("events", event.id)
     end
   end
 end

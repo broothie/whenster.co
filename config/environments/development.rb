@@ -4,8 +4,8 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   config.action_mailer.default_url_options = {
-    host: ENV.fetch("HOSTNAME", "localhost"),
-    port: ENV.fetch("PORT", 3000)
+    host: Config.hostname,
+    port: Config.port,
   }
 
   FactoryBot.find_definitions
@@ -38,7 +38,7 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
-  config.active_storage.service = ENV.key?("GCLOUD_KEY_FILE") ? :google_development : :local
+  config.active_storage.service = Config.gcloud_key_file? ? :google_development : :local
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
