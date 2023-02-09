@@ -20,7 +20,7 @@ module Configurator
       value =
         if ENV.key?(env_name)
           if type.is_a?(Array)
-            ENV.fetch(env_name, "").split(/\s*,\s*/).map { |element| method(type.first.to_s).call(element) }
+            ENV.fetch(env_name).split(/\s*,\s*/).map { |element| method(type.first.to_s).call(element) }
           else
             method(type.to_s).call(ENV[env_name])
           end
@@ -29,6 +29,8 @@ module Configurator
         end
 
       value = value.call if value.respond_to?(:call)
+      value = [] if type.is_a?(Array) && value.nil?
+
       is_required = required.is_a?(Array) ? required.include?(Rails.env.to_sym) : required
       raise "missing required config '#{env_name}'" if is_required && value.blank?
 
