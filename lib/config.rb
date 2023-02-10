@@ -15,7 +15,6 @@ class Config
   config :gcloud_key_file
 
   with_options required: [:production] do
-    config :secret, default: { development: "fake-secret", test: "fake-secret" }
     config :deploy_env, default: { development: "local", test: "local" }
     config :hostname, default: { development: "localhost", test: "localhost" }
 
@@ -46,6 +45,11 @@ class Config
   sig {returns(T::Boolean)}
   def deployed?
     !local?
+  end
+
+  sig {returns(String)}
+  def secret
+    secret_key_base
   end
 
   sig {params(path_segments: String).returns(String)}
