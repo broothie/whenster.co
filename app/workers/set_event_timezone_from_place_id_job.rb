@@ -1,5 +1,5 @@
 # typed: true
-class SetEventTimezoneFromPlaceId
+class SetEventTimezoneFromPlaceIdJob
   extend T::Sig
   include Cloudtasker::Worker
 

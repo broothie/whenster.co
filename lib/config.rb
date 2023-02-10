@@ -13,6 +13,7 @@ class Config
   config :port, default: 3000, type: Integer
   config :email_prefix_allowlist, type: [String]
   config :gcloud_key_file
+  config :redis_url, required: true, default: { development: "redis://localhost:6379/1", test: "redis://localhost:6379/1" }
 
   with_options required: [:production] do
     config :deploy_env, default: { development: "local", test: "local" }

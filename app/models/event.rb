@@ -55,6 +55,6 @@ class Event < ApplicationRecord
   end
 
   def set_timezone_from_place_id!
-    SetEventTimezoneFromPlaceId.perform_async(id)
+    SetEventTimezoneFromPlaceIdJob.perform_async(id)
   end
 end

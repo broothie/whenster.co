@@ -1,0 +1,4 @@
+
+event_starting_reminder:
+  worker: EventStartingReminderJob
+  cron: 1 * * * *
