@@ -5,7 +5,7 @@ class Api::ProxyController < ApplicationController
   def google_maps_places_search
     query = {
       input: params[:input],
-      key: ENV.fetch("GOOGLE_MAPS_API_KEY"),
+      key: Config.google_maps_api_key,
       inputtype: "textquery",
       fields: "name,place_id,formatted_address",
     }

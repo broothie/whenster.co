@@ -1,4 +1,4 @@
 {
   rails_env: Rails.env,
-  service_env: Service.env,
+  deploy_env: Config.deploy_env,
 }

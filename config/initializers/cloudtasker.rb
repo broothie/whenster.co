@@ -1,12 +1,12 @@
 Cloudtasker.configure do |config|
-  config.secret = ENV.fetch("SECRET_KEY_BASE")
+  config.secret = Config.secret
 
-  if Service.deployed?
-    config.processor_host = ENV.fetch("CLOUDTASKER_PROCESSOR_HOST")
+  if Config.deployed?
+    config.processor_host = Config.cloudtasker_processor_host
     config.gcp_location_id = "us-central1"
     config.gcp_project_id = "whenster-375808"
-    config.gcp_queue_prefix = "cloudtasker-#{Service.deploy_env}"
+    config.gcp_queue_prefix = "cloudtasker-#{Config.deploy_env}"
   else
-    config.processor_host = Service.base_url
+    config.processor_host = Config.base_url
   end
 end

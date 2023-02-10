@@ -8,7 +8,7 @@ RSpec.describe "Root", type: :request do
 
       payload = JSON.parse(response.body)
       expect(payload).to include "rails_env"
-      expect(payload).to include "service_env"
+      expect(payload).to include "deploy_env"
     end
   end
 
