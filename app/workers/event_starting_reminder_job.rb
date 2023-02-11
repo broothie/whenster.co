@@ -28,7 +28,7 @@ class EventStartingReminderJob
   sig {params(event_id: String).void}
   def perform_per_event(event_id)
     event = Event.eager_load(:invites).find(event_id)
-    user_ids = event.invites.map(&:user_id)
+    user_ids = event.invites.going.map(&:user_id)
 
     user_ids.each do |user_id|
       EventMailer.with(event_id: event.id, user_id:).starting.deliver_later
