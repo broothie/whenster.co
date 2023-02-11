@@ -23,8 +23,8 @@ class Config
     config :secret_key_base
     config :database_url
     config :sendgrid_api_key
-    config :google_maps_api_key
-    config :google_maps_embed_key
+    config :google_maps_api_key, default: { test: "fake-key" }
+    config :google_maps_embed_key, default: { test: "fake-key" }
     config :cloudtasker_processor_host
   end
 
