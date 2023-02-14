@@ -1,5 +1,6 @@
 Cloudtasker.configure do |config|
   config.secret = Config.secret
+  config.redis = { url: Config.redis_url }
 
   if Config.deployed?
     config.processor_host = Config.cloudtasker_processor_host
@@ -9,4 +10,10 @@ Cloudtasker.configure do |config|
   else
     config.processor_host = Config.base_url
   end
+end
+
+schedule_file = "config/cloudtasker_cron.yml"
+if File.exist?(schedule_file) && !Rails.env.test?
+  require "cloudtasker/cron"
+  Cloudtasker::Cron::Schedule.load_from_hash!(YAML.load_file(schedule_file))
 end
