@@ -12,7 +12,7 @@ Cloudtasker.configure do |config|
   end
 end
 
-schedule_file = "config/cloudtasker_cron.yml"
+schedule_file = Rails.root.join("config", "cloudtasker_cron.yml")
 if File.exist?(schedule_file) && !Rails.env.test?
   require "cloudtasker/cron"
   Cloudtasker::Cron::Schedule.load_from_hash!(YAML.load_file(schedule_file))
