@@ -23,15 +23,15 @@ RSpec.describe EventStartingReminderJob, type: :job do
 
   describe "#perform_per_event" do
     let(:event) { create(:event) }
-    let(:invite) { create(:invite, event:, status: :going) }
-    let(:invite) { create(:invite, event:, status: :pending) }
+    let(:invite1) { create(:invite, event:, status: :going) }
+    let(:invite2) { create(:invite, event:, status: :pending) }
     let(:going) { event.invites.going.map(&:user) }
     let(:perform) { subject.perform(event.id) }
 
     it "queues up emails" do
-      going.each do |user|
-        expect(EventMailer).to receive(:with).with(event_id: event.id, user_id: user.id).and_call_original
-      end
+      expect(EventMailer).to receive(:with).with(event_id: event.id, user_id: event.invites.host.first.user.id).and_call_original
+      expect(EventMailer).to receive(:with).with(event_id: event.id, user_id: invite1.user_id).and_call_original
+      expect(EventMailer).to_not receive(:with).with(event_id: event.id, user_id: invite2.user_id)
 
       perform
     end
