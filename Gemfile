@@ -63,6 +63,7 @@ end
 gem "cancancan", "~> 3.4"
 gem "cloudtasker", "~> 0.13.0"
 gem "google-cloud-storage", "~> 1.44", require: false
+gem "hiredis", "~> 0.6.3"
 gem "httparty", "~> 0.21.0"
 gem "icalendar", "~> 2.8"
 gem "jb", "~> 0.8.0"
