@@ -8,7 +8,7 @@ FactoryBot.define do
     title { Faker::Esport.event }
     description { Faker::Lorem.paragraph(sentence_count: 3) }
     start_at { 1.hour.from_now }
-    end_at { 2.hours.from_now }
+    end_at { start_at + 1.hour }
     location { Faker::Address.city }
     place_id { Faker::Internet.base64 }
 

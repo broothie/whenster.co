@@ -10,7 +10,7 @@
 </div>
 <br/>
 
-<% if event.location %>
+<% if event.location? %>
   <div>
     <p class="light font-bold">Where</p>
     <p class="text-xl"><%= link_to event.location, google_maps_location_url(event), class: "link" %></p>
