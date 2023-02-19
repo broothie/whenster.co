@@ -23,12 +23,13 @@ class User < ApplicationRecord
   before_validation :clean_email!
   before_validation :clean_username!
   before_validation :ensure_calendar_token!
+  after_create :resolve_email_invites
 
   delegate :can?, :cannot?, to: :ability
 
-  sig {params(email: String).returns(User)}
+  sig {params(email: String).returns(T.self_type)}
   def self.find_by_email(email)
-    find_by("email ILIKE ?", email)
+    find_by("email ILIKE ?", email.strip)
   end
 
   sig {returns(String)}
@@ -56,5 +57,10 @@ class User < ApplicationRecord
   sig {returns(Ability)}
   def ability
     @ability ||= Ability.new(self)
+  end
+
+  sig {void}
+  def resolve_email_invites
+    ResolveEmailInvitesJob.perform_async(id)
   end
 end

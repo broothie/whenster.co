@@ -16,6 +16,9 @@ class Ability
     can :update, Invite, :status, user: user
     can :update, Invite, :role, event: { invites: { user:, role: :host } }
 
+    # Email invites
+    can :create, EmailInvite, event: { invites: { user: user, role: :host } }
+
     # Events
     can :create, Event
     can :read, Event, invites: { user: user }

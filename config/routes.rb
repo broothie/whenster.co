@@ -29,6 +29,7 @@ Rails.application.routes.draw do
 
       resource :invite, controller: :invite, only: [:update]
       resources :invites, only: [:create, :update], shallow: true
+      resources :email_invites, only: [:create]
       resources :posts, only: [:create, :update, :destroy], shallow: true do
         resources :comments, only: [:create, :update, :destroy], shallow: true
       end
