@@ -3,5 +3,5 @@
 
   <p><%= @inviter.username %> invited you to <%= link_to @event.title, base_url("events", @event.id), class: "link" %>!</p>
 
-  <%= render "invite_mailer/event_details", event: @event %>
+  <%= render "invite_mailer/event_details", event: @event, user: nil %>
 </div>

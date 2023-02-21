@@ -11,7 +11,7 @@ class InviteMailer < ApplicationMailer
     )
   end
 
-  def invite_email_created
+  def email_invite_created
     @email_invite = EmailInvite.find(params[:email_invite_id])
     @event = @email_invite.event
     @inviter = @email_invite.inviter

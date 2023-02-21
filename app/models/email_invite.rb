@@ -16,7 +16,7 @@ class EmailInvite < ApplicationRecord
   after_create :send_email
 
   sig {params(email: String).returns(T::Enumerable[EmailInvite])}
-  def self.where_email(email)
+  def self.for_email(email)
     where("email ILIKE ?", email.strip)
   end
 
@@ -29,6 +29,6 @@ class EmailInvite < ApplicationRecord
 
   sig {void}
   def send_email
-    InviteMailer.with(email_invite_id: id).invite_email_created.deliver_later
+    InviteMailer.with(email_invite_id: id).email_invite_created.deliver_later
   end
 end

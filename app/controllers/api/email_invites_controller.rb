@@ -17,11 +17,18 @@ class Api::EmailInvitesController < ApplicationController
   private
 
   def invite_params(user)
-    params.require(:email_invite).permit(:role).merge(inviter_id: current_user_id, user:)
+    params.require(:email_invite).permit(:role).merge(
+      user:,
+      event_id: params[:event_id],
+      inviter_id: current_user_id,
+    )
   end
 
   def email_invite_params
-    params.require(:email_invite).permit(:email, :role).merge(invite: invite)
+    params.require(:email_invite).permit(:email, :role).merge(
+      inviter_id: current_user_id,
+      event_id: params[:event_id],
+    )
   end
 
   def invite
