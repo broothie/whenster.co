@@ -6,6 +6,9 @@ class EmailInvite < ApplicationRecord
   belongs_to :event
   belongs_to :inviter, class_name: "User"
 
+  validates :event, presence: true
+  validates :inviter, presence: true
+
   validates :email,
     presence: true,
     uniqueness: { scope: :event },
@@ -15,7 +18,7 @@ class EmailInvite < ApplicationRecord
   after_create :send_email
 
   sig {params(email: String).returns(T::Enumerable[EmailInvite])}
-  def self.for_email(email)
+  def self.where_email(email)
     where("email ILIKE ?", email.strip)
   end
 

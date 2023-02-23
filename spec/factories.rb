@@ -18,7 +18,7 @@ FactoryBot.define do
     end
 
     after :create do |event, evaluator|
-      event.invites.host.going.create!(user: evaluator.creator, inviter: evaluator.creator)
+      event.invites.host.going.create!(user: evaluator.creator, inviter: evaluator.creator, skip_created_email: true)
 
       if evaluator.invites.any?
         evaluator.invites.each { |invite| invite[:inviter] ||= evaluator.creator }

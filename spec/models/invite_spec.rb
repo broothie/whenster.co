@@ -10,12 +10,10 @@ RSpec.describe Invite, type: :model do
   end
 
   describe "emails" do
-    let!(:event) { create(:event) }
-
     it "sends an invite email" do
       expect(InviteMailer).to receive(:with).and_call_original
 
-      create(:invite, event:)
+      create(:invite)
     end
   end
 end
