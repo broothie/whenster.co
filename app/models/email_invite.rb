@@ -1,8 +1,7 @@
 # typed: false
 class EmailInvite < ApplicationRecord
   extend T::Sig
-
-  str_enum :role, %i[guest host]
+  include HasRole
 
   belongs_to :event
   belongs_to :inviter, class_name: "User"

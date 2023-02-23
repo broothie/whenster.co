@@ -56,7 +56,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_17_064958) do
   create_table "email_invites", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "event_id", null: false
     t.string "email", null: false
-    t.string "role"
+    t.string "role", default: "guest", null: false
     t.uuid "inviter_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -72,8 +72,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_17_064958) do
     t.string "location"
     t.string "place_id"
     t.string "timezone"
-    t.datetime "start_at", precision: nil
-    t.datetime "end_at", precision: nil
+    t.datetime "start_at", precision: nil, null: false
+    t.datetime "end_at", precision: nil, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["end_at"], name: "index_events_on_end_at"

@@ -3,7 +3,7 @@ class CreateEmailInvites < ActiveRecord::Migration[7.0]
     create_table :email_invites, id: :uuid do |t|
       t.references :event, type: :uuid, null: false
       t.string :email, null: false
-      t.string :role
+      t.string :role, null: false, default: "guest"
       t.uuid :inviter_id, null: false
 
       t.timestamps

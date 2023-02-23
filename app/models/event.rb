@@ -1,6 +1,6 @@
 class Event < ApplicationRecord
   has_many :invites, dependent: :destroy
-  has_many :email_invites, through: :invites
+  has_many :email_invites, dependent: :destroy
   has_many :users, through: :invites
   has_many :posts, through: :invites
   has_many :comments, through: :posts
