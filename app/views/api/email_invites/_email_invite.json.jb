@@ -1,0 +1,6 @@
+{
+  eventID: email_invite.event_id,
+  email: email_invite.email,
+  role: email_invite.role,
+  inviterID: email_invite.inviter_id,
+}

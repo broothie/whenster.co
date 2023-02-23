@@ -4,7 +4,7 @@ import api from "../../api";
 import * as _ from "lodash";
 import UserChip from "../UserChip";
 import { useAppDispatch, useToast } from "../../hooks";
-import { onEnterKeyDown } from "../../util";
+import { emailPattern, onEnterKeyDown } from "../../util";
 import { selectEventInvites } from "../../selectors";
 import { createInvite } from "../../store/invitesSlice";
 
@@ -15,10 +15,10 @@ export default function ShowInviteUsers({ event }: { event: Event }) {
   const [query, setQuery] = useState("");
   const [users, setUsers] = useState([] as User[]);
 
-  // const isEmail = emailPattern.test(query);
+  const isEmail = emailPattern.test(query);
 
   async function searchForUser(query: string) {
-    if (!query) {
+    if (!query || isEmail) {
       setUsers([]);
       return null;
     }
@@ -49,8 +49,21 @@ export default function ShowInviteUsers({ event }: { event: Event }) {
     return null;
   }
 
+  async function onInviteViaEmailClick() {
+    await api.post(`/events/${event.id}/email_invites`, {
+      email_invite: { email: query },
+    });
+
+    toast(`Invited ${query} via email`).catch(console.error);
+    setQuery("");
+
+    return null;
+  }
+
   async function onEnter() {
-    if (users.length > 0) {
+    if (isEmail) {
+      await onInviteViaEmailClick();
+    } else if (users.length > 0) {
       await onUserClick(users[0]);
     }
   }
@@ -63,6 +76,32 @@ export default function ShowInviteUsers({ event }: { event: Event }) {
   useEffect(() => {
     debouncedSearchForUser(query);
   }, [query]);
+
+  function contents() {
+    if (isEmail) {
+      return (
+        <div onClick={onInviteViaEmailClick}>
+          <p className="link">Invite "{query}" via email</p>
+        </div>
+      );
+    } else if (users.length > 0) {
+      return (
+        <div className="flex flex-row flex-wrap gap-1">
+          {users.map((user) => (
+            <div
+              key={user.id}
+              onClick={() => onUserClick(user)}
+              className="cursor-pointer"
+            >
+              <UserChip user={user} />
+            </div>
+          ))}
+        </div>
+      );
+    } else if (query !== "") {
+      return <p>No users found :(</p>;
+    }
+  }
 
   return (
     <div className="space-y-2">
@@ -78,17 +117,9 @@ export default function ShowInviteUsers({ event }: { event: Event }) {
           onKeyDown={onEnterKeyDown(onEnter)}
         />
 
-        {users.length > 0 && (
-          <div className="b-on-w absolute z-10 flex max-w-md flex-row flex-wrap gap-1 rounded border border-gray-500 p-3">
-            {users.map((user) => (
-              <div
-                key={user.id}
-                onClick={() => onUserClick(user)}
-                className="cursor-pointer"
-              >
-                <UserChip user={user} />
-              </div>
-            ))}
+        {query !== "" && (
+          <div className="b-on-w absolute z-10 max-w-md rounded border border-gray-500 p-3">
+            {contents()}
           </div>
         )}
       </div>

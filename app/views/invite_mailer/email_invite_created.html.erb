@@ -1,0 +1,7 @@
+<div class="space-y-3 p-3">
+  <p>Hey there 👋</p>
+
+  <p><%= @inviter.username %> invited you to <%= link_to @event.title, base_url("events", @event.id), class: "link" %>!</p>
+
+  <%= render "invite_mailer/event_details", event: @event, user: nil %>
+</div>

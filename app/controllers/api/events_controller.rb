@@ -60,6 +60,7 @@ class Api::EventsController < ApplicationController
         inviter: current_user,
         role: :host,
         status: :going,
+        skip_created_email: true,
       }],
     )
   end

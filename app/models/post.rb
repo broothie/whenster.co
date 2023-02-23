@@ -10,11 +10,11 @@ class Post < ApplicationRecord
 
   validates :invite, presence: true
 
-  after_create :send_created_email!
+  after_create :send_created_email
 
   private
 
-  def send_created_email!
+  def send_created_email
     PostMailer.with(id:).created.deliver_later
   end
 end

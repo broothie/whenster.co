@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_02_032141) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_17_064958) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -53,14 +53,27 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_02_032141) do
     t.index ["post_id"], name: "index_comments_on_post_id"
   end
 
+  create_table "email_invites", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "event_id", null: false
+    t.string "email", null: false
+    t.string "role", default: "guest", null: false
+    t.uuid "inviter_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_email_invites_on_email"
+    t.index ["event_id", "email"], name: "index_email_invites_on_event_id_and_email", unique: true
+    t.index ["event_id"], name: "index_email_invites_on_event_id"
+    t.index ["inviter_id"], name: "index_email_invites_on_inviter_id"
+  end
+
   create_table "events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title", null: false
     t.text "description"
     t.string "location"
     t.string "place_id"
     t.string "timezone"
-    t.datetime "start_at", precision: nil
-    t.datetime "end_at", precision: nil
+    t.datetime "start_at", precision: nil, null: false
+    t.datetime "end_at", precision: nil, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["end_at"], name: "index_events_on_end_at"
