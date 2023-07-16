@@ -358,6 +358,7 @@ GEM
       sorbet-static (= 0.5.10634)
     sorbet-runtime (0.5.10634)
     sorbet-static (0.5.10634-universal-darwin-21)
+    sorbet-static (0.5.10634-universal-darwin-22)
     sorbet-static (0.5.10634-x86_64-linux)
     sorbet-static-and-runtime (0.5.10634)
       sorbet (= 0.5.10634)
@@ -408,6 +409,7 @@ GEM
 
 PLATFORMS
   x86_64-darwin-21
+  x86_64-darwin-22
   x86_64-linux
 
 DEPENDENCIES
@@ -447,7 +449,7 @@ DEPENDENCIES
   webmock (~> 3.18)
 
 RUBY VERSION
-   ruby 3.2.0p0
+   ruby 3.2.2p53
 
 BUNDLED WITH
    2.4.10
