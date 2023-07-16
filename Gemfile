@@ -72,4 +72,3 @@ gem "pry-rails", "~> 0.3.9"
 gem "redcarpet", "~> 3.6"
 gem "sidekiq", "~> 7.1"
 gem "sorbet-runtime", "~> 0.5.10634"
-gem "stackdriver", "~> 0.21.1", require: false
