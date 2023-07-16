@@ -1,7 +1,7 @@
 # typed: true
 class EventReminderJob
   extend T::Sig
-  include Cloudtasker::Worker
+  include Sidekiq::Job
 
   class InvalidDistanceError < StandardError; end
 

@@ -4,5 +4,4 @@
 
 # typed: false
 
-module Cloudtasker::Testing; end
 class RSpec::Core::Formatters::BaseTextFormatter; end

@@ -61,7 +61,6 @@ group :test do
 end
 
 gem "cancancan", "~> 3.4"
-gem "cloudtasker", "~> 0.13.0"
 gem "google-cloud-storage", "~> 1.44", require: false
 gem "hiredis", "~> 0.6.3"
 gem "httparty", "~> 0.21.0"
@@ -72,5 +71,6 @@ gem "premailer-rails", "~> 1.12"
 gem "pry", "~> 0.14.2"
 gem "pry-rails", "~> 0.3.9"
 gem "redcarpet", "~> 3.6"
+gem "sidekiq", "~> 7.1"
 gem "sorbet-runtime", "~> 0.5.10634"
 gem "stackdriver", "~> 0.21.1", require: false

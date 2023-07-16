@@ -25,7 +25,6 @@ class Config
     config :sendgrid_api_key
     config :google_maps_api_key, default: { test: "fake-key" }
     config :google_maps_embed_key, default: { test: "fake-key" }
-    config :cloudtasker_processor_host
   end
 
   sig {returns(T::Boolean)}

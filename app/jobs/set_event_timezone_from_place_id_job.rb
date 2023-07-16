@@ -1,7 +1,7 @@
 # typed: true
 class SetEventTimezoneFromPlaceIdJob
   extend T::Sig
-  include Cloudtasker::Worker
+  include Sidekiq::Job
 
   sig {params(event_id: String).void}
   def perform(event_id)
