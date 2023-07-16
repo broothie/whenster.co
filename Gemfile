@@ -13,7 +13,7 @@ gem "pg", "~> 1.1"
 gem "puma", "~> 5.0"
 
 # Use Redis adapter to run Action Cable in production
-# gem "redis", "~> 4.0"
+gem "redis", "~> 4.0"
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
@@ -62,7 +62,6 @@ end
 
 gem "cancancan", "~> 3.4"
 gem "google-cloud-storage", "~> 1.44", require: false
-gem "hiredis", "~> 0.6.3"
 gem "httparty", "~> 0.21.0"
 gem "icalendar", "~> 2.8"
 gem "jb", "~> 0.8.0"
