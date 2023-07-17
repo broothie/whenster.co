@@ -2,8 +2,8 @@
   "name": "whenster.co",
   "version": "1.0.0",
   "scripts": {
-    "build": "vite build www --outDir --sourcemap true ../public",
-    "watch": "vite build www --outDir --sourcemap true ../public --watch",
+    "build": "vite build www --outDir ../public --sourcemap true",
+    "watch": "vite build www --outDir ../public --sourcemap true --watch",
     "check": "tsc --noEmit",
     "issue": "gh issue create --body '' --title",
     "issues": "gh issue list"
