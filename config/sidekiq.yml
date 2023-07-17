@@ -1,0 +1,6 @@
+
+scheduler:
+  schedule:
+    event_reminder:
+      class: "EventReminderJob"
+      cron: "1 * * * *"

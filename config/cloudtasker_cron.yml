@@ -1,4 +1,0 @@
-
-event_reminder:
-  worker: EventReminderJob
-  cron: 1 * * * *
