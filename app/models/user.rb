@@ -26,7 +26,7 @@ class User < ApplicationRecord
 
   delegate :can?, :cannot?, to: :ability
 
-  sig {params(email: String).returns(User)}
+  sig {params(email: String).returns(T.nilable(User))}
   def self.find_by_email(email)
     find_by("email ILIKE ?", email)
   end
