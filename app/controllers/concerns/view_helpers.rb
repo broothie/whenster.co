@@ -21,7 +21,7 @@ module ViewHelpers
 
   sig {returns(T.nilable(String))}
   def public_css_filename
-    filepath = Dir.glob("public/assets/index.*.css").first
+    filepath = Dir.glob("public/index-*.css").first
     return nil unless filepath
 
     File.basename(filepath)
