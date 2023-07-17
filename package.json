@@ -8,6 +8,10 @@
     "issue": "gh issue create --body '' --title",
     "issues": "gh issue list"
   },
+  "engines": {
+    "node": "18.x",
+    "npm": "9.x"
+  },
   "volta": {
     "node": "20.4.0",
     "npm": "9.8.0"
