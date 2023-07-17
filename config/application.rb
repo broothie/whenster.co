@@ -43,5 +43,7 @@ module Whenster
     config.middleware.use config.session_store, config.session_options
 
     config.active_job.queue_adapter = :sidekiq
+
+    config.action_mailer.perform_deliveries = ENV.fetch("ACTION_MAILER_PERFORM_DELIVERIES", false)
   end
 end

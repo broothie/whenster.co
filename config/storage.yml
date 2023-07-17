@@ -19,12 +19,12 @@ google_development:
   service: GCS
   project: whenster
   credentials: <%= Rails.root.join(Config.gcloud_key_file) if Config.gcloud_key_file? %>
-  bucket: whenster-development-img
+  bucket: whenster-development-files
 
 google:
   service: GCS
   project: whenster
-  bucket: whenster-<%= Config.deploy_env %>-img
+  bucket: whenster-<%= Config.deploy_env %>-files
   credentials: <%= Base64.decode64(Config.gcloud_key_base64) if Config.deployed? %>
 
 # Use bin/rails credentials:edit to set the Azure Storage secret (as azure_storage:storage_access_key)

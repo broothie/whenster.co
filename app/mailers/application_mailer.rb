@@ -15,8 +15,10 @@ class ApplicationMailer < ActionMailer::Base
   def perform_deliveries?
     return true if Config.production?
 
-    ((mail.to || []) + (mail.bcc || [])).all? do |email|
-      Config.email_prefix_allowlist.any? { |prefix| email.downcase.start_with?(prefix.downcase) }
+    addresses = mail.to || []
+    addresses += mail.bcc || []
+    addresses.all? do |address|
+      Config.email_prefix_allowlist.any? { |prefix| address.downcase.start_with?(prefix.downcase) }
     end
   end
 end
