@@ -34,6 +34,5 @@ coverage
 
 ## Frontend
 node_modules
-.parcel-cache
-public/index.*
-public/logo.*.png
+public
+.yarn

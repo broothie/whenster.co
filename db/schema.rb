@@ -59,8 +59,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_02_032141) do
     t.string "location"
     t.string "place_id"
     t.string "timezone"
-    t.datetime "start_at", precision: nil
-    t.datetime "end_at", precision: nil
+    t.datetime "start_at", precision: nil, null: false
+    t.datetime "end_at", precision: nil, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["end_at"], name: "index_events_on_end_at"
