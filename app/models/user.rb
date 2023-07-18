@@ -1,6 +1,8 @@
 # typed: false
 class User < ApplicationRecord
   extend T::Sig
+  include UserAuth
+  include UserViewHelpers
 
   has_many :login_links, dependent: :destroy
   has_many :invites, dependent: :destroy
@@ -29,11 +31,6 @@ class User < ApplicationRecord
   sig {params(email: String).returns(T.nilable(User))}
   def self.find_by_email(email)
     find_by("email ILIKE ?", email)
-  end
-
-  sig {returns(String)}
-  def generate_jwt
-    JWT.encode({ id:, exp: 30.days.from_now.to_i }, Config.secret)
   end
 
   private

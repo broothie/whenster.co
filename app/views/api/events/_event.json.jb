@@ -8,10 +8,10 @@
   startAt: event.start_at,
   endAt: event.end_at,
   headerImageURLs: {
-    original: file_url(event.header_image, header_image_url(event)),
-    size300: file_url(event.header_image.variant(:size_300), header_image_url(event)),
-    size1500: file_url(event.header_image.variant(:size_1500), header_image_url(event)),
+    original: file_url(event.header_image, event.header_image_url),
+    size300: file_url(event.header_image.variant(:size_300), event.header_image_url),
+    size1500: file_url(event.header_image.variant(:size_1500), event.header_image_url),
   },
-  googleMapsLocationURL: google_maps_location_url(event),
-  googleMapsEmbedURL: google_maps_embed_url(event),
+  googleMapsLocationURL: event.google_maps_location_url,
+  googleMapsEmbedURL: event.google_maps_embed_url,
 }

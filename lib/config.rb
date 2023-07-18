@@ -60,7 +60,7 @@ class Config
 
   sig {returns(String)}
   def scheme
-    deployed? ? "https" : "http"
+    production? ? "https" : "http"
   end
 
   sig {returns(String)}

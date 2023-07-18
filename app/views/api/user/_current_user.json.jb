@@ -1,5 +1,5 @@
 render("api/users/user", user: current_user).merge(
   email: current_user.email,
-  calendarLink: user_calendar_url(current_user),
+  calendarLink: current_user.calendar_url,
   timezone: current_user.timezone,
 )
