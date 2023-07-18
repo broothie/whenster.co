@@ -48,6 +48,13 @@ old_users.get do |old_user|
   puts "user #{old_user[:user_id]} done"
 end
 
+invite_status_map = {
+  pending: :pending,
+  going: :going,
+  tentative: :tentative,
+  not_going: :declined,
+}.with_indifferent_access
+
 event_map = {}.with_indifferent_access
 invite_map = {}.with_indifferent_access
 old_events.get do |old_event|
@@ -85,7 +92,7 @@ old_events.get do |old_event|
       event: new_event,
       inviter: user_map[old_invite[:inviter_id]] || user_map[user_id],
       role: old_invite[:role],
-      status: old_invite[:status]
+      status: invite_status_map[old_invite[:status]]
     )
 
     new_invite.save!(validate: false)
