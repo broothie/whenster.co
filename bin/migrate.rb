@@ -11,6 +11,9 @@ puts "using collection '#{collection_name}' and bucket '#{bucket_name}'"
 print "proceed? (y/n): "
 exit 1 unless gets.chomp == "y"
 
+puts `mkdir -p .local/migrate_images`
+puts "deleting", [User, Event, Invite, Post, Comment].map(&:delete_all)
+
 firestore = Google::Cloud::Firestore.new(project_id: "whensterco", credentials: Rails.root.join(".local/old.gcloud.key.json"))
 old_storage = Google::Cloud::Storage.new(project_id: "whensterco", credentials: Rails.root.join(".local/old.gcloud.key.json"))
 old_bucket = old_storage.bucket(bucket_name)
