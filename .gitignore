@@ -36,3 +36,4 @@ coverage
 ## Frontend
 node_modules
 public
+.byebug_history
