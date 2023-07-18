@@ -75,3 +75,5 @@ gem "redcarpet", "~> 3.6"
 gem "sidekiq", "~> 6.5"
 gem "sidekiq-scheduler", "~> 5.0"
 gem "sorbet-runtime", "~> 0.5.10634"
+
+gem "google-cloud-firestore", "~> 2.13"
