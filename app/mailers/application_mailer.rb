@@ -13,6 +13,7 @@ class ApplicationMailer < ActionMailer::Base
   end
 
   def perform_deliveries?
+    return false if ENV.fetch("ACTION_MAILER_PERFORM_DELIVERIES", "false").to_s == "false"
     return true if Config.production?
 
     addresses = mail.to || []
