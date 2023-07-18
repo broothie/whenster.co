@@ -83,7 +83,7 @@ old_events.get do |old_event|
     new_invite = Invite.new(
       user: user_map[user_id],
       event: new_event,
-      inviter: user_map[old_invite[:inviter_id]],
+      inviter: user_map[old_invite[:inviter_id] || user_map[user_id]],
       role: old_invite[:role],
       status: old_invite[:status]
     )
