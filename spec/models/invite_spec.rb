@@ -1,3 +1,22 @@
+# == Schema Information
+#
+# Table name: invites
+#
+#  id         :uuid             not null, primary key
+#  role       :string           default("guest"), not null
+#  status     :string           default("pending"), not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  event_id   :uuid             not null
+#  inviter_id :uuid             not null
+#  user_id    :uuid             not null
+#
+# Indexes
+#
+#  index_invites_on_event_id              (event_id)
+#  index_invites_on_user_id               (user_id)
+#  index_invites_on_user_id_and_event_id  (user_id,event_id) UNIQUE
+#
 require 'rails_helper'
 
 RSpec.describe Invite, type: :model do

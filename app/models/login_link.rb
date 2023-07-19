@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: login_links
+#
+#  id         :uuid             not null, primary key
+#  token      :string           not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  user_id    :uuid             not null
+#
+# Indexes
+#
+#  index_login_links_on_token    (token) UNIQUE
+#  index_login_links_on_user_id  (user_id)
+#
 class LoginLink < ApplicationRecord
   belongs_to :user
 
