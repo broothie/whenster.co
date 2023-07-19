@@ -3,6 +3,8 @@ module MailerHelper
   extend T::Sig
   extend ActiveSupport::Concern
 
+  delegate :base_url, to: Config
+
   sig {params(markdown: String).returns(String)}
   def markdown(markdown)
     @markdown_renderer ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(escape_html: true), autolink: true)
