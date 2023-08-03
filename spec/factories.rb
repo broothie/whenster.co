@@ -39,6 +39,12 @@ FactoryBot.define do
     end
   end
 
+  factory :email_invite do
+    email { Faker::Internet.safe_email }
+    event
+    inviter factory: :user
+  end
+
   factory :post do
     invite
     body { Faker::Lorem.paragraph(sentence_count: 3) }

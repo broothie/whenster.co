@@ -32,7 +32,9 @@ export type Invite = {
 };
 
 export type EmailInvite = {
+  id: string;
   email: string;
+  eventID: string;
   inviterID: string;
 };
 

@@ -1,6 +1,5 @@
-import * as _ from "lodash";
-import { UseFormSetError } from "react-hook-form";
-import { KeyboardEvent } from "react";
+import {UseFormSetError} from "react-hook-form";
+import {KeyboardEvent} from "react";
 
 export const dateTimeLocalFormat = "yyyy-MM-dd'T'HH:mm";
 export const emailPattern = /[\w+-]+@[\w+-]+\.[\w+-]+/;
@@ -14,9 +13,9 @@ export function handleAPIFormError<T>(
   setError: UseFormSetError<any>
 ) {
   if (error.errors) {
-    _.each(error.errors, (message: any, name: string) =>
+    error.errors.forEach(({ name, message }) =>
       setError(name, { type: "custom", message })
-    );
+    )
   } else {
     throw error;
   }

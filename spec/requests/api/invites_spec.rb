@@ -11,7 +11,7 @@ RSpec.describe "Api::Invites", type: :request do
         post "/api/events/#{event.id}/invites",
           headers: { Authorization: "Token #{invited_user.generate_jwt}" },
           params: { invite: { user_id: uninvited_user.id } }
-      }.to change { uninvited_user.events.count }
+      }.to change { event.users.include?(uninvited_user) }
 
       expect(response.status).to eq 201
     end

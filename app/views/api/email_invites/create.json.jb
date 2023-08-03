@@ -1,0 +1,8 @@
+if @invite
+  {
+    invite: render("api/invites/invite", invite: @invite),
+    user: render("api/users/user", user: @user),
+  }
+else
+  { emailInvite: render("api/email_invites/email_invite", email_invite: @email_invite) }
+end

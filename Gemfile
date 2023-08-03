@@ -41,6 +41,7 @@ group :development, :test do
   gem "dotenv-rails", "~> 2.8"
   gem "factory_bot", "~> 6.2"
   gem "faker", "~> 3.1"
+  gem "pry-byebug", "~> 3.10"
 end
 
 group :development do
@@ -61,6 +62,7 @@ group :test do
   gem "webmock", "~> 3.18"
 end
 
+gem "annotate", "~> 3.2"
 gem "cancancan", "~> 3.4"
 gem "google-cloud-storage", "~> 1.44", require: false
 gem "httparty", "~> 0.21.0"
@@ -76,5 +78,3 @@ gem "redcarpet", "~> 3.6"
 gem "sidekiq", "~> 6.5"
 gem "sidekiq-scheduler", "~> 5.0"
 gem "sorbet-runtime", "~> 0.5.10634"
-
-gem "google-cloud-firestore", "~> 2.13"

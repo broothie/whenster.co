@@ -1,0 +1,6 @@
+{
+  id: email_invite.id,
+  email: email_invite.email,
+  eventID: email_invite.event_id,
+  inviterID: email_invite.inviter_id,
+}

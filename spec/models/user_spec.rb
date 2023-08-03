@@ -1,3 +1,21 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id             :uuid             not null, primary key
+#  calendar_token :string
+#  email          :string           not null
+#  timezone       :string
+#  username       :string           not null
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#
+# Indexes
+#
+#  index_users_on_calendar_token  (calendar_token) UNIQUE
+#  index_users_on_email           (email) UNIQUE
+#  index_users_on_username        (username) UNIQUE
+#
 require 'rails_helper'
 require "cancan/matchers"
 
@@ -13,10 +31,11 @@ RSpec.describe User, type: :model do
   end
 
   describe ".find_by_email" do
-    subject(:user) { create(:user, email: Faker::Internet.email.downcase) }
+    subject(:user) { create(:user, email: Faker::Internet.email) }
 
     it "is case insensitive" do
       expect(User.find_by_email(user.email)).to eq user
+      expect(User.find_by_email(user.email.downcase)).to eq user
       expect(User.find_by_email(user.email.upcase)).to eq user
     end
   end

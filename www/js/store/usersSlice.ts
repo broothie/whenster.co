@@ -4,6 +4,7 @@ import api from "../api";
 import { fetchCurrentUser } from "./userSlice";
 import { fetchEvent } from "./eventsSlice";
 import { createInvite } from "./invitesSlice";
+import { createEmailInvite } from "./emailInvitesSlice";
 
 export const fetchUser = createAsyncThunk(
   "users/fetchUser",
@@ -30,17 +31,21 @@ const usersSlice = createSlice({
 
     builder.addCase(fetchEvent.fulfilled, (state, action) => {
       const users = action.payload.users;
-      const lookup = state;
-
       users.forEach((user) => {
         state[user.id] = user;
       });
-      return lookup;
     });
 
     builder.addCase(createInvite.fulfilled, (state, action) => {
       const user = action.payload.user;
       state[user.id] = user;
+    });
+
+    builder.addCase(createEmailInvite.fulfilled, (state, action) => {
+      const user = action.payload.user;
+      if (user) {
+        state[user.id] = user;
+      }
     });
   },
 });
