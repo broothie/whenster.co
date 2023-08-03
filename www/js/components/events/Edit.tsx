@@ -41,6 +41,13 @@ export default function EditEvent() {
   }, []);
 
   return (
-    event && <EventForm event={event} submitText="Update" submit={submit} />
+    event && (
+      <EventForm
+        title="Edit Event"
+        event={event}
+        submitText="Update"
+        submit={submit}
+      />
+    )
   );
 }

@@ -5,7 +5,7 @@ RSpec.feature "post creation", type: :feature do
   let(:user) { event.users.first }
   let(:post_details) { attributes_for(:post) }
 
-  it "allows post creation", js: true do
+  it "allows post creation" do
     log_in user
 
     visit "/events/#{event.id}"
@@ -18,7 +18,5 @@ RSpec.feature "post creation", type: :feature do
 
     post = user.posts.last
     expect(post.body).to eq post_details[:body]
-
-    save_and_open_screenshot
   end
 end
