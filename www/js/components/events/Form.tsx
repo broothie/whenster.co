@@ -28,10 +28,12 @@ type Place = {
 };
 
 export default function EventForm({
+  title,
   event,
   submitText,
   submit,
 }: {
+  title: string;
   event?: Event;
   submitText: string;
   submit: { (data: EventFormData): Promise<void> };
@@ -122,7 +124,7 @@ export default function EventForm({
 
   return (
     <div className="container mx-auto max-w-sm space-y-5 px-3 md:px-0">
-      <p className="text-xl font-bold">New Event</p>
+      <p className="text-xl font-bold">{title}</p>
 
       <div className="flex w-full flex-col space-y-1">
         <FormLabelWithError errors={errors} label="Title" name="title" />

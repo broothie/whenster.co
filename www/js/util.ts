@@ -1,5 +1,6 @@
-import {UseFormSetError} from "react-hook-form";
-import {KeyboardEvent} from "react";
+import { UseFormSetError } from "react-hook-form";
+import { KeyboardEvent } from "react";
+import { DateTime } from "luxon";
 
 export const dateTimeLocalFormat = "yyyy-MM-dd'T'HH:mm";
 export const emailPattern = /[\w+-]+@[\w+-]+\.[\w+-]+/;
@@ -15,7 +16,7 @@ export function handleAPIFormError<T>(
   if (error.errors) {
     error.errors.forEach(({ name, message }) =>
       setError(name, { type: "custom", message })
-    )
+    );
   } else {
     throw error;
   }
@@ -51,6 +52,7 @@ export function parameterizeData(
   data: any,
   _isTop = true
 ): { [key: string]: any } {
+  if (DateTime.isDateTime(data)) return { "": (data as DateTime).toISO() };
   if (typeof data !== "object") return { "": data }; // Primitives / catch-all
   if (typeof data?.name === "string") return { "": data }; // File or Blob
 

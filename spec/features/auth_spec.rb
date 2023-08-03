@@ -4,7 +4,7 @@ RSpec.feature "auth", type: :feature do
   describe "/login" do
     let(:user) { create(:user) }
 
-    it "allows a user to log in", js: true do
+    it "allows a user to log in" do
       visit "/login"
       fill_in "email", with: user.email
       click_on "Log In"
@@ -19,7 +19,7 @@ RSpec.feature "auth", type: :feature do
   describe "/signup" do
     let(:user) { build(:user) }
 
-    it "allows a user to sign up", js: true do
+    it "allows a user to sign up" do
       visit "/signup"
       fill_in "email", with: user.email
       fill_in "username", with: user.username

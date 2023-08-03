@@ -26,5 +26,5 @@ export default function NewEvent() {
     navigate(`/events/${event.id}`);
   }
 
-  return <EventForm submit={submit} submitText="Create" />;
+  return <EventForm title="New Event" submit={submit} submitText="Create" />;
 }
