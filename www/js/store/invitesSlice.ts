@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Invite, InviteRole, InviteStatus, User } from "../models";
 import { fetchEvent } from "./eventsSlice";
 import api from "../api";
+import { createEmailInvite } from "./emailInvitesSlice";
 
 export const createInvite = createAsyncThunk(
   "invites/createInvite",
@@ -94,6 +95,13 @@ const invitesSlice = createSlice({
       action.payload.invites.forEach((invite) => {
         state[invite.id] = invite;
       });
+    });
+
+    builder.addCase(createEmailInvite.fulfilled, (state, action) => {
+      const invite = action.payload.invite;
+      if (invite) {
+        state[invite.id] = invite;
+      }
     });
   },
 });

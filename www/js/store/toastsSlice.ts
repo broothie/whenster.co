@@ -1,7 +1,6 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Toast } from "../models";
-import { after } from "../util";
-import * as _ from "lodash";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {Toast} from "../models";
+import {after} from "../util";
 
 export const createToast = createAsyncThunk(
   "toasts/createToast",
@@ -38,9 +37,7 @@ const toastsSlice = createSlice({
       const { message, loader } = action.meta.arg;
       const requestID = action.meta.requestId;
 
-      return _.merge({}, state, {
-        [requestID]: { toastID: requestID, message, loader },
-      });
+      return { ...state, [requestID]: { toastID: requestID, message, loader } }
     });
 
     builder.addCase(createToast.fulfilled, (state, action) => {

@@ -31,10 +31,11 @@ RSpec.describe User, type: :model do
   end
 
   describe ".find_by_email" do
-    subject(:user) { create(:user, email: Faker::Internet.email.downcase) }
+    subject(:user) { create(:user, email: Faker::Internet.email) }
 
     it "is case insensitive" do
       expect(User.find_by_email(user.email)).to eq user
+      expect(User.find_by_email(user.email.downcase)).to eq user
       expect(User.find_by_email(user.email.upcase)).to eq user
     end
   end
