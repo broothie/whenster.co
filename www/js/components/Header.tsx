@@ -7,7 +7,7 @@ export default function Header() {
   const user = selectCurrentUser();
 
   return (
-    <div className="mb-6 w-full">
+    <header className="mb-6 w-full">
       <div className="container mx-auto flex max-w-5xl flex-row items-center justify-between px-5 py-3 md:px-8">
         <Link
           to="/"
@@ -38,6 +38,6 @@ export default function Header() {
           )}
         </div>
       </div>
-    </div>
+    </header>
   );
 }

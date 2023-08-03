@@ -53,8 +53,10 @@ group :development do
 end
 
 group :test do
+  gem "capybara", "~> 3.39"
   gem "fuubar", "~> 2.5"
   gem "rspec-rails", "~> 6.0"
+  gem "selenium-webdriver", "~> 4.11"
   gem "shoulda-matchers", "~> 5.3"
   gem "simplecov", "~> 0.22.0", require: false
   gem "simplecov-cobertura", "~> 2.1", require: false
