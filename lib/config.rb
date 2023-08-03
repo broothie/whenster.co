@@ -13,6 +13,7 @@ class Config
   config :port, default: 3000, type: Integer
   config :email_prefix_allowlist, type: [String]
   config :gcloud_key_file
+  config :ci
 
   with_options required: [:production] do
     config :deploy_env, default: { development: "local", test: "local" }
@@ -41,6 +42,11 @@ class Config
   sig {returns(T::Boolean)}
   def local?
     deploy_env == "local"
+  end
+
+  sig {returns(T::Boolean)}
+  def ci?
+    ci == "true"
   end
 
   sig {returns(T::Boolean)}
