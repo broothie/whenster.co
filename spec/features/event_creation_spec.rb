@@ -26,5 +26,9 @@ RSpec.feature "event creation", type: :feature do
 
     event = user.events.last
     expect(page).to have_current_path "/events/#{event.id}"
+
+    expect(event.title).to eq event_details[:title]
+    expect(event.description).to eq event_details[:description]
+    expect(event.location).to eq event_details[:location]
   end
 end
