@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Api::Invite", type: :request do
+RSpec.describe Api::InviteController, type: :request do
   describe "#update" do
     let(:user) { create(:user) }
     let(:event) { create(:event, invites: [{ user: }]) }

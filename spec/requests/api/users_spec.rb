@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Api::Users", type: :request do
+RSpec.describe Api::UsersController, type: :request do
   describe "#show" do
     let(:user) { create(:user) }
 

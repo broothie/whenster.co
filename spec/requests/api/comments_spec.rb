@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Api::Comments", type: :request do
+RSpec.describe Api::CommentsController, type: :request do
   let(:poast) { create(:post) }
   let(:event) { poast.event }
   let(:invite) { create(:invite, event:) }

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Api::Invites", type: :request do
+RSpec.describe Api::InvitesController, type: :request do
   let(:invited_user) { create(:user) }
   let(:event) { create(:event, invites: [{ user: invited_user, role: :host }]) }
   let(:uninvited_user) { create(:user) }

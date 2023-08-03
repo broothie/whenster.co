@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Root", type: :request do
+RSpec.describe RootController, type: :request do
   describe "#info" do
     it "works" do
       get "/info.json"

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Api::Proxy", type: :request do
+RSpec.describe Api::ProxyController, type: :request do
   describe "#google_maps_places_search" do
     let(:user) { create(:user) }
 

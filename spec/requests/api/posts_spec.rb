@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Api::Posts", type: :request do
+RSpec.describe Api::PostsController, type: :request do
   let(:event) { create(:event) }
   let(:invite) { event.invites.first }
   let(:user) { invite.user }

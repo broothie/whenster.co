@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Api::User", type: :request do
+RSpec.describe Api::UserController, type: :request do
   let(:user_attrs) { attributes_for(:user) }
 
   describe "#update" do

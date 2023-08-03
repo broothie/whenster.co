@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Api::Session", type: :request do
+RSpec.describe Api::SessionController, type: :request do
   describe "#geolocation" do
     let(:user) { create(:user) }
 
