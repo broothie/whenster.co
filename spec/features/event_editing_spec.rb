@@ -5,7 +5,7 @@ RSpec.feature "event editing", type: :feature do
   let(:user) { event.users.first }
   let(:event_details) { attributes_for(:event) }
 
-  it "allows post creation" do
+  it "allows event editing" do
     log_in user
 
     old_start_at = event.start_at
