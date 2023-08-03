@@ -23,7 +23,7 @@ class ICalendar
     calendar = Icalendar::Calendar.new
     calendar.x_wr_calname = "Whenster"
 
-    @user.invites.not_pending.includes(:event).each do |invite|
+    @user.invites.not_pending.includes(event: { header_image_attachment: { blob: :variant_records } }).each do |invite|
       calendar.event do |event|
         event.uid = invite.event.id
         event.dtstart = invite.event.start_at.utc
