@@ -5,8 +5,7 @@ import FormLabelWithError from "../FormLabelWithError";
 import { emailPattern, handleAPIFormError, onEnterKeyDown } from "../../util";
 import { Link } from "react-router-dom";
 import Button from "../Button";
-import { useEffect, useState } from "react";
-import _ from "lodash";
+import { useState } from "react";
 
 type FormData = {
   email: string;
@@ -55,7 +54,7 @@ export default function LogIn() {
           className="input"
           disabled={isSubmitting}
           placeholder="you@example.com"
-          autoFocus={_.isEmpty(email)}
+          autoFocus={!email}
           onKeyDown={onEnterKeyDown(handleSubmit(onSubmit))}
         />
       </div>

@@ -1,14 +1,13 @@
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { useEffect, useState } from "react";
 import { fetchEvents } from "../../store/eventsSlice";
-import * as _ from "lodash";
 import { Link } from "react-router-dom";
 import { DateTime } from "luxon";
 import { Event } from "../../models";
 import Markdown from "../Markdown";
 
 export default function EventsIndex() {
-  const events = useAppSelector((state) => _.values(state.events));
+  const events = useAppSelector((state) => Object.values(state.events));
   const dispatch = useAppDispatch();
   const [checked, setChecked] = useState(false);
 
@@ -34,19 +33,22 @@ export default function EventsIndex() {
   }
 
   const now = DateTime.now();
-  const currentEvents = events.filter(
-    (event) =>
-      DateTime.fromISO(event.startAt) < now &&
-      now < DateTime.fromISO(event.endAt)
-  );
+  const currentEvents = events
+    .filter(
+      (event) =>
+        DateTime.fromISO(event.startAt) < now &&
+        now < DateTime.fromISO(event.endAt)
+    )
+    .sort((a, b) => a.startAt.localeCompare(b.startAt));
 
-  const futureEvents = events.filter(
-    (event) => DateTime.fromISO(event.startAt) > now
-  );
+  const futureEvents = events
+    .filter((event) => DateTime.fromISO(event.startAt) > now)
+    .sort((a, b) => a.startAt.localeCompare(b.startAt));
 
-  const pastEvents = events.filter(
-    (event) => DateTime.fromISO(event.endAt) < now
-  );
+  const pastEvents = events
+    .filter((event) => DateTime.fromISO(event.endAt) < now)
+    .sort((a, b) => a.startAt.localeCompare(b.startAt))
+    .reverse();
 
   return (
     <div className="mb-8">
@@ -55,7 +57,7 @@ export default function EventsIndex() {
           <p className="light py-5 px-7 text-xl font-bold">Happening Now</p>
 
           <div className="flex flex-row flex-wrap justify-center gap-8 px-5 sm:justify-start md:px-8">
-            {_.sortBy(currentEvents, "startTime").map((event) => (
+            {currentEvents.map((event) => (
               <Entry key={event.id} event={event} />
             ))}
           </div>
@@ -67,7 +69,7 @@ export default function EventsIndex() {
           <p className="light py-5 px-7 text-xl font-bold">Upcoming Events</p>
 
           <div className="flex flex-row flex-wrap justify-center gap-8 px-5 sm:justify-start md:px-8">
-            {_.sortBy(futureEvents, "startTime").map((event) => (
+            {futureEvents.map((event) => (
               <Entry key={event.id} event={event} />
             ))}
           </div>
@@ -79,7 +81,7 @@ export default function EventsIndex() {
           <p className="light py-5 px-7 text-xl font-bold">Past Events</p>
 
           <div className="flex flex-row flex-wrap justify-center gap-8 px-5 sm:justify-start md:px-8">
-            {_.reverse(_.sortBy(pastEvents, "startTime")).map((event) => (
+            {pastEvents.map((event) => (
               <Entry key={event.id} event={event} />
             ))}
           </div>
