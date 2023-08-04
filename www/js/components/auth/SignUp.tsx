@@ -5,7 +5,6 @@ import FormLabelWithError from "../FormLabelWithError";
 import { emailPattern, handleAPIFormError, onEnterKeyDown } from "../../util";
 import { Link } from "react-router-dom";
 import Button from "../Button";
-import _ from "lodash";
 
 type FormData = {
   email: string;
@@ -52,7 +51,7 @@ export default function SignUp() {
           disabled={isSubmitting}
           className="input"
           placeholder="you@example.com"
-          autoFocus={_.isEmpty(email)}
+          autoFocus={!email}
           onKeyDown={onEnterKeyDown(handleSubmit(onSubmit))}
         />
       </div>
@@ -65,7 +64,7 @@ export default function SignUp() {
           disabled={isSubmitting}
           className="input"
           placeholder="snowboarderX23"
-          autoFocus={_.isEmpty(username)}
+          autoFocus={!username}
           onKeyDown={onEnterKeyDown(handleSubmit(onSubmit))}
         />
       </div>
