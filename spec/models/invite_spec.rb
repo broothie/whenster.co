@@ -14,6 +14,7 @@
 # Indexes
 #
 #  index_invites_on_event_id              (event_id)
+#  index_invites_on_inviter_id            (inviter_id)
 #  index_invites_on_user_id               (user_id)
 #  index_invites_on_user_id_and_event_id  (user_id,event_id) UNIQUE
 #
