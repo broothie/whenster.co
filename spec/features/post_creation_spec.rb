@@ -9,11 +9,14 @@ RSpec.feature "post creation", type: :feature do
     log_in user
 
     visit "/events/#{event.id}"
-    find("textarea[name='body']").click
-    find("textarea[name='body']").fill_in with: post_details[:body]
-    click_button "Post"
+    find("textarea[placeholder='Post something...']").click
+    find("textarea[placeholder='Post something...']").fill_in with: post_details[:body]
 
-    expect(page).to have_content "Post posted"
+    expect {
+      click_button "Post"
+      expect(page).to have_content "Post posted"
+    }.to change { user.reload.posts.count }
+
     expect(page).to have_content post_details[:body]
 
     post = user.posts.last
