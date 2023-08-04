@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { DateTime } from "luxon";
 import { Event } from "../../models";
 import Markdown from "../Markdown";
-import { Simulate } from "react-dom/test-utils";
 
 export default function EventsIndex() {
   const events = useAppSelector((state) => Object.values(state.events));
