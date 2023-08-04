@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "event creation", type: :feature do
+RSpec.feature "new event page", type: :feature do
   let(:user) { create(:user) }
   let(:event_details) { attributes_for(:event) }
 

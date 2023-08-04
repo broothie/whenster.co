@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "event editing", type: :feature do
+RSpec.feature "edit event page", type: :feature do
   let(:event) { create(:event) }
   let(:user) { event.users.first }
   let(:event_details) { attributes_for(:event) }
