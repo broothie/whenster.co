@@ -95,6 +95,7 @@ export default function Account() {
                 <input
                   type="text"
                   className="input"
+                  placeholder="Username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                 />

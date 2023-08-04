@@ -28,6 +28,7 @@ class User < ApplicationRecord
   has_many :invites, dependent: :destroy
   has_many :events, through: :invites
   has_many :posts, through: :invites
+  has_many :comments, through: :invites
 
   has_one_attached :image do |image|
     image.variant :thumb, resize_to_limit: [300, 300]

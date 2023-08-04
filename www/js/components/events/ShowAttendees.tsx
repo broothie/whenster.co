@@ -44,7 +44,7 @@ export default function ShowAttendees({ event }: { event: Event }) {
   const emailInvites = selectCurrentUserEmailInvites(event.id);
 
   return (
-    <div className="flex flex-col gap-y-2">
+    <div className="attendees flex flex-col gap-y-2">
       <div className="flex flex-row items-center gap-x-1">
         <p className="light font-bold">Attendees</p>
         <p className="chip px-2 py-0.5 font-medium">{users.length}</p>
