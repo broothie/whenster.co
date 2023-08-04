@@ -66,6 +66,42 @@ RSpec.feature "event page", type: :feature do
     end
   end
 
+  describe "attendees" do
+    describe "host promotion" do
+      let(:other_user) { invite.user }
+
+      context "when user is guest" do
+        let!(:invite) { create(:invite, event:, role: :guest) }
+
+        it "can promote a user to host" do
+          within ".attendees" do
+            find("p") { |p| p.text == other_user.username }.hover
+          end
+
+          expect {
+            find("p") { |p| p.text == "Promote to host" }.click
+            expect(page).to have_content "#{other_user.username} promoted to host"
+          }.to change { invite.reload.role }
+        end
+      end
+
+      context "when user is host" do
+        let!(:invite) { create(:invite, event:, role: :host) }
+
+        it "can demote a user to guest" do
+          within ".attendees" do
+            find("p") { |p| p.text == other_user.username }.hover
+          end
+
+          expect {
+            find("p") { |p| p.text == "Demote to guest" }.click
+            expect(page).to have_content "#{other_user.username} demoted to guest"
+          }.to change { invite.reload.role }
+        end
+      end
+    end
+  end
+
   describe "posts" do
     let(:post_details) { attributes_for(:post) }
 
