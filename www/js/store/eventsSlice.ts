@@ -1,8 +1,8 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {Comment, Event, Invite, Post, User} from "../models";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { Comment, EmailInvite, Event, Invite, Post, User } from "../models";
 import api from "../api";
-import {DateTime} from "luxon";
-import {formDataFrom} from "../util";
+import { DateTime } from "luxon";
+import { formDataFrom } from "../util";
 
 export type EventPayload = {
   title?: string;
@@ -17,6 +17,7 @@ export type EventPayload = {
 export type EventResponse = {
   event: Event;
   invites: Invite[];
+  emailInvites: EmailInvite[];
   users: User[];
   posts: Post[];
   comments: Comment[];
@@ -99,7 +100,7 @@ const eventsSlice = createSlice({
 
     builder.addCase(updateEvent.fulfilled, (state, action) => {
       const event = action.payload;
-      return { ...state, [event.id]: event }
+      return { ...state, [event.id]: event };
     });
 
     builder.addCase(fetchEvents.fulfilled, (state, action) => {
@@ -115,7 +116,7 @@ const eventsSlice = createSlice({
 
     builder.addCase(fetchEvent.fulfilled, (state, action) => {
       const event = action.payload.event;
-      return { ...state, [event.id]: event }
+      return { ...state, [event.id]: event };
     });
 
     builder.addCase(deleteEvent.fulfilled, (state, action) => {

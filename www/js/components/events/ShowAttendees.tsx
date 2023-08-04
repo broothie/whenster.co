@@ -1,7 +1,8 @@
-import { EmailInvite, Event, User } from "../../models";
+import { Event, User } from "../../models";
 import UserChip from "../UserChip";
 import {
   selectCurrentUser,
+  selectCurrentUserEmailInvites,
   selectCurrentUserIsHost,
   selectEventUsers,
   selectEventUsersByInvite,
@@ -40,7 +41,7 @@ export default function ShowAttendees({ event }: { event: Event }) {
     ["declined", "pending"].includes(invite.status)
   );
 
-  const emailInvites = [] as EmailInvite[];
+  const emailInvites = selectCurrentUserEmailInvites(event.id);
 
   return (
     <div className="flex flex-col gap-y-2">
@@ -133,7 +134,7 @@ export default function ShowAttendees({ event }: { event: Event }) {
           )
         )}
 
-        {emailInvites.length > 0 && (
+        {emailInvites && emailInvites.length > 0 && (
           <div className="space-y-1">
             <div className="flex flex-row items-center gap-x-1 text-sm">
               <p className="light font-bold">Invited via email</p>

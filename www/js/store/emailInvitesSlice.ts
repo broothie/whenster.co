@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { EmailInvite, Invite, User } from "../models";
 import api from "../api";
+import { fetchEvent } from "./eventsSlice";
 
 export const createEmailInvite = createAsyncThunk(
   "emailInvites/createEmailInvite",
@@ -41,6 +42,13 @@ const emailInvitesSlice = createSlice({
       if (emailInvite) {
         state[emailInvite.id] = emailInvite;
       }
+    });
+
+    builder.addCase(fetchEvent.fulfilled, (state, action) => {
+      const emailInvites = action.payload.emailInvites;
+      emailInvites.forEach((emailInvite) => {
+        state[emailInvite.id] = emailInvite;
+      });
     });
   },
 });

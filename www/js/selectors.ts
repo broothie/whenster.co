@@ -65,6 +65,19 @@ export function selectCurrentUserInvite(eventID: string) {
   return user && selectUserInvite(eventID, user.id);
 }
 
+export function selectCurrentUserEmailInvites(eventID: string) {
+  const user = selectCurrentUser();
+
+  return (
+    user &&
+    useAppSelector((state) =>
+      Object.values(state.emailInvites).filter(
+        (emailInvite) => emailInvite.inviterID == user.id
+      )
+    )
+  );
+}
+
 export function selectCurrentUserInviteIs(
   eventID: string,
   predicate: InvitePredicate
