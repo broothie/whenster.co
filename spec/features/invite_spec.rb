@@ -35,6 +35,9 @@ RSpec.feature "event invites", type: :feature do
         find("div.cursor-pointer") { |div| div.text == other_user.email }.click
         expect(page).to have_content "Emailed #{other_user.email}"
       }.to change { event.reload.email_invites.find { |i| i.email == other_user.email } }
+
+      visit current_path
+      expect(page).to have_content other_user.email
     end
   end
 end

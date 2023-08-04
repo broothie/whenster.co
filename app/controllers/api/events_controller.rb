@@ -30,6 +30,7 @@ class Api::EventsController < ApplicationController
     authorize! :read, @event
 
     @invites = @event.invites
+    @email_invites = @event.email_invites
     @users = @event.users
     @posts = @event.posts
     @comments = @event.comments
@@ -84,6 +85,7 @@ class Api::EventsController < ApplicationController
     [
       :header_image_attachment,
       :invites,
+      :email_invites,
       {
         users: { image_attachment: { blob: :variant_records } },
         posts: [:user, :event, { images_attachments: { blob: :variant_records } }],

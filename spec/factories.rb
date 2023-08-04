@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :user do
     email { Faker::Internet.safe_email }
-    username { Faker::Internet.username(specifier: 5) }
+    username { Faker::Internet.username(specifier: 8) }
   end
 
   factory :event do
