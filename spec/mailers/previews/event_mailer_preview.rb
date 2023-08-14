@@ -4,6 +4,6 @@ class EventMailerPreview < ActionMailer::Preview
     event = Event.find_by(id: params[:event_id]) || Event.last || FactoryBot.create(:event)
     user = event.users.first
 
-    EventMailer.with(event:, user:).soon
+    EventMailer.with(event_id: event.id, user_id: user.id).soon
   end
 end
