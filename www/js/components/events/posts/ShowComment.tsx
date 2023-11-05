@@ -4,9 +4,9 @@ import { Comment } from "../../../models";
 import { deleteComment } from "../../../store/commentsSlice";
 import UserChip from "../../UserChip";
 import { DateTime } from "luxon";
-import Markdown from "../../Markdown";
 import Lightbox from "../../Lightbox";
 import { useState } from "react";
+import RichText from "../../RichText";
 
 export default function ShowComment({ comment }: { comment: Comment }) {
   const user = selectUser(comment.userID);
@@ -59,7 +59,7 @@ export default function ShowComment({ comment }: { comment: Comment }) {
           </div>
         </div>
 
-        <Markdown markdown={comment.body} />
+        <RichText text={comment.body} />
 
         {comment.imageURLs.length > 0 && (
           <div className="flex flex-row flex-wrap gap-3">

@@ -1,8 +1,8 @@
 import { Event } from "../../models";
 import { DateTime } from "luxon";
 import UserChip from "../UserChip";
-import Markdown from "../Markdown";
 import { selectEventUsersByInvite } from "../../selectors";
+import RichText from "../RichText";
 
 export default function ShowDetails({ event }: { event: Event }) {
   const hosts = selectEventUsersByInvite(
@@ -63,7 +63,7 @@ export default function ShowDetails({ event }: { event: Event }) {
         <div className="space-y-1">
           <p className="light font-bold">Description</p>
           <div className="text-xl">
-            <Markdown markdown={event.description} />
+            <RichText text={event.description} />
           </div>
         </div>
       </div>
