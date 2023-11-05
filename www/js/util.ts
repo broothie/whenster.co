@@ -69,3 +69,12 @@ export function parameterizeData(
 
   return result;
 }
+
+export function isJsonString(text: string) {
+  try {
+    JSON.parse(text);
+    return true;
+  } catch {
+    return false;
+  }
+}

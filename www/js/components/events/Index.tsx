@@ -4,7 +4,7 @@ import { fetchEvents } from "../../store/eventsSlice";
 import { Link } from "react-router-dom";
 import { DateTime } from "luxon";
 import { Event } from "../../models";
-import Markdown from "../Markdown";
+import RichText from "../RichText";
 
 export default function EventsIndex() {
   const events = useAppSelector((state) => Object.values(state.events));
@@ -116,7 +116,7 @@ function Entry({ event }: { event: Event }) {
           {event.location && <p className="light text-sm">{event.location}</p>}
 
           <div className="text-ellipsis line-clamp-2">
-            <Markdown markdown={event.description} />
+            <RichText text={event.description} />
           </div>
         </div>
       </div>

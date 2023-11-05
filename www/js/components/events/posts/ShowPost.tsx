@@ -3,7 +3,6 @@ import { useAppDispatch, useToast } from "../../../hooks";
 import UserChip from "../../UserChip";
 import { DateTime } from "luxon";
 import { deletePost } from "../../../store/postsSlice";
-import Markdown from "../../Markdown";
 import {
   selectComments,
   selectCurrentUser,
@@ -13,6 +12,7 @@ import CommentsIndex from "./CommentsIndex";
 import { useState } from "react";
 import Lightbox from "../../Lightbox";
 import NewComment from "./NewComment";
+import RichText from "../../RichText";
 
 export default function ShowPost({ post }: { post: Post }) {
   const currentUser = selectCurrentUser();
@@ -72,7 +72,7 @@ export default function ShowPost({ post }: { post: Post }) {
             </div>
           </div>
 
-          <Markdown markdown={post.body} />
+          <RichText text={post.body} />
 
           {post.imageURLs.length > 0 && (
             <div className="flex flex-row flex-wrap gap-3">
